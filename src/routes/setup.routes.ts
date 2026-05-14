@@ -1,6 +1,4 @@
 import express, { Request, Response } from 'express';
-import fs from 'fs';
-import path from 'path';
 import pool from '../config/database';
 
 const router = express.Router();
@@ -10,19 +8,79 @@ router.get('/run', async (req: Request, res: Response) => {
   try {
     console.log('🔧 Starting database setup...');
 
-    // Read full schema SQL
-    const schemaSQL = fs.readFileSync(
-      path.join(__dirname, '../../essential_schema.sql'),
-      'utf8'
-    );
+    // SQL embedded directly (no file reading!)
+    const schemaSQL = `
+CREATE TABLE IF NOT EXISTS tenants (
+    tenant_id SERIAL PRIMARY KEY,
+    tenant_name VARCHAR(255) NOT NULL,
+    domain VARCHAR(255) UNIQUE,
+    plan VARCHAR(50) DEFAULT 'free',
+    status VARCHAR(50) DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-    // Split by semicolons and execute one by one
+CREATE TABLE IF NOT EXISTS roles (
+    role_id SERIAL PRIMARY KEY,
+    tenant_id INTEGER REFERENCES tenants(tenant_id),
+    role_name VARCHAR(100) NOT NULL,
+    description TEXT,
+    is_system BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    user_id SERIAL PRIMARY KEY,
+    tenant_id INTEGER REFERENCES tenants(tenant_id),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    status VARCHAR(50) DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS user_roles (
+    user_role_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(user_id),
+    role_id INTEGER REFERENCES roles(role_id),
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO tenants (tenant_name, domain, plan, status)
+VALUES ('Demo Company', 'demo.deemona.com', 'enterprise', 'active')
+ON CONFLICT (domain) DO NOTHING;
+
+INSERT INTO roles (tenant_id, role_name, description, is_system)
+VALUES 
+    (1, 'Admin', 'Full system access', true),
+    (1, 'User', 'Standard user access', true);
+
+INSERT INTO users (tenant_id, email, password_hash, first_name, last_name, status)
+VALUES (
+    1,
+    'alice.smith@demo.com',
+    '$2b$10$rKvW8Z9mHxQ7LZ7xJ3vZZeYhX5yN6pK8QxW4tR9sE1wK2fH3vL4nO',
+    'Alice',
+    'Smith',
+    'active'
+)
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.user_id, r.role_id
+FROM users u, roles r
+WHERE u.email = 'alice.smith@demo.com' AND r.role_name = 'Admin';
+`;
+
+    console.log('📦 Executing SQL statements...');
+
+    // Split and execute
     const statements = schemaSQL
       .split(';')
       .map(s => s.trim())
-      .filter(s => s.length > 0 && !s.startsWith('--') && !s.match(/^SET/i));
-
-    console.log(`📦 Found ${statements.length} SQL statements to execute...`);
+      .filter(s => s.length > 0);
 
     let successCount = 0;
     let errorCount = 0;
@@ -30,20 +88,15 @@ router.get('/run', async (req: Request, res: Response) => {
 
     for (let i = 0; i < statements.length; i++) {
       try {
-        // Skip empty or comment-only statements
         if (statements[i].trim().length === 0) continue;
         
-        await pool.query(statements[i] + ';');
+        await pool.query(statements[i]);
         successCount++;
-        
-        if ((i + 1) % 20 === 0) {
-          console.log(`✅ Progress: ${i + 1}/${statements.length}`);
-        }
+        console.log(`✅ Statement ${i + 1} executed`);
       } catch (error: any) {
         errorCount++;
         errors.push(`Statement ${i + 1}: ${error.message.substring(0, 100)}`);
-        console.error(`⚠️ Skipped statement ${i + 1}:`, error.message.substring(0, 100));
-        // Continue with next statement
+        console.error(`⚠️ Skipped statement ${i + 1}:`, error.message);
       }
     }
 
