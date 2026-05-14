@@ -181,4 +181,29 @@ router.get('/create-user', async (req: Request, res: Response) => {
   }
 });
 
+// Add missing columns to users table
+router.get('/fix-schema', async (req: Request, res: Response) => {
+  try {
+    console.log('Adding missing columns to users table...');
+
+    // Add last_login column if missing
+    await pool.query(`
+      ALTER TABLE users 
+      ADD COLUMN IF NOT EXISTS last_login TIMESTAMP;
+    `);
+
+    res.json({
+      success: true,
+      message: 'Schema updated successfully! Added last_login column.'
+    });
+
+  } catch (error: any) {
+    console.error('Failed to update schema:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 export default router;
