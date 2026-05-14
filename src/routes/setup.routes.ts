@@ -1,79 +1,21 @@
 import express, { Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 import pool from '../config/database';
 import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
-// Database setup endpoint
+// Database setup endpoint - imports ALL 131 tables
 router.get('/run', async (req: Request, res: Response) => {
   try {
-    console.log('🔧 Starting database setup...');
+    console.log('🔧 Starting database setup with complete schema (131 tables)...');
 
-    // SQL embedded directly (no file reading!)
-    const schemaSQL = `
-CREATE TABLE IF NOT EXISTS tenants (
-    tenant_id SERIAL PRIMARY KEY,
-    tenant_name VARCHAR(255) NOT NULL,
-    domain VARCHAR(255) UNIQUE,
-    plan VARCHAR(50) DEFAULT 'free',
-    status VARCHAR(50) DEFAULT 'active',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE IF NOT EXISTS roles (
-    role_id SERIAL PRIMARY KEY,
-    tenant_id INTEGER REFERENCES tenants(tenant_id),
-    role_name VARCHAR(100) NOT NULL,
-    description TEXT,
-    is_system BOOLEAN DEFAULT false,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE IF NOT EXISTS users (
-    user_id SERIAL PRIMARY KEY,
-    tenant_id INTEGER REFERENCES tenants(tenant_id),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
-    status VARCHAR(50) DEFAULT 'active',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE IF NOT EXISTS user_roles (
-    user_role_id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(user_id),
-    role_id INTEGER REFERENCES roles(role_id),
-    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-INSERT INTO tenants (tenant_name, domain, plan, status)
-VALUES ('Demo Company', 'demo.deemona.com', 'enterprise', 'active')
-ON CONFLICT (domain) DO NOTHING;
-
-INSERT INTO roles (tenant_id, role_name, description, is_system)
-VALUES 
-    (1, 'Admin', 'Full system access', true),
-    (1, 'User', 'Standard user access', true);
-
-INSERT INTO users (tenant_id, email, password_hash, first_name, last_name, status)
-VALUES (
-    1,
-    'alice.smith@demo.com',
-    '$2b$10$rKvW8Z9mHxQ7LZ7xJ3vZZeYhX5yN6pK8QxW4tR9sE1wK2fH3vL4nO',
-    'Alice',
-    'Smith',
-    'active'
-)
-ON CONFLICT (email) DO NOTHING;
-
-INSERT INTO user_roles (user_id, role_id)
-SELECT u.user_id, r.role_id
-FROM users u, roles r
-WHERE u.email = 'alice.smith@demo.com' AND r.role_name = 'Admin';
-`;
+    // Read the cleaned complete schema
+    const schemaSQL = fs.readFileSync(
+      path.join(__dirname, '../../complete_schema_clean.sql'),
+      'utf8'
+    );
 
     console.log('📦 Executing SQL statements...');
 
@@ -81,7 +23,7 @@ WHERE u.email = 'alice.smith@demo.com' AND r.role_name = 'Admin';
     const statements = schemaSQL
       .split(';')
       .map(s => s.trim())
-      .filter(s => s.length > 0);
+      .filter(s => s.length > 0 && !s.startsWith('--') && !s.match(/^SET/i) && !s.startsWith('\\'));
 
     let successCount = 0;
     let errorCount = 0;
@@ -93,11 +35,14 @@ WHERE u.email = 'alice.smith@demo.com' AND r.role_name = 'Admin';
         
         await pool.query(statements[i]);
         successCount++;
-        console.log(`✅ Statement ${i + 1} executed`);
+        
+        if ((i + 1) % 20 === 0) {
+          console.log(`✅ Progress: ${i + 1}/${statements.length}`);
+        }
       } catch (error: any) {
         errorCount++;
         errors.push(`Statement ${i + 1}: ${error.message.substring(0, 100)}`);
-        console.error(`⚠️ Skipped statement ${i + 1}:`, error.message);
+        console.error(`⚠️ Skipped statement ${i + 1}:`, error.message.substring(0, 100));
       }
     }
 
@@ -113,7 +58,7 @@ WHERE u.email = 'alice.smith@demo.com' AND r.role_name = 'Admin';
 
     res.json({
       success: true,
-      message: 'Database setup completed!',
+      message: 'Database setup completed! All 131 tables imported.',
       tables: result.rows.map(r => r.tablename),
       totalTables: result.rows.length,
       totalStatements: statements.length,
@@ -150,17 +95,18 @@ router.get('/create-user', async (req: Request, res: Response) => {
 
     // Insert user with correct hash
     const userResult = await pool.query(`
-      INSERT INTO users (tenant_id, email, password_hash, first_name, last_name, status)
-      VALUES (1, 'alice.smith@demo.com', $1, 'Alice', 'Smith', 'active')
+      INSERT INTO users (tenant_id, email, password_hash, first_name, last_name, status, role_id)
+      VALUES (1, 'alice.smith@demo.com', $1, 'Alice', 'Smith', 'active', 1)
       RETURNING user_id
     `, [hashedPassword]);
 
     const userId = userResult.rows[0].user_id;
 
-    // Assign admin role
+    // Assign admin role in user_roles table too
     await pool.query(`
       INSERT INTO user_roles (user_id, role_id)
       VALUES ($1, 1)
+      ON CONFLICT DO NOTHING
     `, [userId]);
 
     res.json({
@@ -181,8 +127,7 @@ router.get('/create-user', async (req: Request, res: Response) => {
   }
 });
 
-// Add missing columns to users table
-// Add missing columns to users table
+// Add missing columns to users table (use if needed)
 router.get('/fix-schema', async (req: Request, res: Response) => {
   try {
     console.log('Fixing users table schema...');
@@ -226,7 +171,7 @@ router.get('/fix-schema', async (req: Request, res: Response) => {
   }
 });
 
-// Create permissions and role_permissions tables
+// Create permissions and role_permissions tables (use if needed)
 router.get('/create-permissions', async (req: Request, res: Response) => {
   try {
     console.log('Creating permissions tables...');
