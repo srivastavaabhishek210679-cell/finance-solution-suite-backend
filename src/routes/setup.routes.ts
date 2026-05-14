@@ -182,19 +182,39 @@ router.get('/create-user', async (req: Request, res: Response) => {
 });
 
 // Add missing columns to users table
+// Add missing columns to users table
 router.get('/fix-schema', async (req: Request, res: Response) => {
   try {
-    console.log('Adding missing columns to users table...');
+    console.log('Fixing users table schema...');
 
-    // Add last_login column if missing
+    // Add last_login column
     await pool.query(`
       ALTER TABLE users 
       ADD COLUMN IF NOT EXISTS last_login TIMESTAMP;
     `);
 
+    // Add role_id column
+    await pool.query(`
+      ALTER TABLE users 
+      ADD COLUMN IF NOT EXISTS role_id INTEGER REFERENCES roles(role_id);
+    `);
+
+    // Add phone_number column
+    await pool.query(`
+      ALTER TABLE users 
+      ADD COLUMN IF NOT EXISTS phone_number VARCHAR(20);
+    `);
+
+    // Update demo user to have role_id = 1 (Admin)
+    await pool.query(`
+      UPDATE users 
+      SET role_id = 1 
+      WHERE email = 'alice.smith@demo.com';
+    `);
+
     res.json({
       success: true,
-      message: 'Schema updated successfully! Added last_login column.'
+      message: 'Schema updated! Added last_login, role_id, and phone_number columns. Updated demo user.'
     });
 
   } catch (error: any) {
