@@ -231,4 +231,62 @@ router.get('/create-permissions', async (req: Request, res: Response) => {
   }
 });
 
+// Import all data (reports, domains, etc.)
+router.get('/import-data', async (req: Request, res: Response) => {
+  try {
+    console.log('🔧 Starting data import...');
+
+    // Read data SQL
+    const dataSQL = fs.readFileSync(
+      path.join(__dirname, '../../data_only.sql'),
+      'utf8'
+    );
+
+    console.log('📦 Executing INSERT statements...');
+
+    // Split and execute
+    const statements = dataSQL
+      .split(';')
+      .map(s => s.trim())
+      .filter(s => s.length > 0 && s.startsWith('INSERT'));
+
+    let successCount = 0;
+    let errorCount = 0;
+    const errors: string[] = [];
+
+    for (let i = 0; i < statements.length; i++) {
+      try {
+        await pool.query(statements[i]);
+        successCount++;
+        
+        if ((i + 1) % 50 === 0) {
+          console.log(`✅ Progress: ${i + 1}/${statements.length}`);
+        }
+      } catch (error: any) {
+        errorCount++;
+        errors.push(`Statement ${i + 1}: ${error.message.substring(0, 100)}`);
+        console.error(`⚠️ Skipped statement ${i + 1}:`, error.message.substring(0, 100));
+      }
+    }
+
+    console.log(`✅ Data import complete! Success: ${successCount}, Errors: ${errorCount}`);
+
+    res.json({
+      success: true,
+      message: 'Data imported successfully!',
+      totalStatements: statements.length,
+      successfulStatements: successCount,
+      failedStatements: errorCount,
+      sampleErrors: errors.slice(0, 5)
+    });
+
+  } catch (error: any) {
+    console.error('❌ Data import failed:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 export default router;
