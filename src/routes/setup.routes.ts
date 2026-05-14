@@ -13,7 +13,7 @@ router.get('/run', async (req: Request, res: Response) => {
 
     // Read the cleaned complete schema
     const schemaSQL = fs.readFileSync(
-      path.join(__dirname, '../../complete_schema_clean.sql'),
+      path.join(__dirname, '../../complete_schema_v2.sql'), 
       'utf8'
     );
 
