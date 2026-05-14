@@ -37,17 +37,39 @@ const API_VERSION = process.env.API_VERSION || 'v1';
 // Security middleware
 app.use(helmet());
 
+// Security middleware
+app.use(helmet());
+
 // CORS configuration
+const allowedOrigins = [
+  'http://localhost:3001',
+  'https://finance-frontend-2l6b.onrender.com',
+  process.env.FRONTEND_URL,
+  process.env.CORS_ORIGIN
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3001',
-    credentials: process.env.CORS_CREDENTIALS === 'true',
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
   })
 );
 
 // Body parsing
 app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Body parsing
+//app.use(express.json({ limit: '10mb' }));
+//app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Compression
 app.use(compression());
