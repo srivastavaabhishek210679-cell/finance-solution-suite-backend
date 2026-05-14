@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import pool from '../config/database';
+import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
@@ -130,5 +131,56 @@ WHERE u.email = 'alice.smith@demo.com' AND r.role_name = 'Admin';
     });
   }
 });
+
+// Create demo user with proper password hash
+router.get('/create-user', async (req: Request, res: Response) => {
+  try {
+    console.log('Creating demo user with proper password...');
+    
+    const password = 'password123';
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Delete existing user and their roles
+    await pool.query(`
+      DELETE FROM user_roles 
+      WHERE user_id IN (SELECT user_id FROM users WHERE email = 'alice.smith@demo.com')
+    `);
+    
+    await pool.query(`DELETE FROM users WHERE email = 'alice.smith@demo.com'`);
+
+    // Insert user with correct hash
+    const userResult = await pool.query(`
+      INSERT INTO users (tenant_id, email, password_hash, first_name, last_name, status)
+      VALUES (1, 'alice.smith@demo.com', $1, 'Alice', 'Smith', 'active')
+      RETURNING user_id
+    `, [hashedPassword]);
+
+    const userId = userResult.rows[0].user_id;
+
+    // Assign admin role
+    await pool.query(`
+      INSERT INTO user_roles (user_id, role_id)
+      VALUES ($1, 1)
+    `, [userId]);
+
+    res.json({
+      success: true,
+      message: 'Demo user created with proper password hash!',
+      credentials: {
+        email: 'alice.smith@demo.com',
+        password: 'password123'
+      }
+    });
+
+  } catch (error: any) {
+    console.error('Failed to create user:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+export default router;
 
 export default router;
