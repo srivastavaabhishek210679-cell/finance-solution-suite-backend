@@ -12,7 +12,7 @@ router.get('/run', async (req: Request, res: Response) => {
 
     // Read full schema SQL
     const schemaSQL = fs.readFileSync(
-      path.join(__dirname, '../../full_schema.sql'),
+      path.join(__dirname, '../../essential_schema.sql'),
       'utf8'
     );
 
