@@ -1,28 +1,54 @@
-import { Pool, PoolClient, QueryResult } from 'pg';
+import { Pool, PoolClient, QueryResult, PoolConfig } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Database configuration
-const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '5432'),
-  database: process.env.DB_NAME || 'deemona_dashboard',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD,
-  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
-  min: parseInt(process.env.DB_POOL_MIN || '2'),
-  max: parseInt(process.env.DB_POOL_MAX || '10'),
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
+// Parse DATABASE_URL or use individual environment variables
+const getDatabaseConfig = (): PoolConfig => {
+  // Production: Use DATABASE_URL (Render provides this)
+  if (process.env.DATABASE_URL) {
+    return {
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false
+      },
+      min: parseInt(process.env.DB_POOL_MIN || '2'),
+      max: parseInt(process.env.DB_POOL_MAX || '10'),
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
+    };
+  }
+
+  // Development: Use individual environment variables
+  return {
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT || '5432'),
+    database: process.env.DB_NAME || 'deemona_dashboard',
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD,
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+    min: parseInt(process.env.DB_POOL_MIN || '2'),
+    max: parseInt(process.env.DB_POOL_MAX || '10'),
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
+  };
 };
+
+// Database configuration
+const dbConfig = getDatabaseConfig();
 
 // Create connection pool
 const pool = new Pool(dbConfig);
 
+// Pool connection event
+pool.on('connect', () => {
+  const env = process.env.NODE_ENV || 'development';
+  console.log(`✅ Database pool connected (${env})`);
+});
+
 // Pool error handling
 pool.on('error', (err: Error) => {
-  console.error('Unexpected error on idle client', err);
+  console.error('❌ Unexpected error on idle client', err);
   process.exit(-1);
 });
 
