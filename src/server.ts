@@ -23,6 +23,7 @@ import complianceRoutes from './routes/compliance.routes';
 import aiAnalyticsRoutes from './routes/aiAnalytics.routes';
 import chatbotRoutes from './routes/chatbot.routes';
 import billingRoutes from './routes/billing.routes';
+import setupRoutes from './routes/setup.routes';
 
 dotenv.config();
 
@@ -90,6 +91,9 @@ app.get('/health', (req: Request, res: Response) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Database setup route (REMOVE AFTER FIRST USE!)
+app.use('/setup', setupRoutes);
 
 // API routes
 const apiRouter = express.Router();
