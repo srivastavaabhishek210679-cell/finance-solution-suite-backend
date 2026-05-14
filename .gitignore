@@ -1,0 +1,16 @@
+﻿node_modules/
+.env
+.env.local
+logs/
+*.log
+uploads/
+temp/
+dist/
+build/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+coverage/
+*.sqlite
+*.db
