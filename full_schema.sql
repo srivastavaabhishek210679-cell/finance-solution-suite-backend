@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 5eDm5kufdxhMTcNqa6Wikl1HJKefduJhUtO0cxiuC3fBCYdo3TupQfjdh8x2YIk
+\restrict IpVuyKCBNEkR3VK3ateefP9EwdQOfNsusbUlUusHbsMhkigFjpVX8kteUr3DyXz
 
 -- Dumped from database version 18.3
 -- Dumped by pg_dump version 18.3
@@ -27,7 +27,7 @@ CREATE EXTENSION IF NOT EXISTS btree_gin WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION btree_gin; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION btree_gin; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION btree_gin IS 'support for indexing common datatypes in GIN';
@@ -41,7 +41,7 @@ CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
@@ -55,14 +55,14 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
 
 
 --
--- Name: cleanup_expired_sessions(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: cleanup_expired_sessions(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.cleanup_expired_sessions() RETURNS void
@@ -75,17 +75,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.cleanup_expired_sessions() OWNER TO postgres;
-
 --
--- Name: FUNCTION cleanup_expired_sessions(); Type: COMMENT; Schema: public; Owner: postgres
+-- Name: FUNCTION cleanup_expired_sessions(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.cleanup_expired_sessions() IS 'Removes expired sessions from the sessions table';
 
 
 --
--- Name: log_report_execution(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: log_report_execution(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.log_report_execution() RETURNS trigger
@@ -102,17 +100,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.log_report_execution() OWNER TO postgres;
-
 --
--- Name: FUNCTION log_report_execution(); Type: COMMENT; Schema: public; Owner: postgres
+-- Name: FUNCTION log_report_execution(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.log_report_execution() IS 'Updates report statistics when a report execution is logged';
 
 
 --
--- Name: log_report_run(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: log_report_run(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.log_report_run() RETURNS trigger
@@ -128,10 +124,8 @@ END;
 $$;
 
 
-ALTER FUNCTION public.log_report_run() OWNER TO postgres;
-
 --
--- Name: prevent_system_role_deletion(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: prevent_system_role_deletion(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.prevent_system_role_deletion() RETURNS trigger
@@ -146,17 +140,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.prevent_system_role_deletion() OWNER TO postgres;
-
 --
--- Name: FUNCTION prevent_system_role_deletion(); Type: COMMENT; Schema: public; Owner: postgres
+-- Name: FUNCTION prevent_system_role_deletion(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.prevent_system_role_deletion() IS 'Prevents deletion of system-defined roles';
 
 
 --
--- Name: refresh_all_materialized_views(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: refresh_all_materialized_views(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.refresh_all_materialized_views() RETURNS void
@@ -170,17 +162,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.refresh_all_materialized_views() OWNER TO postgres;
-
 --
--- Name: FUNCTION refresh_all_materialized_views(); Type: COMMENT; Schema: public; Owner: postgres
+-- Name: FUNCTION refresh_all_materialized_views(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.refresh_all_materialized_views() IS 'Refresh all materialized views concurrently';
 
 
 --
--- Name: update_api_key_usage(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: update_api_key_usage(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.update_api_key_usage() RETURNS trigger
@@ -195,17 +185,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_api_key_usage() OWNER TO postgres;
-
 --
--- Name: FUNCTION update_api_key_usage(); Type: COMMENT; Schema: public; Owner: postgres
+-- Name: FUNCTION update_api_key_usage(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.update_api_key_usage() IS 'Updates api_keys.last_used when API usage is logged';
 
 
 --
--- Name: update_updated_at_column(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: update_updated_at_column(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.update_updated_at_column() RETURNS trigger
@@ -218,17 +206,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_updated_at_column() OWNER TO postgres;
-
 --
--- Name: FUNCTION update_updated_at_column(); Type: COMMENT; Schema: public; Owner: postgres
+-- Name: FUNCTION update_updated_at_column(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.update_updated_at_column() IS 'Automatically updates the updated_at column to current timestamp on row modification';
 
 
 --
--- Name: update_user_last_login(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: update_user_last_login(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.update_user_last_login() RETURNS trigger
@@ -243,17 +229,15 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_user_last_login() OWNER TO postgres;
-
 --
--- Name: FUNCTION update_user_last_login(); Type: COMMENT; Schema: public; Owner: postgres
+-- Name: FUNCTION update_user_last_login(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.update_user_last_login() IS 'Updates users.last_login when a new session is created';
 
 
 --
--- Name: validate_email(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: validate_email(); Type: FUNCTION; Schema: public; Owner: -
 --
 
 CREATE FUNCTION public.validate_email() RETURNS trigger
@@ -268,10 +252,8 @@ END;
 $_$;
 
 
-ALTER FUNCTION public.validate_email() OWNER TO postgres;
-
 --
--- Name: FUNCTION validate_email(); Type: COMMENT; Schema: public; Owner: postgres
+-- Name: FUNCTION validate_email(); Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON FUNCTION public.validate_email() IS 'Validates email format before INSERT/UPDATE';
@@ -282,7 +264,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: activity_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: activity_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.activity_logs (
@@ -296,17 +278,15 @@ CREATE TABLE public.activity_logs (
 );
 
 
-ALTER TABLE public.activity_logs OWNER TO postgres;
-
 --
--- Name: TABLE activity_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE activity_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.activity_logs IS 'User activity feed (page views, searches, exports)';
 
 
 --
--- Name: activity_logs_activity_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: activity_logs_activity_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.activity_logs_activity_id_seq
@@ -318,17 +298,15 @@ CREATE SEQUENCE public.activity_logs_activity_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.activity_logs_activity_id_seq OWNER TO postgres;
-
 --
--- Name: activity_logs_activity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: activity_logs_activity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.activity_logs_activity_id_seq OWNED BY public.activity_logs.activity_id;
 
 
 --
--- Name: ai_insights; Type: TABLE; Schema: public; Owner: postgres
+-- Name: ai_insights; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.ai_insights (
@@ -347,17 +325,15 @@ CREATE TABLE public.ai_insights (
 );
 
 
-ALTER TABLE public.ai_insights OWNER TO postgres;
-
 --
--- Name: TABLE ai_insights; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE ai_insights; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.ai_insights IS 'AI-generated summaries, anomaly flags, and trend callouts';
 
 
 --
--- Name: ai_insights_insight_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: ai_insights_insight_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.ai_insights_insight_id_seq
@@ -369,17 +345,15 @@ CREATE SEQUENCE public.ai_insights_insight_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.ai_insights_insight_id_seq OWNER TO postgres;
-
 --
--- Name: ai_insights_insight_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: ai_insights_insight_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.ai_insights_insight_id_seq OWNED BY public.ai_insights.insight_id;
 
 
 --
--- Name: alert_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: alert_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.alert_logs (
@@ -395,17 +369,15 @@ CREATE TABLE public.alert_logs (
 );
 
 
-ALTER TABLE public.alert_logs OWNER TO postgres;
-
 --
--- Name: TABLE alert_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE alert_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.alert_logs IS 'History of triggered alerts with resolution tracking';
 
 
 --
--- Name: alert_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: alert_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.alert_logs_log_id_seq
@@ -417,17 +389,15 @@ CREATE SEQUENCE public.alert_logs_log_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.alert_logs_log_id_seq OWNER TO postgres;
-
 --
--- Name: alert_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: alert_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.alert_logs_log_id_seq OWNED BY public.alert_logs.log_id;
 
 
 --
--- Name: alert_rules; Type: TABLE; Schema: public; Owner: postgres
+-- Name: alert_rules; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.alert_rules (
@@ -445,17 +415,15 @@ CREATE TABLE public.alert_rules (
 );
 
 
-ALTER TABLE public.alert_rules OWNER TO postgres;
-
 --
--- Name: TABLE alert_rules; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE alert_rules; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.alert_rules IS 'Threshold-based alert rules per report/KPI';
 
 
 --
--- Name: alert_rules_rule_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: alert_rules_rule_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.alert_rules_rule_id_seq
@@ -467,17 +435,15 @@ CREATE SEQUENCE public.alert_rules_rule_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.alert_rules_rule_id_seq OWNER TO postgres;
-
 --
--- Name: alert_rules_rule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: alert_rules_rule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.alert_rules_rule_id_seq OWNED BY public.alert_rules.rule_id;
 
 
 --
--- Name: announcements; Type: TABLE; Schema: public; Owner: postgres
+-- Name: announcements; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.announcements (
@@ -495,17 +461,15 @@ CREATE TABLE public.announcements (
 );
 
 
-ALTER TABLE public.announcements OWNER TO postgres;
-
 --
--- Name: TABLE announcements; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE announcements; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.announcements IS 'System or tenant-level banner messages with visibility window and per-user dismissal';
 
 
 --
--- Name: announcements_announcement_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: announcements_announcement_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.announcements_announcement_id_seq
@@ -517,17 +481,15 @@ CREATE SEQUENCE public.announcements_announcement_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.announcements_announcement_id_seq OWNER TO postgres;
-
 --
--- Name: announcements_announcement_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: announcements_announcement_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.announcements_announcement_id_seq OWNED BY public.announcements.announcement_id;
 
 
 --
--- Name: anomaly_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: anomaly_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.anomaly_logs (
@@ -545,17 +507,15 @@ CREATE TABLE public.anomaly_logs (
 );
 
 
-ALTER TABLE public.anomaly_logs OWNER TO postgres;
-
 --
--- Name: TABLE anomaly_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE anomaly_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.anomaly_logs IS 'Detected data anomalies with expected vs actual values';
 
 
 --
--- Name: anomaly_logs_anomaly_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: anomaly_logs_anomaly_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.anomaly_logs_anomaly_id_seq
@@ -567,17 +527,15 @@ CREATE SEQUENCE public.anomaly_logs_anomaly_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.anomaly_logs_anomaly_id_seq OWNER TO postgres;
-
 --
--- Name: anomaly_logs_anomaly_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: anomaly_logs_anomaly_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.anomaly_logs_anomaly_id_seq OWNED BY public.anomaly_logs.anomaly_id;
 
 
 --
--- Name: api_keys; Type: TABLE; Schema: public; Owner: postgres
+-- Name: api_keys; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.api_keys (
@@ -595,17 +553,15 @@ CREATE TABLE public.api_keys (
 );
 
 
-ALTER TABLE public.api_keys OWNER TO postgres;
-
 --
--- Name: TABLE api_keys; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE api_keys; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.api_keys IS 'Hashed API tokens for programmatic access';
 
 
 --
--- Name: api_keys_api_key_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: api_keys_api_key_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.api_keys_api_key_id_seq
@@ -617,17 +573,15 @@ CREATE SEQUENCE public.api_keys_api_key_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.api_keys_api_key_id_seq OWNER TO postgres;
-
 --
--- Name: api_keys_api_key_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: api_keys_api_key_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.api_keys_api_key_id_seq OWNED BY public.api_keys.api_key_id;
 
 
 --
--- Name: api_usage_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: api_usage_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.api_usage_logs (
@@ -647,17 +601,15 @@ CREATE TABLE public.api_usage_logs (
 );
 
 
-ALTER TABLE public.api_usage_logs OWNER TO postgres;
-
 --
--- Name: TABLE api_usage_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE api_usage_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.api_usage_logs IS 'Inbound API call log per key/tenant; used for rate limiting enforcement and usage-based billing';
 
 
 --
--- Name: api_usage_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: api_usage_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.api_usage_logs_log_id_seq
@@ -669,17 +621,15 @@ CREATE SEQUENCE public.api_usage_logs_log_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.api_usage_logs_log_id_seq OWNER TO postgres;
-
 --
--- Name: api_usage_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: api_usage_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.api_usage_logs_log_id_seq OWNED BY public.api_usage_logs.log_id;
 
 
 --
--- Name: approval_steps; Type: TABLE; Schema: public; Owner: postgres
+-- Name: approval_steps; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.approval_steps (
@@ -697,17 +647,15 @@ CREATE TABLE public.approval_steps (
 );
 
 
-ALTER TABLE public.approval_steps OWNER TO postgres;
-
 --
--- Name: TABLE approval_steps; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE approval_steps; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.approval_steps IS 'Ordered steps within an approval workflow; on_reject controls what happens when a step is rejected';
 
 
 --
--- Name: approval_steps_step_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: approval_steps_step_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.approval_steps_step_id_seq
@@ -719,17 +667,15 @@ CREATE SEQUENCE public.approval_steps_step_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.approval_steps_step_id_seq OWNER TO postgres;
-
 --
--- Name: approval_steps_step_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: approval_steps_step_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.approval_steps_step_id_seq OWNED BY public.approval_steps.step_id;
 
 
 --
--- Name: approval_workflows; Type: TABLE; Schema: public; Owner: postgres
+-- Name: approval_workflows; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.approval_workflows (
@@ -748,17 +694,15 @@ CREATE TABLE public.approval_workflows (
 );
 
 
-ALTER TABLE public.approval_workflows OWNER TO postgres;
-
 --
--- Name: TABLE approval_workflows; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE approval_workflows; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.approval_workflows IS 'Multi-step approval chain definitions; is_sequential=FALSE runs all steps in parallel';
 
 
 --
--- Name: approval_workflows_workflow_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: approval_workflows_workflow_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.approval_workflows_workflow_id_seq
@@ -770,17 +714,15 @@ CREATE SEQUENCE public.approval_workflows_workflow_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.approval_workflows_workflow_id_seq OWNER TO postgres;
-
 --
--- Name: approval_workflows_workflow_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: approval_workflows_workflow_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.approval_workflows_workflow_id_seq OWNED BY public.approval_workflows.workflow_id;
 
 
 --
--- Name: attachments; Type: TABLE; Schema: public; Owner: postgres
+-- Name: attachments; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.attachments (
@@ -796,17 +738,15 @@ CREATE TABLE public.attachments (
 );
 
 
-ALTER TABLE public.attachments OWNER TO postgres;
-
 --
--- Name: TABLE attachments; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE attachments; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.attachments IS 'File attachments linked to reports or uploads';
 
 
 --
--- Name: attachments_attachment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: attachments_attachment_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.attachments_attachment_id_seq
@@ -818,17 +758,15 @@ CREATE SEQUENCE public.attachments_attachment_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.attachments_attachment_id_seq OWNER TO postgres;
-
 --
--- Name: attachments_attachment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: attachments_attachment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.attachments_attachment_id_seq OWNED BY public.attachments.attachment_id;
 
 
 --
--- Name: audit_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: audit_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.audit_logs (
@@ -845,17 +783,15 @@ CREATE TABLE public.audit_logs (
 );
 
 
-ALTER TABLE public.audit_logs OWNER TO postgres;
-
 --
--- Name: TABLE audit_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE audit_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.audit_logs IS 'Immutable security audit trail for all CRUD and auth events';
 
 
 --
--- Name: audit_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: audit_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.audit_logs_log_id_seq
@@ -867,17 +803,15 @@ CREATE SEQUENCE public.audit_logs_log_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.audit_logs_log_id_seq OWNER TO postgres;
-
 --
--- Name: audit_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: audit_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.audit_logs_log_id_seq OWNED BY public.audit_logs.log_id;
 
 
 --
--- Name: benchmarking_data; Type: TABLE; Schema: public; Owner: postgres
+-- Name: benchmarking_data; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.benchmarking_data (
@@ -892,17 +826,15 @@ CREATE TABLE public.benchmarking_data (
 );
 
 
-ALTER TABLE public.benchmarking_data OWNER TO postgres;
-
 --
--- Name: TABLE benchmarking_data; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE benchmarking_data; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.benchmarking_data IS 'Industry benchmark data (moved from Billing to AI module)';
 
 
 --
--- Name: benchmarking_data_benchmark_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: benchmarking_data_benchmark_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.benchmarking_data_benchmark_id_seq
@@ -914,17 +846,15 @@ CREATE SEQUENCE public.benchmarking_data_benchmark_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.benchmarking_data_benchmark_id_seq OWNER TO postgres;
-
 --
--- Name: benchmarking_data_benchmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: benchmarking_data_benchmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.benchmarking_data_benchmark_id_seq OWNED BY public.benchmarking_data.benchmark_id;
 
 
 --
--- Name: billing_accounts; Type: TABLE; Schema: public; Owner: postgres
+-- Name: billing_accounts; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.billing_accounts (
@@ -943,17 +873,15 @@ CREATE TABLE public.billing_accounts (
 );
 
 
-ALTER TABLE public.billing_accounts OWNER TO postgres;
-
 --
--- Name: TABLE billing_accounts; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE billing_accounts; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.billing_accounts IS '1:1 with tenants; tracks plan, status, and payment token';
 
 
 --
--- Name: billing_accounts_account_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: billing_accounts_account_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.billing_accounts_account_id_seq
@@ -965,17 +893,15 @@ CREATE SEQUENCE public.billing_accounts_account_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.billing_accounts_account_id_seq OWNER TO postgres;
-
 --
--- Name: billing_accounts_account_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: billing_accounts_account_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.billing_accounts_account_id_seq OWNED BY public.billing_accounts.account_id;
 
 
 --
--- Name: blockchain_audit; Type: TABLE; Schema: public; Owner: postgres
+-- Name: blockchain_audit; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.blockchain_audit (
@@ -991,17 +917,15 @@ CREATE TABLE public.blockchain_audit (
 );
 
 
-ALTER TABLE public.blockchain_audit OWNER TO postgres;
-
 --
--- Name: TABLE blockchain_audit; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE blockchain_audit; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.blockchain_audit IS 'Immutable on-chain audit records for compliance events';
 
 
 --
--- Name: blockchain_audit_audit_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: blockchain_audit_audit_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.blockchain_audit_audit_id_seq
@@ -1013,17 +937,15 @@ CREATE SEQUENCE public.blockchain_audit_audit_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.blockchain_audit_audit_id_seq OWNER TO postgres;
-
 --
--- Name: blockchain_audit_audit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: blockchain_audit_audit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.blockchain_audit_audit_id_seq OWNED BY public.blockchain_audit.audit_id;
 
 
 --
--- Name: chat_feedback; Type: TABLE; Schema: public; Owner: postgres
+-- Name: chat_feedback; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.chat_feedback (
@@ -1037,17 +959,15 @@ CREATE TABLE public.chat_feedback (
 );
 
 
-ALTER TABLE public.chat_feedback OWNER TO postgres;
-
 --
--- Name: TABLE chat_feedback; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE chat_feedback; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.chat_feedback IS 'User ratings and comments on bot responses';
 
 
 --
--- Name: chat_feedback_feedback_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: chat_feedback_feedback_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.chat_feedback_feedback_id_seq
@@ -1059,17 +979,15 @@ CREATE SEQUENCE public.chat_feedback_feedback_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.chat_feedback_feedback_id_seq OWNER TO postgres;
-
 --
--- Name: chat_feedback_feedback_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: chat_feedback_feedback_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.chat_feedback_feedback_id_seq OWNED BY public.chat_feedback.feedback_id;
 
 
 --
--- Name: chat_intents; Type: TABLE; Schema: public; Owner: postgres
+-- Name: chat_intents; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.chat_intents (
@@ -1082,17 +1000,15 @@ CREATE TABLE public.chat_intents (
 );
 
 
-ALTER TABLE public.chat_intents OWNER TO postgres;
-
 --
--- Name: TABLE chat_intents; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE chat_intents; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.chat_intents IS 'NLP intent definitions for chatbot classification';
 
 
 --
--- Name: chat_intents_intent_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: chat_intents_intent_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.chat_intents_intent_id_seq
@@ -1104,17 +1020,15 @@ CREATE SEQUENCE public.chat_intents_intent_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.chat_intents_intent_id_seq OWNER TO postgres;
-
 --
--- Name: chat_intents_intent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: chat_intents_intent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.chat_intents_intent_id_seq OWNED BY public.chat_intents.intent_id;
 
 
 --
--- Name: chat_queries; Type: TABLE; Schema: public; Owner: postgres
+-- Name: chat_queries; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.chat_queries (
@@ -1128,17 +1042,15 @@ CREATE TABLE public.chat_queries (
 );
 
 
-ALTER TABLE public.chat_queries OWNER TO postgres;
-
 --
--- Name: TABLE chat_queries; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE chat_queries; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.chat_queries IS 'Individual user messages within a session';
 
 
 --
--- Name: chat_queries_query_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: chat_queries_query_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.chat_queries_query_id_seq
@@ -1150,17 +1062,15 @@ CREATE SEQUENCE public.chat_queries_query_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.chat_queries_query_id_seq OWNER TO postgres;
-
 --
--- Name: chat_queries_query_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: chat_queries_query_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.chat_queries_query_id_seq OWNED BY public.chat_queries.query_id;
 
 
 --
--- Name: chat_responses; Type: TABLE; Schema: public; Owner: postgres
+-- Name: chat_responses; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.chat_responses (
@@ -1175,17 +1085,15 @@ CREATE TABLE public.chat_responses (
 );
 
 
-ALTER TABLE public.chat_responses OWNER TO postgres;
-
 --
--- Name: TABLE chat_responses; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE chat_responses; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.chat_responses IS 'Bot responses with type (text, chart, table, etc.)';
 
 
 --
--- Name: chat_responses_response_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: chat_responses_response_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.chat_responses_response_id_seq
@@ -1197,17 +1105,15 @@ CREATE SEQUENCE public.chat_responses_response_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.chat_responses_response_id_seq OWNER TO postgres;
-
 --
--- Name: chat_responses_response_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: chat_responses_response_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.chat_responses_response_id_seq OWNED BY public.chat_responses.response_id;
 
 
 --
--- Name: chat_sessions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: chat_sessions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.chat_sessions (
@@ -1221,17 +1127,15 @@ CREATE TABLE public.chat_sessions (
 );
 
 
-ALTER TABLE public.chat_sessions OWNER TO postgres;
-
 --
--- Name: TABLE chat_sessions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE chat_sessions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.chat_sessions IS 'Chatbot conversation sessions per user';
 
 
 --
--- Name: chat_sessions_session_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: chat_sessions_session_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.chat_sessions_session_id_seq
@@ -1243,17 +1147,15 @@ CREATE SEQUENCE public.chat_sessions_session_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.chat_sessions_session_id_seq OWNER TO postgres;
-
 --
--- Name: chat_sessions_session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: chat_sessions_session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.chat_sessions_session_id_seq OWNED BY public.chat_sessions.session_id;
 
 
 --
--- Name: compliance_audit; Type: TABLE; Schema: public; Owner: postgres
+-- Name: compliance_audit; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.compliance_audit (
@@ -1267,17 +1169,15 @@ CREATE TABLE public.compliance_audit (
 );
 
 
-ALTER TABLE public.compliance_audit OWNER TO postgres;
-
 --
--- Name: TABLE compliance_audit; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE compliance_audit; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.compliance_audit IS 'Audit trail of actions on submissions';
 
 
 --
--- Name: compliance_audit_audit_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: compliance_audit_audit_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.compliance_audit_audit_id_seq
@@ -1289,17 +1189,15 @@ CREATE SEQUENCE public.compliance_audit_audit_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.compliance_audit_audit_id_seq OWNER TO postgres;
-
 --
--- Name: compliance_audit_audit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: compliance_audit_audit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.compliance_audit_audit_id_seq OWNED BY public.compliance_audit.audit_id;
 
 
 --
--- Name: compliance_calendar; Type: TABLE; Schema: public; Owner: postgres
+-- Name: compliance_calendar; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.compliance_calendar (
@@ -1319,17 +1217,15 @@ CREATE TABLE public.compliance_calendar (
 );
 
 
-ALTER TABLE public.compliance_calendar OWNER TO postgres;
-
 --
--- Name: TABLE compliance_calendar; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE compliance_calendar; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.compliance_calendar IS 'Filing deadlines; report_id links deadline to its governing report';
 
 
 --
--- Name: compliance_calendar_compliance_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: compliance_calendar_compliance_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.compliance_calendar_compliance_id_seq
@@ -1341,17 +1237,15 @@ CREATE SEQUENCE public.compliance_calendar_compliance_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.compliance_calendar_compliance_id_seq OWNER TO postgres;
-
 --
--- Name: compliance_calendar_compliance_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: compliance_calendar_compliance_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.compliance_calendar_compliance_id_seq OWNED BY public.compliance_calendar.compliance_id;
 
 
 --
--- Name: compliance_documents; Type: TABLE; Schema: public; Owner: postgres
+-- Name: compliance_documents; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.compliance_documents (
@@ -1367,17 +1261,15 @@ CREATE TABLE public.compliance_documents (
 );
 
 
-ALTER TABLE public.compliance_documents OWNER TO postgres;
-
 --
--- Name: TABLE compliance_documents; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE compliance_documents; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.compliance_documents IS 'Files attached to compliance calendar entries';
 
 
 --
--- Name: compliance_documents_doc_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: compliance_documents_doc_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.compliance_documents_doc_id_seq
@@ -1389,17 +1281,15 @@ CREATE SEQUENCE public.compliance_documents_doc_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.compliance_documents_doc_id_seq OWNER TO postgres;
-
 --
--- Name: compliance_documents_doc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: compliance_documents_doc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.compliance_documents_doc_id_seq OWNED BY public.compliance_documents.doc_id;
 
 
 --
--- Name: compliance_rules; Type: TABLE; Schema: public; Owner: postgres
+-- Name: compliance_rules; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.compliance_rules (
@@ -1414,17 +1304,15 @@ CREATE TABLE public.compliance_rules (
 );
 
 
-ALTER TABLE public.compliance_rules OWNER TO postgres;
-
 --
--- Name: TABLE compliance_rules; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE compliance_rules; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.compliance_rules IS 'Regulatory rule library (HIPAA, SOX, GDPR, etc.)';
 
 
 --
--- Name: compliance_rules_rule_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: compliance_rules_rule_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.compliance_rules_rule_id_seq
@@ -1436,17 +1324,15 @@ CREATE SEQUENCE public.compliance_rules_rule_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.compliance_rules_rule_id_seq OWNER TO postgres;
-
 --
--- Name: compliance_rules_rule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: compliance_rules_rule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.compliance_rules_rule_id_seq OWNED BY public.compliance_rules.rule_id;
 
 
 --
--- Name: compliance_submissions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: compliance_submissions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.compliance_submissions (
@@ -1462,17 +1348,15 @@ CREATE TABLE public.compliance_submissions (
 );
 
 
-ALTER TABLE public.compliance_submissions OWNER TO postgres;
-
 --
--- Name: TABLE compliance_submissions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE compliance_submissions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.compliance_submissions IS 'Submission records per compliance deadline';
 
 
 --
--- Name: compliance_submissions_submission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: compliance_submissions_submission_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.compliance_submissions_submission_id_seq
@@ -1484,17 +1368,15 @@ CREATE SEQUENCE public.compliance_submissions_submission_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.compliance_submissions_submission_id_seq OWNER TO postgres;
-
 --
--- Name: compliance_submissions_submission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: compliance_submissions_submission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.compliance_submissions_submission_id_seq OWNED BY public.compliance_submissions.submission_id;
 
 
 --
--- Name: connector_sync_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: connector_sync_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.connector_sync_logs (
@@ -1513,17 +1395,15 @@ CREATE TABLE public.connector_sync_logs (
 );
 
 
-ALTER TABLE public.connector_sync_logs OWNER TO postgres;
-
 --
--- Name: TABLE connector_sync_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE connector_sync_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.connector_sync_logs IS 'Sync execution log per data_source; more granular than etl_jobs, specific to connector syncs';
 
 
 --
--- Name: connector_sync_logs_sync_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: connector_sync_logs_sync_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.connector_sync_logs_sync_id_seq
@@ -1535,17 +1415,15 @@ CREATE SEQUENCE public.connector_sync_logs_sync_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.connector_sync_logs_sync_id_seq OWNER TO postgres;
-
 --
--- Name: connector_sync_logs_sync_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: connector_sync_logs_sync_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.connector_sync_logs_sync_id_seq OWNED BY public.connector_sync_logs.sync_id;
 
 
 --
--- Name: connector_types; Type: TABLE; Schema: public; Owner: postgres
+-- Name: connector_types; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.connector_types (
@@ -1562,17 +1440,15 @@ CREATE TABLE public.connector_types (
 );
 
 
-ALTER TABLE public.connector_types OWNER TO postgres;
-
 --
--- Name: TABLE connector_types; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE connector_types; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.connector_types IS 'Master catalog of available data connector types; config_schema is a JSON Schema for validation';
 
 
 --
--- Name: connector_types_connector_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: connector_types_connector_type_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.connector_types_connector_type_id_seq
@@ -1584,17 +1460,15 @@ CREATE SEQUENCE public.connector_types_connector_type_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.connector_types_connector_type_id_seq OWNER TO postgres;
-
 --
--- Name: connector_types_connector_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: connector_types_connector_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.connector_types_connector_type_id_seq OWNED BY public.connector_types.connector_type_id;
 
 
 --
--- Name: correlation_matrix; Type: TABLE; Schema: public; Owner: postgres
+-- Name: correlation_matrix; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.correlation_matrix (
@@ -1607,17 +1481,15 @@ CREATE TABLE public.correlation_matrix (
 );
 
 
-ALTER TABLE public.correlation_matrix OWNER TO postgres;
-
 --
--- Name: TABLE correlation_matrix; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE correlation_matrix; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.correlation_matrix IS 'Cross-metric correlation results';
 
 
 --
--- Name: correlation_matrix_corr_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: correlation_matrix_corr_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.correlation_matrix_corr_id_seq
@@ -1629,17 +1501,15 @@ CREATE SEQUENCE public.correlation_matrix_corr_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.correlation_matrix_corr_id_seq OWNER TO postgres;
-
 --
--- Name: correlation_matrix_corr_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: correlation_matrix_corr_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.correlation_matrix_corr_id_seq OWNED BY public.correlation_matrix.corr_id;
 
 
 --
--- Name: countries; Type: TABLE; Schema: public; Owner: postgres
+-- Name: countries; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.countries (
@@ -1654,17 +1524,15 @@ CREATE TABLE public.countries (
 );
 
 
-ALTER TABLE public.countries OWNER TO postgres;
-
 --
--- Name: TABLE countries; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE countries; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.countries IS 'ISO 3166-1 country reference; links to currencies and regions for multi-national filtering';
 
 
 --
--- Name: currencies; Type: TABLE; Schema: public; Owner: postgres
+-- Name: currencies; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.currencies (
@@ -1677,17 +1545,15 @@ CREATE TABLE public.currencies (
 );
 
 
-ALTER TABLE public.currencies OWNER TO postgres;
-
 --
--- Name: TABLE currencies; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE currencies; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.currencies IS 'ISO 4217 currency reference table; seeded with 10 major currencies';
 
 
 --
--- Name: custom_report_definitions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: custom_report_definitions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.custom_report_definitions (
@@ -1706,17 +1572,15 @@ CREATE TABLE public.custom_report_definitions (
 );
 
 
-ALTER TABLE public.custom_report_definitions OWNER TO postgres;
-
 --
--- Name: TABLE custom_report_definitions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE custom_report_definitions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.custom_report_definitions IS 'User-built reports beyond the 92 pre-defined ones; query_definition stores fields/filters/groupings as JSONB';
 
 
 --
--- Name: custom_report_definitions_custom_report_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: custom_report_definitions_custom_report_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.custom_report_definitions_custom_report_id_seq
@@ -1728,17 +1592,15 @@ CREATE SEQUENCE public.custom_report_definitions_custom_report_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.custom_report_definitions_custom_report_id_seq OWNER TO postgres;
-
 --
--- Name: custom_report_definitions_custom_report_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: custom_report_definitions_custom_report_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.custom_report_definitions_custom_report_id_seq OWNED BY public.custom_report_definitions.custom_report_id;
 
 
 --
--- Name: dashboard_widgets; Type: TABLE; Schema: public; Owner: postgres
+-- Name: dashboard_widgets; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.dashboard_widgets (
@@ -1759,17 +1621,15 @@ CREATE TABLE public.dashboard_widgets (
 );
 
 
-ALTER TABLE public.dashboard_widgets OWNER TO postgres;
-
 --
--- Name: TABLE dashboard_widgets; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE dashboard_widgets; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.dashboard_widgets IS '[NEW] Individual chart/table/KPI widgets on a dashboard';
 
 
 --
--- Name: dashboard_widgets_widget_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: dashboard_widgets_widget_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.dashboard_widgets_widget_id_seq
@@ -1781,17 +1641,15 @@ CREATE SEQUENCE public.dashboard_widgets_widget_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.dashboard_widgets_widget_id_seq OWNER TO postgres;
-
 --
--- Name: dashboard_widgets_widget_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: dashboard_widgets_widget_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.dashboard_widgets_widget_id_seq OWNED BY public.dashboard_widgets.widget_id;
 
 
 --
--- Name: dashboards; Type: TABLE; Schema: public; Owner: postgres
+-- Name: dashboards; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.dashboards (
@@ -1810,17 +1668,15 @@ CREATE TABLE public.dashboards (
 );
 
 
-ALTER TABLE public.dashboards OWNER TO postgres;
-
 --
--- Name: TABLE dashboards; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE dashboards; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.dashboards IS '[NEW] User-configured dashboard layouts (supports shared dashboards)';
 
 
 --
--- Name: dashboards_dashboard_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: dashboards_dashboard_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.dashboards_dashboard_id_seq
@@ -1832,17 +1688,15 @@ CREATE SEQUENCE public.dashboards_dashboard_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.dashboards_dashboard_id_seq OWNER TO postgres;
-
 --
--- Name: dashboards_dashboard_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: dashboards_dashboard_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.dashboards_dashboard_id_seq OWNED BY public.dashboards.dashboard_id;
 
 
 --
--- Name: data_consent; Type: TABLE; Schema: public; Owner: postgres
+-- Name: data_consent; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.data_consent (
@@ -1860,17 +1714,15 @@ CREATE TABLE public.data_consent (
 );
 
 
-ALTER TABLE public.data_consent OWNER TO postgres;
-
 --
--- Name: TABLE data_consent; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE data_consent; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.data_consent IS 'Per-user consent records per consent type and policy version; supports GDPR Art. 7 proof of consent';
 
 
 --
--- Name: data_consent_consent_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: data_consent_consent_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.data_consent_consent_id_seq
@@ -1882,17 +1734,15 @@ CREATE SEQUENCE public.data_consent_consent_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.data_consent_consent_id_seq OWNER TO postgres;
-
 --
--- Name: data_consent_consent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: data_consent_consent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.data_consent_consent_id_seq OWNED BY public.data_consent.consent_id;
 
 
 --
--- Name: data_ingestion_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: data_ingestion_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.data_ingestion_logs (
@@ -1905,17 +1755,15 @@ CREATE TABLE public.data_ingestion_logs (
 );
 
 
-ALTER TABLE public.data_ingestion_logs OWNER TO postgres;
-
 --
--- Name: TABLE data_ingestion_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE data_ingestion_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.data_ingestion_logs IS 'Granular log lines per upload ingestion step';
 
 
 --
--- Name: data_ingestion_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: data_ingestion_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.data_ingestion_logs_log_id_seq
@@ -1927,17 +1775,15 @@ CREATE SEQUENCE public.data_ingestion_logs_log_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.data_ingestion_logs_log_id_seq OWNER TO postgres;
-
 --
--- Name: data_ingestion_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: data_ingestion_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.data_ingestion_logs_log_id_seq OWNED BY public.data_ingestion_logs.log_id;
 
 
 --
--- Name: data_lineage; Type: TABLE; Schema: public; Owner: postgres
+-- Name: data_lineage; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.data_lineage (
@@ -1955,17 +1801,15 @@ CREATE TABLE public.data_lineage (
 );
 
 
-ALTER TABLE public.data_lineage OWNER TO postgres;
-
 --
--- Name: TABLE data_lineage; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE data_lineage; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.data_lineage IS 'Field-level data provenance for SOX/HIPAA audits â€” maps source fields to report output fields';
 
 
 --
--- Name: data_lineage_lineage_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: data_lineage_lineage_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.data_lineage_lineage_id_seq
@@ -1977,17 +1821,15 @@ CREATE SEQUENCE public.data_lineage_lineage_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.data_lineage_lineage_id_seq OWNER TO postgres;
-
 --
--- Name: data_lineage_lineage_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: data_lineage_lineage_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.data_lineage_lineage_id_seq OWNED BY public.data_lineage.lineage_id;
 
 
 --
--- Name: data_masking_rules; Type: TABLE; Schema: public; Owner: postgres
+-- Name: data_masking_rules; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.data_masking_rules (
@@ -2004,17 +1846,15 @@ CREATE TABLE public.data_masking_rules (
 );
 
 
-ALTER TABLE public.data_masking_rules OWNER TO postgres;
-
 --
--- Name: TABLE data_masking_rules; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE data_masking_rules; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.data_masking_rules IS 'PII field masking/anonymization rules applied at query time for GDPR-compliant exports';
 
 
 --
--- Name: data_masking_rules_rule_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: data_masking_rules_rule_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.data_masking_rules_rule_id_seq
@@ -2026,17 +1866,15 @@ CREATE SEQUENCE public.data_masking_rules_rule_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.data_masking_rules_rule_id_seq OWNER TO postgres;
-
 --
--- Name: data_masking_rules_rule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: data_masking_rules_rule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.data_masking_rules_rule_id_seq OWNED BY public.data_masking_rules.rule_id;
 
 
 --
--- Name: data_quality_scores; Type: TABLE; Schema: public; Owner: postgres
+-- Name: data_quality_scores; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.data_quality_scores (
@@ -2055,17 +1893,15 @@ CREATE TABLE public.data_quality_scores (
 );
 
 
-ALTER TABLE public.data_quality_scores OWNER TO postgres;
-
 --
--- Name: TABLE data_quality_scores; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE data_quality_scores; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.data_quality_scores IS '[NEW] Completeness/accuracy/consistency scores per upload';
 
 
 --
--- Name: data_quality_scores_quality_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: data_quality_scores_quality_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.data_quality_scores_quality_id_seq
@@ -2077,17 +1913,15 @@ CREATE SEQUENCE public.data_quality_scores_quality_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.data_quality_scores_quality_id_seq OWNER TO postgres;
-
 --
--- Name: data_quality_scores_quality_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: data_quality_scores_quality_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.data_quality_scores_quality_id_seq OWNED BY public.data_quality_scores.quality_id;
 
 
 --
--- Name: data_retention_policies; Type: TABLE; Schema: public; Owner: postgres
+-- Name: data_retention_policies; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.data_retention_policies (
@@ -2106,17 +1940,15 @@ CREATE TABLE public.data_retention_policies (
 );
 
 
-ALTER TABLE public.data_retention_policies OWNER TO postgres;
-
 --
--- Name: TABLE data_retention_policies; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE data_retention_policies; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.data_retention_policies IS 'Per-tenant/domain/report rules for data retention, archival, and deletion';
 
 
 --
--- Name: data_retention_policies_policy_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: data_retention_policies_policy_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.data_retention_policies_policy_id_seq
@@ -2128,17 +1960,15 @@ CREATE SEQUENCE public.data_retention_policies_policy_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.data_retention_policies_policy_id_seq OWNER TO postgres;
-
 --
--- Name: data_retention_policies_policy_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: data_retention_policies_policy_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.data_retention_policies_policy_id_seq OWNED BY public.data_retention_policies.policy_id;
 
 
 --
--- Name: data_sources; Type: TABLE; Schema: public; Owner: postgres
+-- Name: data_sources; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.data_sources (
@@ -2155,17 +1985,15 @@ CREATE TABLE public.data_sources (
 );
 
 
-ALTER TABLE public.data_sources OWNER TO postgres;
-
 --
--- Name: TABLE data_sources; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE data_sources; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.data_sources IS 'Registered external data sources (APIs, databases, files)';
 
 
 --
--- Name: data_sources_source_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: data_sources_source_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.data_sources_source_id_seq
@@ -2177,17 +2005,15 @@ CREATE SEQUENCE public.data_sources_source_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.data_sources_source_id_seq OWNER TO postgres;
-
 --
--- Name: data_sources_source_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: data_sources_source_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.data_sources_source_id_seq OWNED BY public.data_sources.source_id;
 
 
 --
--- Name: data_uploads; Type: TABLE; Schema: public; Owner: postgres
+-- Name: data_uploads; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.data_uploads (
@@ -2208,17 +2034,15 @@ CREATE TABLE public.data_uploads (
 );
 
 
-ALTER TABLE public.data_uploads OWNER TO postgres;
-
 --
--- Name: TABLE data_uploads; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE data_uploads; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.data_uploads IS 'File upload tracking with processing status';
 
 
 --
--- Name: data_uploads_upload_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: data_uploads_upload_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.data_uploads_upload_id_seq
@@ -2230,17 +2054,15 @@ CREATE SEQUENCE public.data_uploads_upload_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.data_uploads_upload_id_seq OWNER TO postgres;
-
 --
--- Name: data_uploads_upload_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: data_uploads_upload_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.data_uploads_upload_id_seq OWNED BY public.data_uploads.upload_id;
 
 
 --
--- Name: data_validation_rules; Type: TABLE; Schema: public; Owner: postgres
+-- Name: data_validation_rules; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.data_validation_rules (
@@ -2256,17 +2078,15 @@ CREATE TABLE public.data_validation_rules (
 );
 
 
-ALTER TABLE public.data_validation_rules OWNER TO postgres;
-
 --
--- Name: TABLE data_validation_rules; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE data_validation_rules; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.data_validation_rules IS 'Reusable validation rule library';
 
 
 --
--- Name: data_validation_rules_rule_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: data_validation_rules_rule_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.data_validation_rules_rule_id_seq
@@ -2278,17 +2098,15 @@ CREATE SEQUENCE public.data_validation_rules_rule_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.data_validation_rules_rule_id_seq OWNER TO postgres;
-
 --
--- Name: data_validation_rules_rule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: data_validation_rules_rule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.data_validation_rules_rule_id_seq OWNED BY public.data_validation_rules.rule_id;
 
 
 --
--- Name: deployment_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: deployment_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.deployment_logs (
@@ -2304,17 +2122,15 @@ CREATE TABLE public.deployment_logs (
 );
 
 
-ALTER TABLE public.deployment_logs OWNER TO postgres;
-
 --
--- Name: TABLE deployment_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE deployment_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.deployment_logs IS 'Release deployment history';
 
 
 --
--- Name: deployment_logs_deploy_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: deployment_logs_deploy_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.deployment_logs_deploy_id_seq
@@ -2326,17 +2142,15 @@ CREATE SEQUENCE public.deployment_logs_deploy_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.deployment_logs_deploy_id_seq OWNER TO postgres;
-
 --
--- Name: deployment_logs_deploy_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: deployment_logs_deploy_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.deployment_logs_deploy_id_seq OWNED BY public.deployment_logs.deploy_id;
 
 
 --
--- Name: distribution_lists; Type: TABLE; Schema: public; Owner: postgres
+-- Name: distribution_lists; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.distribution_lists (
@@ -2352,17 +2166,15 @@ CREATE TABLE public.distribution_lists (
 );
 
 
-ALTER TABLE public.distribution_lists OWNER TO postgres;
-
 --
--- Name: TABLE distribution_lists; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE distribution_lists; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.distribution_lists IS 'Named recipient groups for bulk report delivery; supports internal users and external emails';
 
 
 --
--- Name: distribution_lists_list_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: distribution_lists_list_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.distribution_lists_list_id_seq
@@ -2374,17 +2186,15 @@ CREATE SEQUENCE public.distribution_lists_list_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.distribution_lists_list_id_seq OWNER TO postgres;
-
 --
--- Name: distribution_lists_list_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: distribution_lists_list_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.distribution_lists_list_id_seq OWNED BY public.distribution_lists.list_id;
 
 
 --
--- Name: distribution_members; Type: TABLE; Schema: public; Owner: postgres
+-- Name: distribution_members; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.distribution_members (
@@ -2399,17 +2209,15 @@ CREATE TABLE public.distribution_members (
 );
 
 
-ALTER TABLE public.distribution_members OWNER TO postgres;
-
 --
--- Name: TABLE distribution_members; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE distribution_members; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.distribution_members IS 'Members of a distribution list; either a users.user_id or a freeform email for external recipients';
 
 
 --
--- Name: distribution_members_member_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: distribution_members_member_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.distribution_members_member_id_seq
@@ -2421,17 +2229,15 @@ CREATE SEQUENCE public.distribution_members_member_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.distribution_members_member_id_seq OWNER TO postgres;
-
 --
--- Name: distribution_members_member_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: distribution_members_member_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.distribution_members_member_id_seq OWNED BY public.distribution_members.member_id;
 
 
 --
--- Name: domains; Type: TABLE; Schema: public; Owner: postgres
+-- Name: domains; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.domains (
@@ -2447,17 +2253,15 @@ CREATE TABLE public.domains (
 );
 
 
-ALTER TABLE public.domains OWNER TO postgres;
-
 --
--- Name: TABLE domains; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE domains; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.domains IS '[NEW] Normalised domain lookup (Finance, HR, â€¦); replaces free-text string in reports_master';
 
 
 --
--- Name: domains_domain_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: domains_domain_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.domains_domain_id_seq
@@ -2469,17 +2273,15 @@ CREATE SEQUENCE public.domains_domain_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.domains_domain_id_seq OWNER TO postgres;
-
 --
--- Name: domains_domain_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: domains_domain_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.domains_domain_id_seq OWNED BY public.domains.domain_id;
 
 
 --
--- Name: email_queue; Type: TABLE; Schema: public; Owner: postgres
+-- Name: email_queue; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.email_queue (
@@ -2502,17 +2304,15 @@ CREATE TABLE public.email_queue (
 );
 
 
-ALTER TABLE public.email_queue OWNER TO postgres;
-
 --
--- Name: TABLE email_queue; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE email_queue; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.email_queue IS 'Outbound email queue with retry logic; decouples sending from event triggering';
 
 
 --
--- Name: email_queue_queue_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: email_queue_queue_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.email_queue_queue_id_seq
@@ -2524,17 +2324,15 @@ CREATE SEQUENCE public.email_queue_queue_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.email_queue_queue_id_seq OWNER TO postgres;
-
 --
--- Name: email_queue_queue_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: email_queue_queue_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.email_queue_queue_id_seq OWNED BY public.email_queue.queue_id;
 
 
 --
--- Name: error_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: error_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.error_logs (
@@ -2549,17 +2347,15 @@ CREATE TABLE public.error_logs (
 );
 
 
-ALTER TABLE public.error_logs OWNER TO postgres;
-
 --
--- Name: TABLE error_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE error_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.error_logs IS 'Application error and exception log';
 
 
 --
--- Name: error_logs_error_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: error_logs_error_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.error_logs_error_id_seq
@@ -2571,17 +2367,15 @@ CREATE SEQUENCE public.error_logs_error_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.error_logs_error_id_seq OWNER TO postgres;
-
 --
--- Name: error_logs_error_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: error_logs_error_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.error_logs_error_id_seq OWNED BY public.error_logs.error_id;
 
 
 --
--- Name: esg_scores; Type: TABLE; Schema: public; Owner: postgres
+-- Name: esg_scores; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.esg_scores (
@@ -2597,17 +2391,15 @@ CREATE TABLE public.esg_scores (
 );
 
 
-ALTER TABLE public.esg_scores OWNER TO postgres;
-
 --
--- Name: TABLE esg_scores; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE esg_scores; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.esg_scores IS 'ESG pillar scores per tenant per period (moved to AI module)';
 
 
 --
--- Name: esg_scores_esg_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: esg_scores_esg_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.esg_scores_esg_id_seq
@@ -2619,17 +2411,15 @@ CREATE SEQUENCE public.esg_scores_esg_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.esg_scores_esg_id_seq OWNER TO postgres;
-
 --
--- Name: esg_scores_esg_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: esg_scores_esg_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.esg_scores_esg_id_seq OWNED BY public.esg_scores.esg_id;
 
 
 --
--- Name: etl_jobs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: etl_jobs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.etl_jobs (
@@ -2650,17 +2440,15 @@ CREATE TABLE public.etl_jobs (
 );
 
 
-ALTER TABLE public.etl_jobs OWNER TO postgres;
-
 --
--- Name: TABLE etl_jobs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE etl_jobs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.etl_jobs IS 'ETL pipeline job runs; upload_id added to trace upload-triggered jobs';
 
 
 --
--- Name: etl_jobs_job_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: etl_jobs_job_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.etl_jobs_job_id_seq
@@ -2672,17 +2460,15 @@ CREATE SEQUENCE public.etl_jobs_job_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.etl_jobs_job_id_seq OWNER TO postgres;
-
 --
--- Name: etl_jobs_job_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: etl_jobs_job_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.etl_jobs_job_id_seq OWNED BY public.etl_jobs.job_id;
 
 
 --
--- Name: exchange_rates; Type: TABLE; Schema: public; Owner: postgres
+-- Name: exchange_rates; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.exchange_rates (
@@ -2696,17 +2482,15 @@ CREATE TABLE public.exchange_rates (
 );
 
 
-ALTER TABLE public.exchange_rates OWNER TO postgres;
-
 --
--- Name: TABLE exchange_rates; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE exchange_rates; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.exchange_rates IS 'Daily FX rates per currency pair; used to convert multi-currency financial report data';
 
 
 --
--- Name: exchange_rates_rate_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: exchange_rates_rate_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.exchange_rates_rate_id_seq
@@ -2718,17 +2502,15 @@ CREATE SEQUENCE public.exchange_rates_rate_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.exchange_rates_rate_id_seq OWNER TO postgres;
-
 --
--- Name: exchange_rates_rate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: exchange_rates_rate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.exchange_rates_rate_id_seq OWNED BY public.exchange_rates.rate_id;
 
 
 --
--- Name: executive_narratives; Type: TABLE; Schema: public; Owner: postgres
+-- Name: executive_narratives; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.executive_narratives (
@@ -2743,17 +2525,15 @@ CREATE TABLE public.executive_narratives (
 );
 
 
-ALTER TABLE public.executive_narratives OWNER TO postgres;
-
 --
--- Name: TABLE executive_narratives; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE executive_narratives; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.executive_narratives IS 'AI-generated executive summaries per report (moved to AI module)';
 
 
 --
--- Name: executive_narratives_narrative_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: executive_narratives_narrative_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.executive_narratives_narrative_id_seq
@@ -2765,17 +2545,15 @@ CREATE SEQUENCE public.executive_narratives_narrative_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.executive_narratives_narrative_id_seq OWNER TO postgres;
-
 --
--- Name: executive_narratives_narrative_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: executive_narratives_narrative_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.executive_narratives_narrative_id_seq OWNED BY public.executive_narratives.narrative_id;
 
 
 --
--- Name: export_history; Type: TABLE; Schema: public; Owner: postgres
+-- Name: export_history; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.export_history (
@@ -2792,17 +2570,15 @@ CREATE TABLE public.export_history (
 );
 
 
-ALTER TABLE public.export_history OWNER TO postgres;
-
 --
--- Name: TABLE export_history; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE export_history; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.export_history IS '[NEW] Audit trail of every PDF/Excel/CSV export per tenant';
 
 
 --
--- Name: export_history_export_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: export_history_export_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.export_history_export_id_seq
@@ -2814,17 +2590,15 @@ CREATE SEQUENCE public.export_history_export_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.export_history_export_id_seq OWNER TO postgres;
-
 --
--- Name: export_history_export_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: export_history_export_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.export_history_export_id_seq OWNED BY public.export_history.export_id;
 
 
 --
--- Name: export_templates; Type: TABLE; Schema: public; Owner: postgres
+-- Name: export_templates; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.export_templates (
@@ -2845,17 +2619,15 @@ CREATE TABLE public.export_templates (
 );
 
 
-ALTER TABLE public.export_templates OWNER TO postgres;
-
 --
--- Name: TABLE export_templates; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE export_templates; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.export_templates IS 'Custom branded PDF/Excel export layouts with header, footer, stylesheet, and page config';
 
 
 --
--- Name: export_templates_template_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: export_templates_template_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.export_templates_template_id_seq
@@ -2867,17 +2639,15 @@ CREATE SEQUENCE public.export_templates_template_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.export_templates_template_id_seq OWNER TO postgres;
-
 --
--- Name: export_templates_template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: export_templates_template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.export_templates_template_id_seq OWNED BY public.export_templates.template_id;
 
 
 --
--- Name: external_feeds; Type: TABLE; Schema: public; Owner: postgres
+-- Name: external_feeds; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.external_feeds (
@@ -2892,17 +2662,15 @@ CREATE TABLE public.external_feeds (
 );
 
 
-ALTER TABLE public.external_feeds OWNER TO postgres;
-
 --
--- Name: TABLE external_feeds; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE external_feeds; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.external_feeds IS 'Registered external data feeds (RSS, Kafka topics, S3 buckets)';
 
 
 --
--- Name: external_feeds_feed_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: external_feeds_feed_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.external_feeds_feed_id_seq
@@ -2914,17 +2682,15 @@ CREATE SEQUENCE public.external_feeds_feed_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.external_feeds_feed_id_seq OWNER TO postgres;
-
 --
--- Name: external_feeds_feed_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: external_feeds_feed_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.external_feeds_feed_id_seq OWNED BY public.external_feeds.feed_id;
 
 
 --
--- Name: feature_flags; Type: TABLE; Schema: public; Owner: postgres
+-- Name: feature_flags; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.feature_flags (
@@ -2940,17 +2706,15 @@ CREATE TABLE public.feature_flags (
 );
 
 
-ALTER TABLE public.feature_flags OWNER TO postgres;
-
 --
--- Name: TABLE feature_flags; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE feature_flags; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.feature_flags IS 'Feature toggles with rollout percentage support';
 
 
 --
--- Name: feature_flags_flag_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: feature_flags_flag_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.feature_flags_flag_id_seq
@@ -2962,17 +2726,15 @@ CREATE SEQUENCE public.feature_flags_flag_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.feature_flags_flag_id_seq OWNER TO postgres;
-
 --
--- Name: feature_flags_flag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: feature_flags_flag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.feature_flags_flag_id_seq OWNED BY public.feature_flags.flag_id;
 
 
 --
--- Name: fiscal_calendars; Type: TABLE; Schema: public; Owner: postgres
+-- Name: fiscal_calendars; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.fiscal_calendars (
@@ -2993,17 +2755,15 @@ CREATE TABLE public.fiscal_calendars (
 );
 
 
-ALTER TABLE public.fiscal_calendars OWNER TO postgres;
-
 --
--- Name: TABLE fiscal_calendars; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE fiscal_calendars; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.fiscal_calendars IS '1:1 with tenants; defines fiscal year start, quarter labels, week start day for Finance reports';
 
 
 --
--- Name: fiscal_calendars_calendar_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: fiscal_calendars_calendar_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.fiscal_calendars_calendar_id_seq
@@ -3015,17 +2775,15 @@ CREATE SEQUENCE public.fiscal_calendars_calendar_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.fiscal_calendars_calendar_id_seq OWNER TO postgres;
-
 --
--- Name: fiscal_calendars_calendar_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: fiscal_calendars_calendar_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.fiscal_calendars_calendar_id_seq OWNED BY public.fiscal_calendars.calendar_id;
 
 
 --
--- Name: forecast_models; Type: TABLE; Schema: public; Owner: postgres
+-- Name: forecast_models; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.forecast_models (
@@ -3043,17 +2801,15 @@ CREATE TABLE public.forecast_models (
 );
 
 
-ALTER TABLE public.forecast_models OWNER TO postgres;
-
 --
--- Name: TABLE forecast_models; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE forecast_models; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.forecast_models IS 'ML/statistical models; report_id added to link model to report domain';
 
 
 --
--- Name: forecast_models_model_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: forecast_models_model_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.forecast_models_model_id_seq
@@ -3065,17 +2821,15 @@ CREATE SEQUENCE public.forecast_models_model_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.forecast_models_model_id_seq OWNER TO postgres;
-
 --
--- Name: forecast_models_model_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: forecast_models_model_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.forecast_models_model_id_seq OWNED BY public.forecast_models.model_id;
 
 
 --
--- Name: gdpr_requests; Type: TABLE; Schema: public; Owner: postgres
+-- Name: gdpr_requests; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.gdpr_requests (
@@ -3095,17 +2849,15 @@ CREATE TABLE public.gdpr_requests (
 );
 
 
-ALTER TABLE public.gdpr_requests OWNER TO postgres;
-
 --
--- Name: TABLE gdpr_requests; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE gdpr_requests; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.gdpr_requests IS 'GDPR/CCPA data subject requests; due_by = received_at + 30 days per GDPR Art. 12';
 
 
 --
--- Name: gdpr_requests_request_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: gdpr_requests_request_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.gdpr_requests_request_id_seq
@@ -3117,17 +2869,15 @@ CREATE SEQUENCE public.gdpr_requests_request_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.gdpr_requests_request_id_seq OWNER TO postgres;
-
 --
--- Name: gdpr_requests_request_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: gdpr_requests_request_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.gdpr_requests_request_id_seq OWNED BY public.gdpr_requests.request_id;
 
 
 --
--- Name: integration_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: integration_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.integration_logs (
@@ -3145,17 +2895,15 @@ CREATE TABLE public.integration_logs (
 );
 
 
-ALTER TABLE public.integration_logs OWNER TO postgres;
-
 --
--- Name: TABLE integration_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE integration_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.integration_logs IS 'Request/response logs for all external integrations';
 
 
 --
--- Name: integration_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: integration_logs_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.integration_logs_log_id_seq
@@ -3167,17 +2915,15 @@ CREATE SEQUENCE public.integration_logs_log_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.integration_logs_log_id_seq OWNER TO postgres;
-
 --
--- Name: integration_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: integration_logs_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.integration_logs_log_id_seq OWNED BY public.integration_logs.log_id;
 
 
 --
--- Name: ip_allowlist; Type: TABLE; Schema: public; Owner: postgres
+-- Name: ip_allowlist; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.ip_allowlist (
@@ -3191,17 +2937,15 @@ CREATE TABLE public.ip_allowlist (
 );
 
 
-ALTER TABLE public.ip_allowlist OWNER TO postgres;
-
 --
--- Name: TABLE ip_allowlist; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE ip_allowlist; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.ip_allowlist IS 'CIDR-based IP allowlist per tenant; app layer checks before authentication';
 
 
 --
--- Name: ip_allowlist_entry_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: ip_allowlist_entry_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.ip_allowlist_entry_id_seq
@@ -3213,17 +2957,15 @@ CREATE SEQUENCE public.ip_allowlist_entry_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.ip_allowlist_entry_id_seq OWNER TO postgres;
-
 --
--- Name: ip_allowlist_entry_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: ip_allowlist_entry_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.ip_allowlist_entry_id_seq OWNED BY public.ip_allowlist.entry_id;
 
 
 --
--- Name: job_queue; Type: TABLE; Schema: public; Owner: postgres
+-- Name: job_queue; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.job_queue (
@@ -3247,17 +2989,15 @@ CREATE TABLE public.job_queue (
 );
 
 
-ALTER TABLE public.job_queue OWNER TO postgres;
-
 --
--- Name: TABLE job_queue; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE job_queue; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.job_queue IS 'General-purpose background job queue for on-demand tasks (report_generate, export, email_send, etl_run)';
 
 
 --
--- Name: job_queue_job_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: job_queue_job_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.job_queue_job_id_seq
@@ -3269,17 +3009,15 @@ CREATE SEQUENCE public.job_queue_job_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.job_queue_job_id_seq OWNER TO postgres;
-
 --
--- Name: job_queue_job_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: job_queue_job_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.job_queue_job_id_seq OWNED BY public.job_queue.job_id;
 
 
 --
--- Name: kpi_benchmarks; Type: TABLE; Schema: public; Owner: postgres
+-- Name: kpi_benchmarks; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.kpi_benchmarks (
@@ -3296,17 +3034,15 @@ CREATE TABLE public.kpi_benchmarks (
 );
 
 
-ALTER TABLE public.kpi_benchmarks OWNER TO postgres;
-
 --
--- Name: TABLE kpi_benchmarks; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE kpi_benchmarks; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.kpi_benchmarks IS '[NEW] Target and threshold bands for KPIs per period';
 
 
 --
--- Name: kpi_benchmarks_benchmark_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: kpi_benchmarks_benchmark_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.kpi_benchmarks_benchmark_id_seq
@@ -3318,17 +3054,15 @@ CREATE SEQUENCE public.kpi_benchmarks_benchmark_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.kpi_benchmarks_benchmark_id_seq OWNER TO postgres;
-
 --
--- Name: kpi_benchmarks_benchmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: kpi_benchmarks_benchmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.kpi_benchmarks_benchmark_id_seq OWNED BY public.kpi_benchmarks.benchmark_id;
 
 
 --
--- Name: kpi_history; Type: TABLE; Schema: public; Owner: postgres
+-- Name: kpi_history; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.kpi_history (
@@ -3342,17 +3076,15 @@ CREATE TABLE public.kpi_history (
 );
 
 
-ALTER TABLE public.kpi_history OWNER TO postgres;
-
 --
--- Name: TABLE kpi_history; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE kpi_history; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.kpi_history IS 'Time-series KPI value log per tenant/period; enables trending without re-running reports';
 
 
 --
--- Name: kpi_history_history_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: kpi_history_history_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.kpi_history_history_id_seq
@@ -3364,17 +3096,15 @@ CREATE SEQUENCE public.kpi_history_history_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.kpi_history_history_id_seq OWNER TO postgres;
-
 --
--- Name: kpi_history_history_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: kpi_history_history_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.kpi_history_history_id_seq OWNED BY public.kpi_history.history_id;
 
 
 --
--- Name: llm_usage_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: llm_usage_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.llm_usage_logs (
@@ -3395,17 +3125,15 @@ CREATE TABLE public.llm_usage_logs (
 );
 
 
-ALTER TABLE public.llm_usage_logs OWNER TO postgres;
-
 --
--- Name: TABLE llm_usage_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE llm_usage_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.llm_usage_logs IS 'Logs every LLM API call for cost tracking, quota enforcement, and billing';
 
 
 --
--- Name: llm_usage_logs_usage_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: llm_usage_logs_usage_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.llm_usage_logs_usage_id_seq
@@ -3417,17 +3145,15 @@ CREATE SEQUENCE public.llm_usage_logs_usage_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.llm_usage_logs_usage_id_seq OWNER TO postgres;
-
 --
--- Name: llm_usage_logs_usage_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: llm_usage_logs_usage_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.llm_usage_logs_usage_id_seq OWNED BY public.llm_usage_logs.usage_id;
 
 
 --
--- Name: localization; Type: TABLE; Schema: public; Owner: postgres
+-- Name: localization; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.localization (
@@ -3442,17 +3168,15 @@ CREATE TABLE public.localization (
 );
 
 
-ALTER TABLE public.localization OWNER TO postgres;
-
 --
--- Name: TABLE localization; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE localization; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.localization IS 'Per-user locale: language, timezone, date format, currency';
 
 
 --
--- Name: localization_loc_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: localization_loc_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.localization_loc_id_seq
@@ -3464,17 +3188,15 @@ CREATE SEQUENCE public.localization_loc_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.localization_loc_id_seq OWNER TO postgres;
-
 --
--- Name: localization_loc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: localization_loc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.localization_loc_id_seq OWNED BY public.localization.loc_id;
 
 
 --
--- Name: message_streams; Type: TABLE; Schema: public; Owner: postgres
+-- Name: message_streams; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.message_streams (
@@ -3489,17 +3211,15 @@ CREATE TABLE public.message_streams (
 );
 
 
-ALTER TABLE public.message_streams OWNER TO postgres;
-
 --
--- Name: TABLE message_streams; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE message_streams; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.message_streams IS 'Message broker topic registrations';
 
 
 --
--- Name: message_streams_stream_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: message_streams_stream_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.message_streams_stream_id_seq
@@ -3511,17 +3231,15 @@ CREATE SEQUENCE public.message_streams_stream_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.message_streams_stream_id_seq OWNER TO postgres;
-
 --
--- Name: message_streams_stream_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: message_streams_stream_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.message_streams_stream_id_seq OWNED BY public.message_streams.stream_id;
 
 
 --
--- Name: metric_definitions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: metric_definitions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.metric_definitions (
@@ -3540,17 +3258,15 @@ CREATE TABLE public.metric_definitions (
 );
 
 
-ALTER TABLE public.metric_definitions OWNER TO postgres;
-
 --
--- Name: TABLE metric_definitions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE metric_definitions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.metric_definitions IS 'Reusable metric/KPI definitions (formula, unit, type) referenced across reports';
 
 
 --
--- Name: metric_definitions_metric_def_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: metric_definitions_metric_def_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.metric_definitions_metric_def_id_seq
@@ -3562,17 +3278,15 @@ CREATE SEQUENCE public.metric_definitions_metric_def_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.metric_definitions_metric_def_id_seq OWNER TO postgres;
-
 --
--- Name: metric_definitions_metric_def_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: metric_definitions_metric_def_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.metric_definitions_metric_def_id_seq OWNED BY public.metric_definitions.metric_def_id;
 
 
 --
--- Name: mfa_settings; Type: TABLE; Schema: public; Owner: postgres
+-- Name: mfa_settings; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.mfa_settings (
@@ -3589,17 +3303,15 @@ CREATE TABLE public.mfa_settings (
 );
 
 
-ALTER TABLE public.mfa_settings OWNER TO postgres;
-
 --
--- Name: TABLE mfa_settings; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE mfa_settings; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.mfa_settings IS 'Per-user MFA config (TOTP/SMS/email); backup_codes stores hashed codes';
 
 
 --
--- Name: mfa_settings_mfa_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: mfa_settings_mfa_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.mfa_settings_mfa_id_seq
@@ -3611,17 +3323,15 @@ CREATE SEQUENCE public.mfa_settings_mfa_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.mfa_settings_mfa_id_seq OWNER TO postgres;
-
 --
--- Name: mfa_settings_mfa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: mfa_settings_mfa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.mfa_settings_mfa_id_seq OWNED BY public.mfa_settings.mfa_id;
 
 
 --
--- Name: model_training_history; Type: TABLE; Schema: public; Owner: postgres
+-- Name: model_training_history; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.model_training_history (
@@ -3643,17 +3353,15 @@ CREATE TABLE public.model_training_history (
 );
 
 
-ALTER TABLE public.model_training_history OWNER TO postgres;
-
 --
--- Name: TABLE model_training_history; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE model_training_history; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.model_training_history IS 'Training run log per forecast model: dataset, accuracy metrics, parameters, duration';
 
 
 --
--- Name: model_training_history_training_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: model_training_history_training_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.model_training_history_training_id_seq
@@ -3665,17 +3373,15 @@ CREATE SEQUENCE public.model_training_history_training_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.model_training_history_training_id_seq OWNER TO postgres;
-
 --
--- Name: model_training_history_training_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: model_training_history_training_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.model_training_history_training_id_seq OWNED BY public.model_training_history.training_id;
 
 
 --
--- Name: report_run_history; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_run_history; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_run_history (
@@ -3697,17 +3403,15 @@ CREATE TABLE public.report_run_history (
 );
 
 
-ALTER TABLE public.report_run_history OWNER TO postgres;
-
 --
--- Name: TABLE report_run_history; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_run_history; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_run_history IS 'Logs every report generation event (manual or scheduled) with status and duration';
 
 
 --
--- Name: reports_master; Type: TABLE; Schema: public; Owner: postgres
+-- Name: reports_master; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.reports_master (
@@ -3727,17 +3431,15 @@ CREATE TABLE public.reports_master (
 );
 
 
-ALTER TABLE public.reports_master OWNER TO postgres;
-
 --
--- Name: TABLE reports_master; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE reports_master; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.reports_master IS 'Master catalogue of all 92 business reports; domain_id replaces domain string';
 
 
 --
--- Name: mv_report_performance_metrics; Type: MATERIALIZED VIEW; Schema: public; Owner: postgres
+-- Name: mv_report_performance_metrics; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
 CREATE MATERIALIZED VIEW public.mv_report_performance_metrics AS
@@ -3767,17 +3469,15 @@ CREATE MATERIALIZED VIEW public.mv_report_performance_metrics AS
   WITH NO DATA;
 
 
-ALTER MATERIALIZED VIEW public.mv_report_performance_metrics OWNER TO postgres;
-
 --
--- Name: MATERIALIZED VIEW mv_report_performance_metrics; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: MATERIALIZED VIEW mv_report_performance_metrics; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON MATERIALIZED VIEW public.mv_report_performance_metrics IS 'Report execution performance metrics for the last 7 days (refresh hourly)';
 
 
 --
--- Name: report_view_logs; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_view_logs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_view_logs (
@@ -3792,17 +3492,15 @@ CREATE TABLE public.report_view_logs (
 );
 
 
-ALTER TABLE public.report_view_logs OWNER TO postgres;
-
 --
--- Name: TABLE report_view_logs; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_view_logs; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_view_logs IS 'Logs every report view event; powers Most Viewed, Last Viewed, and access audit reports';
 
 
 --
--- Name: tenants; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tenants; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.tenants (
@@ -3817,17 +3515,15 @@ CREATE TABLE public.tenants (
 );
 
 
-ALTER TABLE public.tenants OWNER TO postgres;
-
 --
--- Name: TABLE tenants; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE tenants; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.tenants IS 'Multi-tenant isolation root â€” all data scopes by tenant_id';
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: postgres
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
@@ -3846,17 +3542,15 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO postgres;
-
 --
--- Name: TABLE users; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE users; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.users IS 'User accounts; email unique per tenant';
 
 
 --
--- Name: mv_tenant_usage_stats; Type: MATERIALIZED VIEW; Schema: public; Owner: postgres
+-- Name: mv_tenant_usage_stats; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
 CREATE MATERIALIZED VIEW public.mv_tenant_usage_stats AS
@@ -3887,17 +3581,15 @@ CREATE MATERIALIZED VIEW public.mv_tenant_usage_stats AS
   WITH NO DATA;
 
 
-ALTER MATERIALIZED VIEW public.mv_tenant_usage_stats OWNER TO postgres;
-
 --
--- Name: MATERIALIZED VIEW mv_tenant_usage_stats; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: MATERIALIZED VIEW mv_tenant_usage_stats; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON MATERIALIZED VIEW public.mv_tenant_usage_stats IS 'Aggregated tenant usage statistics for the last 30 days (refresh daily)';
 
 
 --
--- Name: notification_templates; Type: TABLE; Schema: public; Owner: postgres
+-- Name: notification_templates; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.notification_templates (
@@ -3914,17 +3606,15 @@ CREATE TABLE public.notification_templates (
 );
 
 
-ALTER TABLE public.notification_templates OWNER TO postgres;
-
 --
--- Name: TABLE notification_templates; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE notification_templates; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.notification_templates IS 'Channel-specific message templates (email HTML, Slack blocks, SMS) with placeholders';
 
 
 --
--- Name: notification_templates_template_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: notification_templates_template_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.notification_templates_template_id_seq
@@ -3936,17 +3626,15 @@ CREATE SEQUENCE public.notification_templates_template_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.notification_templates_template_id_seq OWNER TO postgres;
-
 --
--- Name: notification_templates_template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: notification_templates_template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.notification_templates_template_id_seq OWNED BY public.notification_templates.template_id;
 
 
 --
--- Name: notifications; Type: TABLE; Schema: public; Owner: postgres
+-- Name: notifications; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.notifications (
@@ -3965,17 +3653,15 @@ CREATE TABLE public.notifications (
 );
 
 
-ALTER TABLE public.notifications OWNER TO postgres;
-
 --
--- Name: TABLE notifications; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE notifications; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.notifications IS 'Outbound notifications across channels';
 
 
 --
--- Name: notifications_notif_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: notifications_notif_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.notifications_notif_id_seq
@@ -3987,17 +3673,15 @@ CREATE SEQUENCE public.notifications_notif_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.notifications_notif_id_seq OWNER TO postgres;
-
 --
--- Name: notifications_notif_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: notifications_notif_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.notifications_notif_id_seq OWNED BY public.notifications.notif_id;
 
 
 --
--- Name: oauth_providers; Type: TABLE; Schema: public; Owner: postgres
+-- Name: oauth_providers; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.oauth_providers (
@@ -4015,17 +3699,15 @@ CREATE TABLE public.oauth_providers (
 );
 
 
-ALTER TABLE public.oauth_providers OWNER TO postgres;
-
 --
--- Name: TABLE oauth_providers; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE oauth_providers; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.oauth_providers IS 'SSO/OAuth2 provider config per tenant (Google, Microsoft, Okta, SAML)';
 
 
 --
--- Name: oauth_providers_provider_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: oauth_providers_provider_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.oauth_providers_provider_id_seq
@@ -4037,17 +3719,15 @@ CREATE SEQUENCE public.oauth_providers_provider_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.oauth_providers_provider_id_seq OWNER TO postgres;
-
 --
--- Name: oauth_providers_provider_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: oauth_providers_provider_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.oauth_providers_provider_id_seq OWNED BY public.oauth_providers.provider_id;
 
 
 --
--- Name: partner_integrations; Type: TABLE; Schema: public; Owner: postgres
+-- Name: partner_integrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.partner_integrations (
@@ -4063,17 +3743,15 @@ CREATE TABLE public.partner_integrations (
 );
 
 
-ALTER TABLE public.partner_integrations OWNER TO postgres;
-
 --
--- Name: TABLE partner_integrations; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE partner_integrations; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.partner_integrations IS 'ERP, CRM, HR system integrations per tenant';
 
 
 --
--- Name: partner_integrations_partner_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: partner_integrations_partner_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.partner_integrations_partner_id_seq
@@ -4085,17 +3763,15 @@ CREATE SEQUENCE public.partner_integrations_partner_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.partner_integrations_partner_id_seq OWNER TO postgres;
-
 --
--- Name: partner_integrations_partner_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: partner_integrations_partner_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.partner_integrations_partner_id_seq OWNED BY public.partner_integrations.partner_id;
 
 
 --
--- Name: password_reset_tokens; Type: TABLE; Schema: public; Owner: postgres
+-- Name: password_reset_tokens; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.password_reset_tokens (
@@ -4109,17 +3785,15 @@ CREATE TABLE public.password_reset_tokens (
 );
 
 
-ALTER TABLE public.password_reset_tokens OWNER TO postgres;
-
 --
--- Name: TABLE password_reset_tokens; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE password_reset_tokens; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.password_reset_tokens IS 'Single-use tokens for password reset flow; expires_at enforced at application layer';
 
 
 --
--- Name: password_reset_tokens_token_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: password_reset_tokens_token_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.password_reset_tokens_token_id_seq
@@ -4131,17 +3805,15 @@ CREATE SEQUENCE public.password_reset_tokens_token_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.password_reset_tokens_token_id_seq OWNER TO postgres;
-
 --
--- Name: password_reset_tokens_token_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: password_reset_tokens_token_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.password_reset_tokens_token_id_seq OWNED BY public.password_reset_tokens.token_id;
 
 
 --
--- Name: permissions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: permissions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.permissions (
@@ -4154,17 +3826,15 @@ CREATE TABLE public.permissions (
 );
 
 
-ALTER TABLE public.permissions OWNER TO postgres;
-
 --
--- Name: TABLE permissions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE permissions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.permissions IS 'Granular permission codes e.g. reports:export';
 
 
 --
--- Name: permissions_perm_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: permissions_perm_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.permissions_perm_id_seq
@@ -4176,17 +3846,15 @@ CREATE SEQUENCE public.permissions_perm_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.permissions_perm_id_seq OWNER TO postgres;
-
 --
--- Name: permissions_perm_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: permissions_perm_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.permissions_perm_id_seq OWNED BY public.permissions.perm_id;
 
 
 --
--- Name: plan_features; Type: TABLE; Schema: public; Owner: postgres
+-- Name: plan_features; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.plan_features (
@@ -4209,17 +3877,15 @@ CREATE TABLE public.plan_features (
 );
 
 
-ALTER TABLE public.plan_features OWNER TO postgres;
-
 --
--- Name: TABLE plan_features; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE plan_features; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.plan_features IS '1:1 with subscription_plans; enforces per-plan limits (users, reports, storage, API calls)';
 
 
 --
--- Name: plan_features_feature_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: plan_features_feature_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.plan_features_feature_id_seq
@@ -4231,17 +3897,15 @@ CREATE SEQUENCE public.plan_features_feature_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.plan_features_feature_id_seq OWNER TO postgres;
-
 --
--- Name: plan_features_feature_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: plan_features_feature_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.plan_features_feature_id_seq OWNED BY public.plan_features.feature_id;
 
 
 --
--- Name: preferences; Type: TABLE; Schema: public; Owner: postgres
+-- Name: preferences; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.preferences (
@@ -4255,17 +3919,15 @@ CREATE TABLE public.preferences (
 );
 
 
-ALTER TABLE public.preferences OWNER TO postgres;
-
 --
--- Name: TABLE preferences; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE preferences; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.preferences IS 'Per-user UI preferences (theme, sidebar, notifications)';
 
 
 --
--- Name: preferences_pref_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: preferences_pref_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.preferences_pref_id_seq
@@ -4277,17 +3939,15 @@ CREATE SEQUENCE public.preferences_pref_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.preferences_pref_id_seq OWNER TO postgres;
-
 --
--- Name: preferences_pref_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: preferences_pref_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.preferences_pref_id_seq OWNED BY public.preferences.pref_id;
 
 
 --
--- Name: rate_limit_config; Type: TABLE; Schema: public; Owner: postgres
+-- Name: rate_limit_config; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.rate_limit_config (
@@ -4304,17 +3964,15 @@ CREATE TABLE public.rate_limit_config (
 );
 
 
-ALTER TABLE public.rate_limit_config OWNER TO postgres;
-
 --
--- Name: TABLE rate_limit_config; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE rate_limit_config; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.rate_limit_config IS 'Configurable rate limit rules per plan or per tenant; chk_rate_target ensures plan OR tenant is set';
 
 
 --
--- Name: rate_limit_config_config_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: rate_limit_config_config_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.rate_limit_config_config_id_seq
@@ -4326,17 +3984,15 @@ CREATE SEQUENCE public.rate_limit_config_config_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.rate_limit_config_config_id_seq OWNER TO postgres;
-
 --
--- Name: rate_limit_config_config_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: rate_limit_config_config_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.rate_limit_config_config_id_seq OWNED BY public.rate_limit_config.config_id;
 
 
 --
--- Name: recommendations; Type: TABLE; Schema: public; Owner: postgres
+-- Name: recommendations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.recommendations (
@@ -4350,17 +4006,15 @@ CREATE TABLE public.recommendations (
 );
 
 
-ALTER TABLE public.recommendations OWNER TO postgres;
-
 --
--- Name: TABLE recommendations; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE recommendations; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.recommendations IS 'Prescriptive action items derived from insights';
 
 
 --
--- Name: recommendations_rec_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: recommendations_rec_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.recommendations_rec_id_seq
@@ -4372,17 +4026,15 @@ CREATE SEQUENCE public.recommendations_rec_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.recommendations_rec_id_seq OWNER TO postgres;
-
 --
--- Name: recommendations_rec_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: recommendations_rec_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.recommendations_rec_id_seq OWNED BY public.recommendations.rec_id;
 
 
 --
--- Name: regions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: regions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.regions (
@@ -4397,17 +4049,15 @@ CREATE TABLE public.regions (
 );
 
 
-ALTER TABLE public.regions OWNER TO postgres;
-
 --
--- Name: TABLE regions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE regions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.regions IS 'Hierarchical geographic region reference (self-referencing parent_region_id)';
 
 
 --
--- Name: regions_region_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: regions_region_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.regions_region_id_seq
@@ -4419,17 +4069,15 @@ CREATE SEQUENCE public.regions_region_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.regions_region_id_seq OWNER TO postgres;
-
 --
--- Name: regions_region_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: regions_region_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.regions_region_id_seq OWNED BY public.regions.region_id;
 
 
 --
--- Name: regulatory_contacts; Type: TABLE; Schema: public; Owner: postgres
+-- Name: regulatory_contacts; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.regulatory_contacts (
@@ -4445,17 +4093,15 @@ CREATE TABLE public.regulatory_contacts (
 );
 
 
-ALTER TABLE public.regulatory_contacts OWNER TO postgres;
-
 --
--- Name: TABLE regulatory_contacts; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE regulatory_contacts; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.regulatory_contacts IS 'Regulator contact directory';
 
 
 --
--- Name: regulatory_contacts_contact_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: regulatory_contacts_contact_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.regulatory_contacts_contact_id_seq
@@ -4467,17 +4113,15 @@ CREATE SEQUENCE public.regulatory_contacts_contact_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.regulatory_contacts_contact_id_seq OWNER TO postgres;
-
 --
--- Name: regulatory_contacts_contact_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: regulatory_contacts_contact_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.regulatory_contacts_contact_id_seq OWNED BY public.regulatory_contacts.contact_id;
 
 
 --
--- Name: report_access_policies; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_access_policies; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_access_policies (
@@ -4497,17 +4141,15 @@ CREATE TABLE public.report_access_policies (
 );
 
 
-ALTER TABLE public.report_access_policies OWNER TO postgres;
-
 --
--- Name: TABLE report_access_policies; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_access_policies; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_access_policies IS 'Fine-grained per-report access control extending RBAC (role, user, or team target)';
 
 
 --
--- Name: report_access_policies_policy_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_access_policies_policy_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_access_policies_policy_id_seq
@@ -4519,17 +4161,15 @@ CREATE SEQUENCE public.report_access_policies_policy_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_access_policies_policy_id_seq OWNER TO postgres;
-
 --
--- Name: report_access_policies_policy_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_access_policies_policy_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_access_policies_policy_id_seq OWNED BY public.report_access_policies.policy_id;
 
 
 --
--- Name: report_annotations; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_annotations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_annotations (
@@ -4548,17 +4188,15 @@ CREATE TABLE public.report_annotations (
 );
 
 
-ALTER TABLE public.report_annotations OWNER TO postgres;
-
 --
--- Name: TABLE report_annotations; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_annotations; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_annotations IS 'Inline annotations pinned to specific chart data points or table cells';
 
 
 --
--- Name: report_annotations_annotation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_annotations_annotation_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_annotations_annotation_id_seq
@@ -4570,17 +4208,15 @@ CREATE SEQUENCE public.report_annotations_annotation_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_annotations_annotation_id_seq OWNER TO postgres;
-
 --
--- Name: report_annotations_annotation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_annotations_annotation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_annotations_annotation_id_seq OWNED BY public.report_annotations.annotation_id;
 
 
 --
--- Name: report_approvals; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_approvals; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_approvals (
@@ -4599,17 +4235,15 @@ CREATE TABLE public.report_approvals (
 );
 
 
-ALTER TABLE public.report_approvals OWNER TO postgres;
-
 --
--- Name: TABLE report_approvals; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_approvals; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_approvals IS 'Approval workflow for reports before publication; critical for compliance reports';
 
 
 --
--- Name: report_approvals_approval_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_approvals_approval_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_approvals_approval_id_seq
@@ -4621,17 +4255,15 @@ CREATE SEQUENCE public.report_approvals_approval_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_approvals_approval_id_seq OWNER TO postgres;
-
 --
--- Name: report_approvals_approval_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_approvals_approval_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_approvals_approval_id_seq OWNED BY public.report_approvals.approval_id;
 
 
 --
--- Name: report_bookmarks; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_bookmarks; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_bookmarks (
@@ -4642,17 +4274,15 @@ CREATE TABLE public.report_bookmarks (
 );
 
 
-ALTER TABLE public.report_bookmarks OWNER TO postgres;
-
 --
--- Name: TABLE report_bookmarks; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_bookmarks; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_bookmarks IS 'User-saved report favorites for quick access (My Favorites view)';
 
 
 --
--- Name: report_bookmarks_bookmark_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_bookmarks_bookmark_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_bookmarks_bookmark_id_seq
@@ -4664,17 +4294,15 @@ CREATE SEQUENCE public.report_bookmarks_bookmark_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_bookmarks_bookmark_id_seq OWNER TO postgres;
-
 --
--- Name: report_bookmarks_bookmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_bookmarks_bookmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_bookmarks_bookmark_id_seq OWNED BY public.report_bookmarks.bookmark_id;
 
 
 --
--- Name: report_comments; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_comments; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_comments (
@@ -4689,17 +4317,15 @@ CREATE TABLE public.report_comments (
 );
 
 
-ALTER TABLE public.report_comments OWNER TO postgres;
-
 --
--- Name: TABLE report_comments; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_comments; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_comments IS 'Threaded user comments and annotations on reports';
 
 
 --
--- Name: report_comments_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_comments_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_comments_comment_id_seq
@@ -4711,17 +4337,15 @@ CREATE SEQUENCE public.report_comments_comment_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_comments_comment_id_seq OWNER TO postgres;
-
 --
--- Name: report_comments_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_comments_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_comments_comment_id_seq OWNED BY public.report_comments.comment_id;
 
 
 --
--- Name: report_data; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_data; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_data (
@@ -4738,17 +4362,15 @@ CREATE TABLE public.report_data (
 );
 
 
-ALTER TABLE public.report_data OWNER TO postgres;
-
 --
--- Name: TABLE report_data; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_data; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_data IS 'JSONB payload for each report run, scoped by tenant and date';
 
 
 --
--- Name: report_data_data_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_data_data_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_data_data_id_seq
@@ -4760,17 +4382,15 @@ CREATE SEQUENCE public.report_data_data_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_data_data_id_seq OWNER TO postgres;
-
 --
--- Name: report_data_data_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_data_data_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_data_data_id_seq OWNED BY public.report_data.data_id;
 
 
 --
--- Name: report_fields; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_fields; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_fields (
@@ -4792,17 +4412,15 @@ CREATE TABLE public.report_fields (
 );
 
 
-ALTER TABLE public.report_fields OWNER TO postgres;
-
 --
--- Name: TABLE report_fields; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_fields; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_fields IS 'Available field catalog for the custom report builder; is_pii flag gates masking rules';
 
 
 --
--- Name: report_fields_field_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_fields_field_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_fields_field_id_seq
@@ -4814,17 +4432,15 @@ CREATE SEQUENCE public.report_fields_field_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_fields_field_id_seq OWNER TO postgres;
-
 --
--- Name: report_fields_field_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_fields_field_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_fields_field_id_seq OWNED BY public.report_fields.field_id;
 
 
 --
--- Name: report_filters; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_filters; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_filters (
@@ -4839,17 +4455,15 @@ CREATE TABLE public.report_filters (
 );
 
 
-ALTER TABLE public.report_filters OWNER TO postgres;
-
 --
--- Name: TABLE report_filters; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_filters; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_filters IS 'User-configurable filter definitions per report';
 
 
 --
--- Name: report_filters_filter_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_filters_filter_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_filters_filter_id_seq
@@ -4861,17 +4475,15 @@ CREATE SEQUENCE public.report_filters_filter_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_filters_filter_id_seq OWNER TO postgres;
-
 --
--- Name: report_filters_filter_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_filters_filter_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_filters_filter_id_seq OWNED BY public.report_filters.filter_id;
 
 
 --
--- Name: report_join_definitions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_join_definitions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_join_definitions (
@@ -4887,17 +4499,15 @@ CREATE TABLE public.report_join_definitions (
 );
 
 
-ALTER TABLE public.report_join_definitions OWNER TO postgres;
-
 --
--- Name: TABLE report_join_definitions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_join_definitions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_join_definitions IS 'Join rules between data sources for multi-source custom reports';
 
 
 --
--- Name: report_join_definitions_join_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_join_definitions_join_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_join_definitions_join_id_seq
@@ -4909,17 +4519,15 @@ CREATE SEQUENCE public.report_join_definitions_join_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_join_definitions_join_id_seq OWNER TO postgres;
-
 --
--- Name: report_join_definitions_join_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_join_definitions_join_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_join_definitions_join_id_seq OWNED BY public.report_join_definitions.join_id;
 
 
 --
--- Name: report_kpis; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_kpis; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_kpis (
@@ -4938,17 +4546,15 @@ CREATE TABLE public.report_kpis (
 );
 
 
-ALTER TABLE public.report_kpis OWNER TO postgres;
-
 --
--- Name: TABLE report_kpis; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_kpis; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_kpis IS 'KPI definitions per report with thresholds and targets';
 
 
 --
--- Name: report_kpis_kpi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_kpis_kpi_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_kpis_kpi_id_seq
@@ -4960,17 +4566,15 @@ CREATE SEQUENCE public.report_kpis_kpi_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_kpis_kpi_id_seq OWNER TO postgres;
-
 --
--- Name: report_kpis_kpi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_kpis_kpi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_kpis_kpi_id_seq OWNED BY public.report_kpis.kpi_id;
 
 
 --
--- Name: report_run_history_run_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_run_history_run_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_run_history_run_id_seq
@@ -4982,17 +4586,15 @@ CREATE SEQUENCE public.report_run_history_run_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_run_history_run_id_seq OWNER TO postgres;
-
 --
--- Name: report_run_history_run_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_run_history_run_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_run_history_run_id_seq OWNED BY public.report_run_history.run_id;
 
 
 --
--- Name: report_sharing; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_sharing; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_sharing (
@@ -5011,17 +4613,15 @@ CREATE TABLE public.report_sharing (
 );
 
 
-ALTER TABLE public.report_sharing OWNER TO postgres;
-
 --
--- Name: TABLE report_sharing; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_sharing; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_sharing IS 'Token-based report sharing with internal users or external email recipients';
 
 
 --
--- Name: report_sharing_share_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_sharing_share_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_sharing_share_id_seq
@@ -5033,17 +4633,15 @@ CREATE SEQUENCE public.report_sharing_share_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_sharing_share_id_seq OWNER TO postgres;
-
 --
--- Name: report_sharing_share_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_sharing_share_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_sharing_share_id_seq OWNED BY public.report_sharing.share_id;
 
 
 --
--- Name: report_subscriptions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_subscriptions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_subscriptions (
@@ -5058,17 +4656,15 @@ CREATE TABLE public.report_subscriptions (
 );
 
 
-ALTER TABLE public.report_subscriptions OWNER TO postgres;
-
 --
--- Name: TABLE report_subscriptions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_subscriptions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_subscriptions IS '[NEW] Users subscribe to receive reports via email/slack/in-app';
 
 
 --
--- Name: report_subscriptions_subscription_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_subscriptions_subscription_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_subscriptions_subscription_id_seq
@@ -5080,17 +4676,15 @@ CREATE SEQUENCE public.report_subscriptions_subscription_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_subscriptions_subscription_id_seq OWNER TO postgres;
-
 --
--- Name: report_subscriptions_subscription_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_subscriptions_subscription_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_subscriptions_subscription_id_seq OWNED BY public.report_subscriptions.subscription_id;
 
 
 --
--- Name: report_tags; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_tags; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_tags (
@@ -5101,17 +4695,15 @@ CREATE TABLE public.report_tags (
 );
 
 
-ALTER TABLE public.report_tags OWNER TO postgres;
-
 --
--- Name: TABLE report_tags; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_tags; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_tags IS 'Tagging system for report discovery';
 
 
 --
--- Name: report_tags_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_tags_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_tags_tag_id_seq
@@ -5123,17 +4715,15 @@ CREATE SEQUENCE public.report_tags_tag_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_tags_tag_id_seq OWNER TO postgres;
-
 --
--- Name: report_tags_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_tags_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_tags_tag_id_seq OWNED BY public.report_tags.tag_id;
 
 
 --
--- Name: report_templates; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_templates; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_templates (
@@ -5148,17 +4738,15 @@ CREATE TABLE public.report_templates (
 );
 
 
-ALTER TABLE public.report_templates OWNER TO postgres;
-
 --
--- Name: TABLE report_templates; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_templates; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_templates IS 'Visualisation / layout configurations per report';
 
 
 --
--- Name: report_templates_template_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_templates_template_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_templates_template_id_seq
@@ -5170,17 +4758,15 @@ CREATE SEQUENCE public.report_templates_template_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_templates_template_id_seq OWNER TO postgres;
-
 --
--- Name: report_templates_template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_templates_template_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_templates_template_id_seq OWNED BY public.report_templates.template_id;
 
 
 --
--- Name: report_themes; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_themes; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_themes (
@@ -5200,17 +4786,15 @@ CREATE TABLE public.report_themes (
 );
 
 
-ALTER TABLE public.report_themes OWNER TO postgres;
-
 --
--- Name: TABLE report_themes; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_themes; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_themes IS 'Visual themes per tenant for branded dashboards and reports; chart_palette is ordered JSON array of hex colors';
 
 
 --
--- Name: report_themes_theme_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_themes_theme_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_themes_theme_id_seq
@@ -5222,17 +4806,15 @@ CREATE SEQUENCE public.report_themes_theme_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_themes_theme_id_seq OWNER TO postgres;
-
 --
--- Name: report_themes_theme_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_themes_theme_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_themes_theme_id_seq OWNED BY public.report_themes.theme_id;
 
 
 --
--- Name: report_versions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: report_versions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.report_versions (
@@ -5246,17 +4828,15 @@ CREATE TABLE public.report_versions (
 );
 
 
-ALTER TABLE public.report_versions OWNER TO postgres;
-
 --
--- Name: TABLE report_versions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE report_versions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.report_versions IS 'Immutable version history of report metadata changes';
 
 
 --
--- Name: report_versions_version_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_versions_version_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_versions_version_id_seq
@@ -5268,17 +4848,15 @@ CREATE SEQUENCE public.report_versions_version_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_versions_version_id_seq OWNER TO postgres;
-
 --
--- Name: report_versions_version_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_versions_version_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_versions_version_id_seq OWNED BY public.report_versions.version_id;
 
 
 --
--- Name: report_view_logs_view_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: report_view_logs_view_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.report_view_logs_view_id_seq
@@ -5290,17 +4868,15 @@ CREATE SEQUENCE public.report_view_logs_view_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.report_view_logs_view_id_seq OWNER TO postgres;
-
 --
--- Name: report_view_logs_view_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: report_view_logs_view_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.report_view_logs_view_id_seq OWNED BY public.report_view_logs.view_id;
 
 
 --
--- Name: reports_master_report_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: reports_master_report_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.reports_master_report_id_seq
@@ -5312,17 +4888,15 @@ CREATE SEQUENCE public.reports_master_report_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.reports_master_report_id_seq OWNER TO postgres;
-
 --
--- Name: reports_master_report_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: reports_master_report_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.reports_master_report_id_seq OWNED BY public.reports_master.report_id;
 
 
 --
--- Name: role_permissions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: role_permissions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.role_permissions (
@@ -5333,17 +4907,15 @@ CREATE TABLE public.role_permissions (
 );
 
 
-ALTER TABLE public.role_permissions OWNER TO postgres;
-
 --
--- Name: TABLE role_permissions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE role_permissions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.role_permissions IS '[NEW] M:N junction â€” which permissions each role carries';
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: postgres
+-- Name: roles; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.roles (
@@ -5356,17 +4928,15 @@ CREATE TABLE public.roles (
 );
 
 
-ALTER TABLE public.roles OWNER TO postgres;
-
 --
--- Name: TABLE roles; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE roles; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.roles IS 'RBAC roles; is_system=TRUE rows are platform-built-ins';
 
 
 --
--- Name: roles_role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: roles_role_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.roles_role_id_seq
@@ -5378,17 +4948,15 @@ CREATE SEQUENCE public.roles_role_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.roles_role_id_seq OWNER TO postgres;
-
 --
--- Name: roles_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: roles_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.roles_role_id_seq OWNED BY public.roles.role_id;
 
 
 --
--- Name: saved_filters; Type: TABLE; Schema: public; Owner: postgres
+-- Name: saved_filters; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.saved_filters (
@@ -5403,17 +4971,15 @@ CREATE TABLE public.saved_filters (
 );
 
 
-ALTER TABLE public.saved_filters OWNER TO postgres;
-
 --
--- Name: TABLE saved_filters; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE saved_filters; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.saved_filters IS 'Named filter presets per user per report for repeated filtered views';
 
 
 --
--- Name: saved_filters_filter_set_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: saved_filters_filter_set_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.saved_filters_filter_set_id_seq
@@ -5425,17 +4991,15 @@ CREATE SEQUENCE public.saved_filters_filter_set_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.saved_filters_filter_set_id_seq OWNER TO postgres;
-
 --
--- Name: saved_filters_filter_set_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: saved_filters_filter_set_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.saved_filters_filter_set_id_seq OWNED BY public.saved_filters.filter_set_id;
 
 
 --
--- Name: scenario_simulations; Type: TABLE; Schema: public; Owner: postgres
+-- Name: scenario_simulations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.scenario_simulations (
@@ -5451,17 +5015,15 @@ CREATE TABLE public.scenario_simulations (
 );
 
 
-ALTER TABLE public.scenario_simulations OWNER TO postgres;
-
 --
--- Name: TABLE scenario_simulations; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE scenario_simulations; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.scenario_simulations IS 'What-if scenario results per report';
 
 
 --
--- Name: scenario_simulations_scenario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: scenario_simulations_scenario_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.scenario_simulations_scenario_id_seq
@@ -5473,17 +5035,15 @@ CREATE SEQUENCE public.scenario_simulations_scenario_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.scenario_simulations_scenario_id_seq OWNER TO postgres;
-
 --
--- Name: scenario_simulations_scenario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: scenario_simulations_scenario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.scenario_simulations_scenario_id_seq OWNED BY public.scenario_simulations.scenario_id;
 
 
 --
--- Name: scheduled_tasks; Type: TABLE; Schema: public; Owner: postgres
+-- Name: scheduled_tasks; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.scheduled_tasks (
@@ -5503,17 +5063,15 @@ CREATE TABLE public.scheduled_tasks (
 );
 
 
-ALTER TABLE public.scheduled_tasks OWNER TO postgres;
-
 --
--- Name: TABLE scheduled_tasks; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE scheduled_tasks; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.scheduled_tasks IS 'Cron-based tasks; report_id links task to the report it generates';
 
 
 --
--- Name: scheduled_tasks_task_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: scheduled_tasks_task_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.scheduled_tasks_task_id_seq
@@ -5525,17 +5083,15 @@ CREATE SEQUENCE public.scheduled_tasks_task_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.scheduled_tasks_task_id_seq OWNER TO postgres;
-
 --
--- Name: scheduled_tasks_task_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: scheduled_tasks_task_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.scheduled_tasks_task_id_seq OWNED BY public.scheduled_tasks.task_id;
 
 
 --
--- Name: scorecard_definitions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: scorecard_definitions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.scorecard_definitions (
@@ -5553,17 +5109,15 @@ CREATE TABLE public.scorecard_definitions (
 );
 
 
-ALTER TABLE public.scorecard_definitions OWNER TO postgres;
-
 --
--- Name: TABLE scorecard_definitions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE scorecard_definitions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.scorecard_definitions IS 'Balanced scorecards grouping multiple KPIs; frameworks: BSC, OKR, KPI, custom';
 
 
 --
--- Name: scorecard_definitions_scorecard_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: scorecard_definitions_scorecard_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.scorecard_definitions_scorecard_id_seq
@@ -5575,17 +5129,15 @@ CREATE SEQUENCE public.scorecard_definitions_scorecard_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.scorecard_definitions_scorecard_id_seq OWNER TO postgres;
-
 --
--- Name: scorecard_definitions_scorecard_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: scorecard_definitions_scorecard_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.scorecard_definitions_scorecard_id_seq OWNED BY public.scorecard_definitions.scorecard_id;
 
 
 --
--- Name: scorecard_kpis; Type: TABLE; Schema: public; Owner: postgres
+-- Name: scorecard_kpis; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.scorecard_kpis (
@@ -5599,17 +5151,15 @@ CREATE TABLE public.scorecard_kpis (
 );
 
 
-ALTER TABLE public.scorecard_kpis OWNER TO postgres;
-
 --
--- Name: TABLE scorecard_kpis; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE scorecard_kpis; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.scorecard_kpis IS 'Weighted KPI assignments within a scorecard; weight enables weighted-average scoring';
 
 
 --
--- Name: scorecard_kpis_sc_kpi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: scorecard_kpis_sc_kpi_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.scorecard_kpis_sc_kpi_id_seq
@@ -5621,17 +5171,15 @@ CREATE SEQUENCE public.scorecard_kpis_sc_kpi_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.scorecard_kpis_sc_kpi_id_seq OWNER TO postgres;
-
 --
--- Name: scorecard_kpis_sc_kpi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: scorecard_kpis_sc_kpi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.scorecard_kpis_sc_kpi_id_seq OWNED BY public.scorecard_kpis.sc_kpi_id;
 
 
 --
--- Name: search_history; Type: TABLE; Schema: public; Owner: postgres
+-- Name: search_history; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.search_history (
@@ -5646,17 +5194,15 @@ CREATE TABLE public.search_history (
 );
 
 
-ALTER TABLE public.search_history OWNER TO postgres;
-
 --
--- Name: TABLE search_history; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE search_history; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.search_history IS 'User search query log; powers Recent Searches, auto-suggest, and search analytics';
 
 
 --
--- Name: search_history_search_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: search_history_search_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.search_history_search_id_seq
@@ -5668,17 +5214,15 @@ CREATE SEQUENCE public.search_history_search_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.search_history_search_id_seq OWNER TO postgres;
-
 --
--- Name: search_history_search_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: search_history_search_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.search_history_search_id_seq OWNED BY public.search_history.search_id;
 
 
 --
--- Name: security_events; Type: TABLE; Schema: public; Owner: postgres
+-- Name: security_events; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.security_events (
@@ -5697,17 +5241,15 @@ CREATE TABLE public.security_events (
 );
 
 
-ALTER TABLE public.security_events OWNER TO postgres;
-
 --
--- Name: TABLE security_events; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE security_events; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.security_events IS 'Security-specific audit log (failed logins, brute force, MFA failures); required for SOC2 Type II';
 
 
 --
--- Name: security_events_event_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: security_events_event_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.security_events_event_id_seq
@@ -5719,17 +5261,15 @@ CREATE SEQUENCE public.security_events_event_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.security_events_event_id_seq OWNER TO postgres;
-
 --
--- Name: security_events_event_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: security_events_event_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.security_events_event_id_seq OWNED BY public.security_events.event_id;
 
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: sessions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.sessions (
@@ -5743,17 +5283,15 @@ CREATE TABLE public.sessions (
 );
 
 
-ALTER TABLE public.sessions OWNER TO postgres;
-
 --
--- Name: TABLE sessions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE sessions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.sessions IS 'Active user browser/app sessions';
 
 
 --
--- Name: sessions_session_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: sessions_session_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.sessions_session_id_seq
@@ -5765,17 +5303,15 @@ CREATE SEQUENCE public.sessions_session_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.sessions_session_id_seq OWNER TO postgres;
-
 --
--- Name: sessions_session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: sessions_session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.sessions_session_id_seq OWNED BY public.sessions.session_id;
 
 
 --
--- Name: settings; Type: TABLE; Schema: public; Owner: postgres
+-- Name: settings; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.settings (
@@ -5791,17 +5327,15 @@ CREATE TABLE public.settings (
 );
 
 
-ALTER TABLE public.settings OWNER TO postgres;
-
 --
--- Name: TABLE settings; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE settings; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.settings IS 'Key-value config store scoped per tenant';
 
 
 --
--- Name: settings_setting_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: settings_setting_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.settings_setting_id_seq
@@ -5813,17 +5347,15 @@ CREATE SEQUENCE public.settings_setting_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.settings_setting_id_seq OWNER TO postgres;
-
 --
--- Name: settings_setting_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: settings_setting_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.settings_setting_id_seq OWNED BY public.settings.setting_id;
 
 
 --
--- Name: source_mappings; Type: TABLE; Schema: public; Owner: postgres
+-- Name: source_mappings; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.source_mappings (
@@ -5839,17 +5371,15 @@ CREATE TABLE public.source_mappings (
 );
 
 
-ALTER TABLE public.source_mappings OWNER TO postgres;
-
 --
--- Name: TABLE source_mappings; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE source_mappings; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.source_mappings IS 'Field-level mapping rules from source to target schema';
 
 
 --
--- Name: source_mappings_mapping_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: source_mappings_mapping_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.source_mappings_mapping_id_seq
@@ -5861,17 +5391,15 @@ CREATE SEQUENCE public.source_mappings_mapping_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.source_mappings_mapping_id_seq OWNER TO postgres;
-
 --
--- Name: source_mappings_mapping_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: source_mappings_mapping_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.source_mappings_mapping_id_seq OWNED BY public.source_mappings.mapping_id;
 
 
 --
--- Name: subscription_plans; Type: TABLE; Schema: public; Owner: postgres
+-- Name: subscription_plans; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.subscription_plans (
@@ -5891,17 +5419,15 @@ CREATE TABLE public.subscription_plans (
 );
 
 
-ALTER TABLE public.subscription_plans OWNER TO postgres;
-
 --
--- Name: TABLE subscription_plans; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE subscription_plans; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.subscription_plans IS 'Plan definitions (free/starter/professional/enterprise) with pricing; backs billing_accounts.plan';
 
 
 --
--- Name: subscription_plans_plan_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: subscription_plans_plan_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.subscription_plans_plan_id_seq
@@ -5913,17 +5439,15 @@ CREATE SEQUENCE public.subscription_plans_plan_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.subscription_plans_plan_id_seq OWNER TO postgres;
-
 --
--- Name: subscription_plans_plan_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: subscription_plans_plan_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.subscription_plans_plan_id_seq OWNED BY public.subscription_plans.plan_id;
 
 
 --
--- Name: system_metrics; Type: TABLE; Schema: public; Owner: postgres
+-- Name: system_metrics; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.system_metrics (
@@ -5937,17 +5461,15 @@ CREATE TABLE public.system_metrics (
 );
 
 
-ALTER TABLE public.system_metrics OWNER TO postgres;
-
 --
--- Name: TABLE system_metrics; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE system_metrics; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.system_metrics IS 'Platform health metrics (CPU, memory, latency, etc.)';
 
 
 --
--- Name: system_metrics_metric_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: system_metrics_metric_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.system_metrics_metric_id_seq
@@ -5959,17 +5481,15 @@ CREATE SEQUENCE public.system_metrics_metric_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.system_metrics_metric_id_seq OWNER TO postgres;
-
 --
--- Name: system_metrics_metric_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: system_metrics_metric_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.system_metrics_metric_id_seq OWNED BY public.system_metrics.metric_id;
 
 
 --
--- Name: task_history; Type: TABLE; Schema: public; Owner: postgres
+-- Name: task_history; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.task_history (
@@ -5985,17 +5505,15 @@ CREATE TABLE public.task_history (
 );
 
 
-ALTER TABLE public.task_history OWNER TO postgres;
-
 --
--- Name: TABLE task_history; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE task_history; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.task_history IS 'Execution log per task run';
 
 
 --
--- Name: task_history_history_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: task_history_history_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.task_history_history_id_seq
@@ -6007,17 +5525,15 @@ CREATE SEQUENCE public.task_history_history_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.task_history_history_id_seq OWNER TO postgres;
-
 --
--- Name: task_history_history_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: task_history_history_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.task_history_history_id_seq OWNED BY public.task_history.history_id;
 
 
 --
--- Name: team_members; Type: TABLE; Schema: public; Owner: postgres
+-- Name: team_members; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.team_members (
@@ -6029,17 +5545,15 @@ CREATE TABLE public.team_members (
 );
 
 
-ALTER TABLE public.team_members OWNER TO postgres;
-
 --
--- Name: TABLE team_members; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE team_members; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.team_members IS 'M:N junction: assigns users to teams with a role (owner/admin/member)';
 
 
 --
--- Name: teams; Type: TABLE; Schema: public; Owner: postgres
+-- Name: teams; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.teams (
@@ -6055,17 +5569,15 @@ CREATE TABLE public.teams (
 );
 
 
-ALTER TABLE public.teams OWNER TO postgres;
-
 --
--- Name: TABLE teams; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE teams; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.teams IS 'Named user groups per tenant; used for shared dashboards and access policies';
 
 
 --
--- Name: teams_team_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: teams_team_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.teams_team_id_seq
@@ -6077,17 +5589,15 @@ CREATE SEQUENCE public.teams_team_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.teams_team_id_seq OWNER TO postgres;
-
 --
--- Name: teams_team_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: teams_team_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.teams_team_id_seq OWNED BY public.teams.team_id;
 
 
 --
--- Name: tenant_invitations; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tenant_invitations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.tenant_invitations (
@@ -6104,17 +5614,15 @@ CREATE TABLE public.tenant_invitations (
 );
 
 
-ALTER TABLE public.tenant_invitations OWNER TO postgres;
-
 --
--- Name: TABLE tenant_invitations; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE tenant_invitations; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.tenant_invitations IS 'Email invitation tokens for onboarding new users into a tenant';
 
 
 --
--- Name: tenant_invitations_invitation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: tenant_invitations_invitation_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.tenant_invitations_invitation_id_seq
@@ -6126,17 +5634,15 @@ CREATE SEQUENCE public.tenant_invitations_invitation_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.tenant_invitations_invitation_id_seq OWNER TO postgres;
-
 --
--- Name: tenant_invitations_invitation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: tenant_invitations_invitation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.tenant_invitations_invitation_id_seq OWNED BY public.tenant_invitations.invitation_id;
 
 
 --
--- Name: tenant_subscriptions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tenant_subscriptions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.tenant_subscriptions (
@@ -6154,17 +5660,15 @@ CREATE TABLE public.tenant_subscriptions (
 );
 
 
-ALTER TABLE public.tenant_subscriptions OWNER TO postgres;
-
 --
--- Name: TABLE tenant_subscriptions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE tenant_subscriptions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.tenant_subscriptions IS 'Full history of plan changes per tenant â€” current + past subscriptions';
 
 
 --
--- Name: tenant_subscriptions_subscription_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: tenant_subscriptions_subscription_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.tenant_subscriptions_subscription_id_seq
@@ -6176,17 +5680,15 @@ CREATE SEQUENCE public.tenant_subscriptions_subscription_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.tenant_subscriptions_subscription_id_seq OWNER TO postgres;
-
 --
--- Name: tenant_subscriptions_subscription_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: tenant_subscriptions_subscription_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.tenant_subscriptions_subscription_id_seq OWNED BY public.tenant_subscriptions.subscription_id;
 
 
 --
--- Name: tenants_tenant_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: tenants_tenant_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.tenants_tenant_id_seq
@@ -6198,17 +5700,15 @@ CREATE SEQUENCE public.tenants_tenant_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.tenants_tenant_id_seq OWNER TO postgres;
-
 --
--- Name: tenants_tenant_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: tenants_tenant_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.tenants_tenant_id_seq OWNED BY public.tenants.tenant_id;
 
 
 --
--- Name: translations; Type: TABLE; Schema: public; Owner: postgres
+-- Name: translations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.translations (
@@ -6223,17 +5723,15 @@ CREATE TABLE public.translations (
 );
 
 
-ALTER TABLE public.translations OWNER TO postgres;
-
 --
--- Name: TABLE translations; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE translations; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.translations IS 'UI string translations keyed by translation_key + language_code; context narrows scope';
 
 
 --
--- Name: translations_translation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: translations_translation_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.translations_translation_id_seq
@@ -6245,17 +5743,15 @@ CREATE SEQUENCE public.translations_translation_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.translations_translation_id_seq OWNER TO postgres;
-
 --
--- Name: translations_translation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: translations_translation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.translations_translation_id_seq OWNED BY public.translations.translation_id;
 
 
 --
--- Name: trend_analysis; Type: TABLE; Schema: public; Owner: postgres
+-- Name: trend_analysis; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.trend_analysis (
@@ -6270,17 +5766,15 @@ CREATE TABLE public.trend_analysis (
 );
 
 
-ALTER TABLE public.trend_analysis OWNER TO postgres;
-
 --
--- Name: TABLE trend_analysis; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE trend_analysis; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.trend_analysis IS 'Time-series trend data per report period';
 
 
 --
--- Name: trend_analysis_trend_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: trend_analysis_trend_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.trend_analysis_trend_id_seq
@@ -6292,17 +5786,15 @@ CREATE SEQUENCE public.trend_analysis_trend_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.trend_analysis_trend_id_seq OWNER TO postgres;
-
 --
--- Name: trend_analysis_trend_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: trend_analysis_trend_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.trend_analysis_trend_id_seq OWNED BY public.trend_analysis.trend_id;
 
 
 --
--- Name: upload_validation_rules; Type: TABLE; Schema: public; Owner: postgres
+-- Name: upload_validation_rules; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.upload_validation_rules (
@@ -6314,17 +5806,15 @@ CREATE TABLE public.upload_validation_rules (
 );
 
 
-ALTER TABLE public.upload_validation_rules OWNER TO postgres;
-
 --
--- Name: TABLE upload_validation_rules; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE upload_validation_rules; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.upload_validation_rules IS '[NEW] M:N junction â€” which rules ran on which upload, with results';
 
 
 --
--- Name: usage_metrics; Type: TABLE; Schema: public; Owner: postgres
+-- Name: usage_metrics; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.usage_metrics (
@@ -6338,17 +5828,15 @@ CREATE TABLE public.usage_metrics (
 );
 
 
-ALTER TABLE public.usage_metrics OWNER TO postgres;
-
 --
--- Name: TABLE usage_metrics; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE usage_metrics; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.usage_metrics IS 'Per-tenant module usage for metered billing';
 
 
 --
--- Name: usage_metrics_usage_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: usage_metrics_usage_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.usage_metrics_usage_id_seq
@@ -6360,17 +5848,15 @@ CREATE SEQUENCE public.usage_metrics_usage_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.usage_metrics_usage_id_seq OWNER TO postgres;
-
 --
--- Name: usage_metrics_usage_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: usage_metrics_usage_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.usage_metrics_usage_id_seq OWNED BY public.usage_metrics.usage_id;
 
 
 --
--- Name: user_devices; Type: TABLE; Schema: public; Owner: postgres
+-- Name: user_devices; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.user_devices (
@@ -6390,17 +5876,15 @@ CREATE TABLE public.user_devices (
 );
 
 
-ALTER TABLE public.user_devices OWNER TO postgres;
-
 --
--- Name: TABLE user_devices; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE user_devices; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.user_devices IS 'Trusted device registry for MFA remember-me; expires_at enforces re-verification after N days';
 
 
 --
--- Name: user_devices_device_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: user_devices_device_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.user_devices_device_id_seq
@@ -6412,17 +5896,15 @@ CREATE SEQUENCE public.user_devices_device_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.user_devices_device_id_seq OWNER TO postgres;
-
 --
--- Name: user_devices_device_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: user_devices_device_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.user_devices_device_id_seq OWNED BY public.user_devices.device_id;
 
 
 --
--- Name: user_roles; Type: TABLE; Schema: public; Owner: postgres
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.user_roles (
@@ -6433,17 +5915,15 @@ CREATE TABLE public.user_roles (
 );
 
 
-ALTER TABLE public.user_roles OWNER TO postgres;
-
 --
--- Name: TABLE user_roles; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE user_roles; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.user_roles IS 'Assigns one or many roles to a user';
 
 
 --
--- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.users_user_id_seq
@@ -6455,17 +5935,15 @@ CREATE SEQUENCE public.users_user_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.users_user_id_seq OWNER TO postgres;
-
 --
--- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
 
 
 --
--- Name: vw_active_sessions; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_active_sessions; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_active_sessions AS
@@ -6486,17 +5964,15 @@ CREATE VIEW public.vw_active_sessions AS
   ORDER BY s.created_at DESC;
 
 
-ALTER VIEW public.vw_active_sessions OWNER TO postgres;
-
 --
--- Name: VIEW vw_active_sessions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_active_sessions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_active_sessions IS 'Currently active user sessions with time until expiry';
 
 
 --
--- Name: vw_active_subscriptions; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_active_subscriptions; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_active_subscriptions AS
@@ -6516,17 +5992,15 @@ CREATE VIEW public.vw_active_subscriptions AS
   ORDER BY t.tenant_name;
 
 
-ALTER VIEW public.vw_active_subscriptions OWNER TO postgres;
-
 --
--- Name: VIEW vw_active_subscriptions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_active_subscriptions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_active_subscriptions IS 'Active tenant subscriptions with billing information';
 
 
 --
--- Name: vw_active_users_with_permissions; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_active_users_with_permissions; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_active_users_with_permissions AS
@@ -6545,17 +6019,15 @@ CREATE VIEW public.vw_active_users_with_permissions AS
   GROUP BY u.user_id, u.tenant_id, u.email, u.first_name, u.last_name, u.status, r.role_name;
 
 
-ALTER VIEW public.vw_active_users_with_permissions OWNER TO postgres;
-
 --
--- Name: VIEW vw_active_users_with_permissions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_active_users_with_permissions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_active_users_with_permissions IS 'Active users with their aggregated permissions';
 
 
 --
--- Name: vw_api_key_usage; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_api_key_usage; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_api_key_usage AS
@@ -6576,17 +6048,15 @@ CREATE VIEW public.vw_api_key_usage AS
   ORDER BY (count(al.log_id)) DESC;
 
 
-ALTER VIEW public.vw_api_key_usage OWNER TO postgres;
-
 --
--- Name: VIEW vw_api_key_usage; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_api_key_usage; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_api_key_usage IS 'API key usage summary with 30-day call counts';
 
 
 --
--- Name: vw_api_usage_by_tenant; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_api_usage_by_tenant; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_api_usage_by_tenant AS
@@ -6608,17 +6078,15 @@ CREATE VIEW public.vw_api_usage_by_tenant AS
   ORDER BY (count(al.log_id)) DESC;
 
 
-ALTER VIEW public.vw_api_usage_by_tenant OWNER TO postgres;
-
 --
--- Name: VIEW vw_api_usage_by_tenant; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_api_usage_by_tenant; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_api_usage_by_tenant IS 'API usage statistics per tenant for the last 30 days';
 
 
 --
--- Name: vw_audit_trail; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_audit_trail; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_audit_trail AS
@@ -6640,17 +6108,15 @@ CREATE VIEW public.vw_audit_trail AS
  LIMIT 1000;
 
 
-ALTER VIEW public.vw_audit_trail OWNER TO postgres;
-
 --
--- Name: VIEW vw_audit_trail; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_audit_trail; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_audit_trail IS 'Recent 1000 audit log entries with user details';
 
 
 --
--- Name: vw_data_source_health; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_data_source_health; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_data_source_health AS
@@ -6690,17 +6156,15 @@ CREATE VIEW public.vw_data_source_health AS
   ORDER BY ds.last_sync DESC NULLS LAST;
 
 
-ALTER VIEW public.vw_data_source_health OWNER TO postgres;
-
 --
--- Name: VIEW vw_data_source_health; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_data_source_health; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_data_source_health IS 'Data source connection health and last sync status';
 
 
 --
--- Name: vw_etl_job_statistics; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_etl_job_statistics; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_etl_job_statistics AS
@@ -6717,17 +6181,15 @@ CREATE VIEW public.vw_etl_job_statistics AS
   ORDER BY (count(*)) DESC;
 
 
-ALTER VIEW public.vw_etl_job_statistics OWNER TO postgres;
-
 --
--- Name: VIEW vw_etl_job_statistics; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_etl_job_statistics; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_etl_job_statistics IS 'ETL job statistics for the last 7 days by data source and status';
 
 
 --
--- Name: vw_gdpr_compliance_status; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_gdpr_compliance_status; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_gdpr_compliance_status AS
@@ -6757,17 +6219,15 @@ CREATE VIEW public.vw_gdpr_compliance_status AS
   GROUP BY tenant_id;
 
 
-ALTER VIEW public.vw_gdpr_compliance_status OWNER TO postgres;
-
 --
--- Name: VIEW vw_gdpr_compliance_status; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_gdpr_compliance_status; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_gdpr_compliance_status IS 'GDPR request status summary by tenant';
 
 
 --
--- Name: vw_popular_reports; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_popular_reports; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_popular_reports AS
@@ -6785,17 +6245,15 @@ CREATE VIEW public.vw_popular_reports AS
  LIMIT 50;
 
 
-ALTER VIEW public.vw_popular_reports OWNER TO postgres;
-
 --
--- Name: VIEW vw_popular_reports; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_popular_reports; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_popular_reports IS 'Top 50 most viewed reports in the last 30 days';
 
 
 --
--- Name: vw_report_catalog; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_report_catalog; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_report_catalog AS
@@ -6816,17 +6274,15 @@ CREATE VIEW public.vw_report_catalog AS
   ORDER BY r.name;
 
 
-ALTER VIEW public.vw_report_catalog OWNER TO postgres;
-
 --
--- Name: VIEW vw_report_catalog; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_report_catalog; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_report_catalog IS 'Active reports catalog with domain details';
 
 
 --
--- Name: vw_report_execution_performance; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_report_execution_performance; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_report_execution_performance AS
@@ -6853,17 +6309,15 @@ CREATE VIEW public.vw_report_execution_performance AS
   ORDER BY (count(rh.run_id)) DESC;
 
 
-ALTER VIEW public.vw_report_execution_performance OWNER TO postgres;
-
 --
--- Name: VIEW vw_report_execution_performance; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_report_execution_performance; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_report_execution_performance IS 'Report execution statistics for the last 7 days';
 
 
 --
--- Name: vw_security_events_summary; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_security_events_summary; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_security_events_summary AS
@@ -6877,17 +6331,15 @@ CREATE VIEW public.vw_security_events_summary AS
   ORDER BY (count(*)) DESC;
 
 
-ALTER VIEW public.vw_security_events_summary OWNER TO postgres;
-
 --
--- Name: VIEW vw_security_events_summary; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_security_events_summary; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_security_events_summary IS 'Security event summary for the last 30 days by tenant and event type';
 
 
 --
--- Name: vw_system_health_metrics; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_system_health_metrics; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_system_health_metrics AS
@@ -6917,17 +6369,15 @@ CREATE VIEW public.vw_system_health_metrics AS
           WHERE (date(api_usage_logs.created_at) = CURRENT_DATE)) AS api_calls_today;
 
 
-ALTER VIEW public.vw_system_health_metrics OWNER TO postgres;
-
 --
--- Name: VIEW vw_system_health_metrics; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_system_health_metrics; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_system_health_metrics IS 'Real-time system health and activity metrics';
 
 
 --
--- Name: vw_tenant_overview; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_tenant_overview; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_tenant_overview AS
@@ -6951,17 +6401,15 @@ CREATE VIEW public.vw_tenant_overview AS
   GROUP BY t.tenant_id, t.tenant_name, t.domain, t.plan, t.status, t.created_at, t.updated_at;
 
 
-ALTER VIEW public.vw_tenant_overview OWNER TO postgres;
-
 --
--- Name: VIEW vw_tenant_overview; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_tenant_overview; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_tenant_overview IS 'Tenant overview with user and session statistics';
 
 
 --
--- Name: vw_user_activity_summary; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_user_activity_summary; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_user_activity_summary AS
@@ -6982,17 +6430,15 @@ CREATE VIEW public.vw_user_activity_summary AS
   GROUP BY u.user_id, u.tenant_id, u.email, u.first_name, u.last_name, u.last_login;
 
 
-ALTER VIEW public.vw_user_activity_summary OWNER TO postgres;
-
 --
--- Name: VIEW vw_user_activity_summary; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_user_activity_summary; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_user_activity_summary IS 'User activity metrics for the last 30 days';
 
 
 --
--- Name: vw_users_complete; Type: VIEW; Schema: public; Owner: postgres
+-- Name: vw_users_complete; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW public.vw_users_complete AS
@@ -7028,17 +6474,15 @@ CREATE VIEW public.vw_users_complete AS
      LEFT JOIN public.localization l ON ((u.user_id = l.user_id)));
 
 
-ALTER VIEW public.vw_users_complete OWNER TO postgres;
-
 --
--- Name: VIEW vw_users_complete; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW vw_users_complete; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON VIEW public.vw_users_complete IS 'Complete user information including tenant, role, preferences, and localization';
 
 
 --
--- Name: webhooks; Type: TABLE; Schema: public; Owner: postgres
+-- Name: webhooks; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.webhooks (
@@ -7054,17 +6498,15 @@ CREATE TABLE public.webhooks (
 );
 
 
-ALTER TABLE public.webhooks OWNER TO postgres;
-
 --
--- Name: TABLE webhooks; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE webhooks; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.webhooks IS 'Outbound webhook endpoints for event notifications';
 
 
 --
--- Name: webhooks_hook_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: webhooks_hook_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.webhooks_hook_id_seq
@@ -7076,17 +6518,15 @@ CREATE SEQUENCE public.webhooks_hook_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.webhooks_hook_id_seq OWNER TO postgres;
-
 --
--- Name: webhooks_hook_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: webhooks_hook_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.webhooks_hook_id_seq OWNED BY public.webhooks.hook_id;
 
 
 --
--- Name: workflow_definitions; Type: TABLE; Schema: public; Owner: postgres
+-- Name: workflow_definitions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.workflow_definitions (
@@ -7104,17 +6544,15 @@ CREATE TABLE public.workflow_definitions (
 );
 
 
-ALTER TABLE public.workflow_definitions OWNER TO postgres;
-
 --
--- Name: TABLE workflow_definitions; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE workflow_definitions; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.workflow_definitions IS 'Workflow templates (DAG-style) triggered by tasks';
 
 
 --
--- Name: workflow_definitions_workflow_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: workflow_definitions_workflow_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.workflow_definitions_workflow_id_seq
@@ -7126,17 +6564,15 @@ CREATE SEQUENCE public.workflow_definitions_workflow_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.workflow_definitions_workflow_id_seq OWNER TO postgres;
-
 --
--- Name: workflow_definitions_workflow_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: workflow_definitions_workflow_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.workflow_definitions_workflow_id_seq OWNED BY public.workflow_definitions.workflow_id;
 
 
 --
--- Name: workflow_instances; Type: TABLE; Schema: public; Owner: postgres
+-- Name: workflow_instances; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.workflow_instances (
@@ -7150,17 +6586,15 @@ CREATE TABLE public.workflow_instances (
 );
 
 
-ALTER TABLE public.workflow_instances OWNER TO postgres;
-
 --
--- Name: TABLE workflow_instances; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: TABLE workflow_instances; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.workflow_instances IS 'Individual workflow execution runs';
 
 
 --
--- Name: workflow_instances_instance_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: workflow_instances_instance_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.workflow_instances_instance_id_seq
@@ -7172,892 +6606,890 @@ CREATE SEQUENCE public.workflow_instances_instance_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.workflow_instances_instance_id_seq OWNER TO postgres;
-
 --
--- Name: workflow_instances_instance_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: workflow_instances_instance_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.workflow_instances_instance_id_seq OWNED BY public.workflow_instances.instance_id;
 
 
 --
--- Name: activity_logs activity_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: activity_logs activity_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.activity_logs ALTER COLUMN activity_id SET DEFAULT nextval('public.activity_logs_activity_id_seq'::regclass);
 
 
 --
--- Name: ai_insights insight_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: ai_insights insight_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ai_insights ALTER COLUMN insight_id SET DEFAULT nextval('public.ai_insights_insight_id_seq'::regclass);
 
 
 --
--- Name: alert_logs log_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: alert_logs log_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_logs ALTER COLUMN log_id SET DEFAULT nextval('public.alert_logs_log_id_seq'::regclass);
 
 
 --
--- Name: alert_rules rule_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: alert_rules rule_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_rules ALTER COLUMN rule_id SET DEFAULT nextval('public.alert_rules_rule_id_seq'::regclass);
 
 
 --
--- Name: announcements announcement_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: announcements announcement_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.announcements ALTER COLUMN announcement_id SET DEFAULT nextval('public.announcements_announcement_id_seq'::regclass);
 
 
 --
--- Name: anomaly_logs anomaly_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: anomaly_logs anomaly_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.anomaly_logs ALTER COLUMN anomaly_id SET DEFAULT nextval('public.anomaly_logs_anomaly_id_seq'::regclass);
 
 
 --
--- Name: api_keys api_key_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: api_keys api_key_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_keys ALTER COLUMN api_key_id SET DEFAULT nextval('public.api_keys_api_key_id_seq'::regclass);
 
 
 --
--- Name: api_usage_logs log_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: api_usage_logs log_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_usage_logs ALTER COLUMN log_id SET DEFAULT nextval('public.api_usage_logs_log_id_seq'::regclass);
 
 
 --
--- Name: approval_steps step_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: approval_steps step_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_steps ALTER COLUMN step_id SET DEFAULT nextval('public.approval_steps_step_id_seq'::regclass);
 
 
 --
--- Name: approval_workflows workflow_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: approval_workflows workflow_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_workflows ALTER COLUMN workflow_id SET DEFAULT nextval('public.approval_workflows_workflow_id_seq'::regclass);
 
 
 --
--- Name: attachments attachment_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: attachments attachment_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.attachments ALTER COLUMN attachment_id SET DEFAULT nextval('public.attachments_attachment_id_seq'::regclass);
 
 
 --
--- Name: audit_logs log_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: audit_logs log_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.audit_logs ALTER COLUMN log_id SET DEFAULT nextval('public.audit_logs_log_id_seq'::regclass);
 
 
 --
--- Name: benchmarking_data benchmark_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: benchmarking_data benchmark_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.benchmarking_data ALTER COLUMN benchmark_id SET DEFAULT nextval('public.benchmarking_data_benchmark_id_seq'::regclass);
 
 
 --
--- Name: billing_accounts account_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: billing_accounts account_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.billing_accounts ALTER COLUMN account_id SET DEFAULT nextval('public.billing_accounts_account_id_seq'::regclass);
 
 
 --
--- Name: blockchain_audit audit_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: blockchain_audit audit_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.blockchain_audit ALTER COLUMN audit_id SET DEFAULT nextval('public.blockchain_audit_audit_id_seq'::regclass);
 
 
 --
--- Name: chat_feedback feedback_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: chat_feedback feedback_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_feedback ALTER COLUMN feedback_id SET DEFAULT nextval('public.chat_feedback_feedback_id_seq'::regclass);
 
 
 --
--- Name: chat_intents intent_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: chat_intents intent_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_intents ALTER COLUMN intent_id SET DEFAULT nextval('public.chat_intents_intent_id_seq'::regclass);
 
 
 --
--- Name: chat_queries query_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: chat_queries query_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_queries ALTER COLUMN query_id SET DEFAULT nextval('public.chat_queries_query_id_seq'::regclass);
 
 
 --
--- Name: chat_responses response_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: chat_responses response_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_responses ALTER COLUMN response_id SET DEFAULT nextval('public.chat_responses_response_id_seq'::regclass);
 
 
 --
--- Name: chat_sessions session_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: chat_sessions session_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_sessions ALTER COLUMN session_id SET DEFAULT nextval('public.chat_sessions_session_id_seq'::regclass);
 
 
 --
--- Name: compliance_audit audit_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: compliance_audit audit_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_audit ALTER COLUMN audit_id SET DEFAULT nextval('public.compliance_audit_audit_id_seq'::regclass);
 
 
 --
--- Name: compliance_calendar compliance_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: compliance_calendar compliance_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_calendar ALTER COLUMN compliance_id SET DEFAULT nextval('public.compliance_calendar_compliance_id_seq'::regclass);
 
 
 --
--- Name: compliance_documents doc_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: compliance_documents doc_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_documents ALTER COLUMN doc_id SET DEFAULT nextval('public.compliance_documents_doc_id_seq'::regclass);
 
 
 --
--- Name: compliance_rules rule_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: compliance_rules rule_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_rules ALTER COLUMN rule_id SET DEFAULT nextval('public.compliance_rules_rule_id_seq'::regclass);
 
 
 --
--- Name: compliance_submissions submission_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: compliance_submissions submission_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_submissions ALTER COLUMN submission_id SET DEFAULT nextval('public.compliance_submissions_submission_id_seq'::regclass);
 
 
 --
--- Name: connector_sync_logs sync_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: connector_sync_logs sync_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connector_sync_logs ALTER COLUMN sync_id SET DEFAULT nextval('public.connector_sync_logs_sync_id_seq'::regclass);
 
 
 --
--- Name: connector_types connector_type_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: connector_types connector_type_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connector_types ALTER COLUMN connector_type_id SET DEFAULT nextval('public.connector_types_connector_type_id_seq'::regclass);
 
 
 --
--- Name: correlation_matrix corr_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: correlation_matrix corr_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.correlation_matrix ALTER COLUMN corr_id SET DEFAULT nextval('public.correlation_matrix_corr_id_seq'::regclass);
 
 
 --
--- Name: custom_report_definitions custom_report_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: custom_report_definitions custom_report_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.custom_report_definitions ALTER COLUMN custom_report_id SET DEFAULT nextval('public.custom_report_definitions_custom_report_id_seq'::regclass);
 
 
 --
--- Name: dashboard_widgets widget_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: dashboard_widgets widget_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dashboard_widgets ALTER COLUMN widget_id SET DEFAULT nextval('public.dashboard_widgets_widget_id_seq'::regclass);
 
 
 --
--- Name: dashboards dashboard_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: dashboards dashboard_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dashboards ALTER COLUMN dashboard_id SET DEFAULT nextval('public.dashboards_dashboard_id_seq'::regclass);
 
 
 --
--- Name: data_consent consent_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: data_consent consent_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_consent ALTER COLUMN consent_id SET DEFAULT nextval('public.data_consent_consent_id_seq'::regclass);
 
 
 --
--- Name: data_ingestion_logs log_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: data_ingestion_logs log_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_ingestion_logs ALTER COLUMN log_id SET DEFAULT nextval('public.data_ingestion_logs_log_id_seq'::regclass);
 
 
 --
--- Name: data_lineage lineage_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: data_lineage lineage_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_lineage ALTER COLUMN lineage_id SET DEFAULT nextval('public.data_lineage_lineage_id_seq'::regclass);
 
 
 --
--- Name: data_masking_rules rule_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: data_masking_rules rule_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_masking_rules ALTER COLUMN rule_id SET DEFAULT nextval('public.data_masking_rules_rule_id_seq'::regclass);
 
 
 --
--- Name: data_quality_scores quality_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: data_quality_scores quality_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_quality_scores ALTER COLUMN quality_id SET DEFAULT nextval('public.data_quality_scores_quality_id_seq'::regclass);
 
 
 --
--- Name: data_retention_policies policy_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: data_retention_policies policy_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_retention_policies ALTER COLUMN policy_id SET DEFAULT nextval('public.data_retention_policies_policy_id_seq'::regclass);
 
 
 --
--- Name: data_sources source_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: data_sources source_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_sources ALTER COLUMN source_id SET DEFAULT nextval('public.data_sources_source_id_seq'::regclass);
 
 
 --
--- Name: data_uploads upload_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: data_uploads upload_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_uploads ALTER COLUMN upload_id SET DEFAULT nextval('public.data_uploads_upload_id_seq'::regclass);
 
 
 --
--- Name: data_validation_rules rule_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: data_validation_rules rule_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_validation_rules ALTER COLUMN rule_id SET DEFAULT nextval('public.data_validation_rules_rule_id_seq'::regclass);
 
 
 --
--- Name: deployment_logs deploy_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: deployment_logs deploy_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.deployment_logs ALTER COLUMN deploy_id SET DEFAULT nextval('public.deployment_logs_deploy_id_seq'::regclass);
 
 
 --
--- Name: distribution_lists list_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: distribution_lists list_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_lists ALTER COLUMN list_id SET DEFAULT nextval('public.distribution_lists_list_id_seq'::regclass);
 
 
 --
--- Name: distribution_members member_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: distribution_members member_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_members ALTER COLUMN member_id SET DEFAULT nextval('public.distribution_members_member_id_seq'::regclass);
 
 
 --
--- Name: domains domain_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: domains domain_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.domains ALTER COLUMN domain_id SET DEFAULT nextval('public.domains_domain_id_seq'::regclass);
 
 
 --
--- Name: email_queue queue_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: email_queue queue_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.email_queue ALTER COLUMN queue_id SET DEFAULT nextval('public.email_queue_queue_id_seq'::regclass);
 
 
 --
--- Name: error_logs error_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: error_logs error_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.error_logs ALTER COLUMN error_id SET DEFAULT nextval('public.error_logs_error_id_seq'::regclass);
 
 
 --
--- Name: esg_scores esg_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: esg_scores esg_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.esg_scores ALTER COLUMN esg_id SET DEFAULT nextval('public.esg_scores_esg_id_seq'::regclass);
 
 
 --
--- Name: etl_jobs job_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: etl_jobs job_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.etl_jobs ALTER COLUMN job_id SET DEFAULT nextval('public.etl_jobs_job_id_seq'::regclass);
 
 
 --
--- Name: exchange_rates rate_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: exchange_rates rate_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.exchange_rates ALTER COLUMN rate_id SET DEFAULT nextval('public.exchange_rates_rate_id_seq'::regclass);
 
 
 --
--- Name: executive_narratives narrative_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: executive_narratives narrative_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.executive_narratives ALTER COLUMN narrative_id SET DEFAULT nextval('public.executive_narratives_narrative_id_seq'::regclass);
 
 
 --
--- Name: export_history export_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: export_history export_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_history ALTER COLUMN export_id SET DEFAULT nextval('public.export_history_export_id_seq'::regclass);
 
 
 --
--- Name: export_templates template_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: export_templates template_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_templates ALTER COLUMN template_id SET DEFAULT nextval('public.export_templates_template_id_seq'::regclass);
 
 
 --
--- Name: external_feeds feed_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: external_feeds feed_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.external_feeds ALTER COLUMN feed_id SET DEFAULT nextval('public.external_feeds_feed_id_seq'::regclass);
 
 
 --
--- Name: feature_flags flag_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: feature_flags flag_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.feature_flags ALTER COLUMN flag_id SET DEFAULT nextval('public.feature_flags_flag_id_seq'::regclass);
 
 
 --
--- Name: fiscal_calendars calendar_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: fiscal_calendars calendar_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.fiscal_calendars ALTER COLUMN calendar_id SET DEFAULT nextval('public.fiscal_calendars_calendar_id_seq'::regclass);
 
 
 --
--- Name: forecast_models model_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: forecast_models model_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.forecast_models ALTER COLUMN model_id SET DEFAULT nextval('public.forecast_models_model_id_seq'::regclass);
 
 
 --
--- Name: gdpr_requests request_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: gdpr_requests request_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gdpr_requests ALTER COLUMN request_id SET DEFAULT nextval('public.gdpr_requests_request_id_seq'::regclass);
 
 
 --
--- Name: integration_logs log_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: integration_logs log_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.integration_logs ALTER COLUMN log_id SET DEFAULT nextval('public.integration_logs_log_id_seq'::regclass);
 
 
 --
--- Name: ip_allowlist entry_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: ip_allowlist entry_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ip_allowlist ALTER COLUMN entry_id SET DEFAULT nextval('public.ip_allowlist_entry_id_seq'::regclass);
 
 
 --
--- Name: job_queue job_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: job_queue job_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.job_queue ALTER COLUMN job_id SET DEFAULT nextval('public.job_queue_job_id_seq'::regclass);
 
 
 --
--- Name: kpi_benchmarks benchmark_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: kpi_benchmarks benchmark_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.kpi_benchmarks ALTER COLUMN benchmark_id SET DEFAULT nextval('public.kpi_benchmarks_benchmark_id_seq'::regclass);
 
 
 --
--- Name: kpi_history history_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: kpi_history history_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.kpi_history ALTER COLUMN history_id SET DEFAULT nextval('public.kpi_history_history_id_seq'::regclass);
 
 
 --
--- Name: llm_usage_logs usage_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: llm_usage_logs usage_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.llm_usage_logs ALTER COLUMN usage_id SET DEFAULT nextval('public.llm_usage_logs_usage_id_seq'::regclass);
 
 
 --
--- Name: localization loc_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: localization loc_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.localization ALTER COLUMN loc_id SET DEFAULT nextval('public.localization_loc_id_seq'::regclass);
 
 
 --
--- Name: message_streams stream_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: message_streams stream_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.message_streams ALTER COLUMN stream_id SET DEFAULT nextval('public.message_streams_stream_id_seq'::regclass);
 
 
 --
--- Name: metric_definitions metric_def_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: metric_definitions metric_def_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.metric_definitions ALTER COLUMN metric_def_id SET DEFAULT nextval('public.metric_definitions_metric_def_id_seq'::regclass);
 
 
 --
--- Name: mfa_settings mfa_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: mfa_settings mfa_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mfa_settings ALTER COLUMN mfa_id SET DEFAULT nextval('public.mfa_settings_mfa_id_seq'::regclass);
 
 
 --
--- Name: model_training_history training_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: model_training_history training_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.model_training_history ALTER COLUMN training_id SET DEFAULT nextval('public.model_training_history_training_id_seq'::regclass);
 
 
 --
--- Name: notification_templates template_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: notification_templates template_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notification_templates ALTER COLUMN template_id SET DEFAULT nextval('public.notification_templates_template_id_seq'::regclass);
 
 
 --
--- Name: notifications notif_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: notifications notif_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notifications ALTER COLUMN notif_id SET DEFAULT nextval('public.notifications_notif_id_seq'::regclass);
 
 
 --
--- Name: oauth_providers provider_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: oauth_providers provider_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.oauth_providers ALTER COLUMN provider_id SET DEFAULT nextval('public.oauth_providers_provider_id_seq'::regclass);
 
 
 --
--- Name: partner_integrations partner_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: partner_integrations partner_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.partner_integrations ALTER COLUMN partner_id SET DEFAULT nextval('public.partner_integrations_partner_id_seq'::regclass);
 
 
 --
--- Name: password_reset_tokens token_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: password_reset_tokens token_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.password_reset_tokens ALTER COLUMN token_id SET DEFAULT nextval('public.password_reset_tokens_token_id_seq'::regclass);
 
 
 --
--- Name: permissions perm_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: permissions perm_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.permissions ALTER COLUMN perm_id SET DEFAULT nextval('public.permissions_perm_id_seq'::regclass);
 
 
 --
--- Name: plan_features feature_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: plan_features feature_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.plan_features ALTER COLUMN feature_id SET DEFAULT nextval('public.plan_features_feature_id_seq'::regclass);
 
 
 --
--- Name: preferences pref_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: preferences pref_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.preferences ALTER COLUMN pref_id SET DEFAULT nextval('public.preferences_pref_id_seq'::regclass);
 
 
 --
--- Name: rate_limit_config config_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: rate_limit_config config_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.rate_limit_config ALTER COLUMN config_id SET DEFAULT nextval('public.rate_limit_config_config_id_seq'::regclass);
 
 
 --
--- Name: recommendations rec_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: recommendations rec_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.recommendations ALTER COLUMN rec_id SET DEFAULT nextval('public.recommendations_rec_id_seq'::regclass);
 
 
 --
--- Name: regions region_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: regions region_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.regions ALTER COLUMN region_id SET DEFAULT nextval('public.regions_region_id_seq'::regclass);
 
 
 --
--- Name: regulatory_contacts contact_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: regulatory_contacts contact_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.regulatory_contacts ALTER COLUMN contact_id SET DEFAULT nextval('public.regulatory_contacts_contact_id_seq'::regclass);
 
 
 --
--- Name: report_access_policies policy_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_access_policies policy_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_access_policies ALTER COLUMN policy_id SET DEFAULT nextval('public.report_access_policies_policy_id_seq'::regclass);
 
 
 --
--- Name: report_annotations annotation_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_annotations annotation_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_annotations ALTER COLUMN annotation_id SET DEFAULT nextval('public.report_annotations_annotation_id_seq'::regclass);
 
 
 --
--- Name: report_approvals approval_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_approvals approval_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_approvals ALTER COLUMN approval_id SET DEFAULT nextval('public.report_approvals_approval_id_seq'::regclass);
 
 
 --
--- Name: report_bookmarks bookmark_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_bookmarks bookmark_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_bookmarks ALTER COLUMN bookmark_id SET DEFAULT nextval('public.report_bookmarks_bookmark_id_seq'::regclass);
 
 
 --
--- Name: report_comments comment_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_comments comment_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_comments ALTER COLUMN comment_id SET DEFAULT nextval('public.report_comments_comment_id_seq'::regclass);
 
 
 --
--- Name: report_data data_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_data data_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_data ALTER COLUMN data_id SET DEFAULT nextval('public.report_data_data_id_seq'::regclass);
 
 
 --
--- Name: report_fields field_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_fields field_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_fields ALTER COLUMN field_id SET DEFAULT nextval('public.report_fields_field_id_seq'::regclass);
 
 
 --
--- Name: report_filters filter_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_filters filter_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_filters ALTER COLUMN filter_id SET DEFAULT nextval('public.report_filters_filter_id_seq'::regclass);
 
 
 --
--- Name: report_join_definitions join_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_join_definitions join_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_join_definitions ALTER COLUMN join_id SET DEFAULT nextval('public.report_join_definitions_join_id_seq'::regclass);
 
 
 --
--- Name: report_kpis kpi_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_kpis kpi_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_kpis ALTER COLUMN kpi_id SET DEFAULT nextval('public.report_kpis_kpi_id_seq'::regclass);
 
 
 --
--- Name: report_run_history run_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_run_history run_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_run_history ALTER COLUMN run_id SET DEFAULT nextval('public.report_run_history_run_id_seq'::regclass);
 
 
 --
--- Name: report_sharing share_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_sharing share_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_sharing ALTER COLUMN share_id SET DEFAULT nextval('public.report_sharing_share_id_seq'::regclass);
 
 
 --
--- Name: report_subscriptions subscription_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_subscriptions subscription_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_subscriptions ALTER COLUMN subscription_id SET DEFAULT nextval('public.report_subscriptions_subscription_id_seq'::regclass);
 
 
 --
--- Name: report_tags tag_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_tags tag_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_tags ALTER COLUMN tag_id SET DEFAULT nextval('public.report_tags_tag_id_seq'::regclass);
 
 
 --
--- Name: report_templates template_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_templates template_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_templates ALTER COLUMN template_id SET DEFAULT nextval('public.report_templates_template_id_seq'::regclass);
 
 
 --
--- Name: report_themes theme_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_themes theme_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_themes ALTER COLUMN theme_id SET DEFAULT nextval('public.report_themes_theme_id_seq'::regclass);
 
 
 --
--- Name: report_versions version_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_versions version_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_versions ALTER COLUMN version_id SET DEFAULT nextval('public.report_versions_version_id_seq'::regclass);
 
 
 --
--- Name: report_view_logs view_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: report_view_logs view_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_view_logs ALTER COLUMN view_id SET DEFAULT nextval('public.report_view_logs_view_id_seq'::regclass);
 
 
 --
--- Name: reports_master report_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: reports_master report_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reports_master ALTER COLUMN report_id SET DEFAULT nextval('public.reports_master_report_id_seq'::regclass);
 
 
 --
--- Name: roles role_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: roles role_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.roles ALTER COLUMN role_id SET DEFAULT nextval('public.roles_role_id_seq'::regclass);
 
 
 --
--- Name: saved_filters filter_set_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: saved_filters filter_set_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.saved_filters ALTER COLUMN filter_set_id SET DEFAULT nextval('public.saved_filters_filter_set_id_seq'::regclass);
 
 
 --
--- Name: scenario_simulations scenario_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: scenario_simulations scenario_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scenario_simulations ALTER COLUMN scenario_id SET DEFAULT nextval('public.scenario_simulations_scenario_id_seq'::regclass);
 
 
 --
--- Name: scheduled_tasks task_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: scheduled_tasks task_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scheduled_tasks ALTER COLUMN task_id SET DEFAULT nextval('public.scheduled_tasks_task_id_seq'::regclass);
 
 
 --
--- Name: scorecard_definitions scorecard_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: scorecard_definitions scorecard_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_definitions ALTER COLUMN scorecard_id SET DEFAULT nextval('public.scorecard_definitions_scorecard_id_seq'::regclass);
 
 
 --
--- Name: scorecard_kpis sc_kpi_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: scorecard_kpis sc_kpi_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_kpis ALTER COLUMN sc_kpi_id SET DEFAULT nextval('public.scorecard_kpis_sc_kpi_id_seq'::regclass);
 
 
 --
--- Name: search_history search_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: search_history search_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.search_history ALTER COLUMN search_id SET DEFAULT nextval('public.search_history_search_id_seq'::regclass);
 
 
 --
--- Name: security_events event_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: security_events event_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.security_events ALTER COLUMN event_id SET DEFAULT nextval('public.security_events_event_id_seq'::regclass);
 
 
 --
--- Name: sessions session_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: sessions session_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.sessions ALTER COLUMN session_id SET DEFAULT nextval('public.sessions_session_id_seq'::regclass);
 
 
 --
--- Name: settings setting_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: settings setting_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.settings ALTER COLUMN setting_id SET DEFAULT nextval('public.settings_setting_id_seq'::regclass);
 
 
 --
--- Name: source_mappings mapping_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: source_mappings mapping_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.source_mappings ALTER COLUMN mapping_id SET DEFAULT nextval('public.source_mappings_mapping_id_seq'::regclass);
 
 
 --
--- Name: subscription_plans plan_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: subscription_plans plan_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.subscription_plans ALTER COLUMN plan_id SET DEFAULT nextval('public.subscription_plans_plan_id_seq'::regclass);
 
 
 --
--- Name: system_metrics metric_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: system_metrics metric_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.system_metrics ALTER COLUMN metric_id SET DEFAULT nextval('public.system_metrics_metric_id_seq'::regclass);
 
 
 --
--- Name: task_history history_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: task_history history_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.task_history ALTER COLUMN history_id SET DEFAULT nextval('public.task_history_history_id_seq'::regclass);
 
 
 --
--- Name: teams team_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: teams team_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.teams ALTER COLUMN team_id SET DEFAULT nextval('public.teams_team_id_seq'::regclass);
 
 
 --
--- Name: tenant_invitations invitation_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: tenant_invitations invitation_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_invitations ALTER COLUMN invitation_id SET DEFAULT nextval('public.tenant_invitations_invitation_id_seq'::regclass);
 
 
 --
--- Name: tenant_subscriptions subscription_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: tenant_subscriptions subscription_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_subscriptions ALTER COLUMN subscription_id SET DEFAULT nextval('public.tenant_subscriptions_subscription_id_seq'::regclass);
 
 
 --
--- Name: tenants tenant_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: tenants tenant_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenants ALTER COLUMN tenant_id SET DEFAULT nextval('public.tenants_tenant_id_seq'::regclass);
 
 
 --
--- Name: translations translation_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: translations translation_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.translations ALTER COLUMN translation_id SET DEFAULT nextval('public.translations_translation_id_seq'::regclass);
 
 
 --
--- Name: trend_analysis trend_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: trend_analysis trend_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.trend_analysis ALTER COLUMN trend_id SET DEFAULT nextval('public.trend_analysis_trend_id_seq'::regclass);
 
 
 --
--- Name: usage_metrics usage_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: usage_metrics usage_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.usage_metrics ALTER COLUMN usage_id SET DEFAULT nextval('public.usage_metrics_usage_id_seq'::regclass);
 
 
 --
--- Name: user_devices device_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: user_devices device_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_devices ALTER COLUMN device_id SET DEFAULT nextval('public.user_devices_device_id_seq'::regclass);
 
 
 --
--- Name: users user_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: users user_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
 
 
 --
--- Name: webhooks hook_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: webhooks hook_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.webhooks ALTER COLUMN hook_id SET DEFAULT nextval('public.webhooks_hook_id_seq'::regclass);
 
 
 --
--- Name: workflow_definitions workflow_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: workflow_definitions workflow_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.workflow_definitions ALTER COLUMN workflow_id SET DEFAULT nextval('public.workflow_definitions_workflow_id_seq'::regclass);
 
 
 --
--- Name: workflow_instances instance_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: workflow_instances instance_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.workflow_instances ALTER COLUMN instance_id SET DEFAULT nextval('public.workflow_instances_instance_id_seq'::regclass);
 
 
 --
--- Name: activity_logs activity_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: activity_logs activity_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.activity_logs
@@ -8065,7 +7497,7 @@ ALTER TABLE ONLY public.activity_logs
 
 
 --
--- Name: ai_insights ai_insights_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ai_insights ai_insights_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ai_insights
@@ -8073,7 +7505,7 @@ ALTER TABLE ONLY public.ai_insights
 
 
 --
--- Name: alert_logs alert_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alert_logs alert_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_logs
@@ -8081,7 +7513,7 @@ ALTER TABLE ONLY public.alert_logs
 
 
 --
--- Name: alert_rules alert_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alert_rules alert_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_rules
@@ -8089,7 +7521,7 @@ ALTER TABLE ONLY public.alert_rules
 
 
 --
--- Name: announcements announcements_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: announcements announcements_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.announcements
@@ -8097,7 +7529,7 @@ ALTER TABLE ONLY public.announcements
 
 
 --
--- Name: anomaly_logs anomaly_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: anomaly_logs anomaly_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.anomaly_logs
@@ -8105,7 +7537,7 @@ ALTER TABLE ONLY public.anomaly_logs
 
 
 --
--- Name: api_keys api_keys_key_hash_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: api_keys api_keys_key_hash_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_keys
@@ -8113,7 +7545,7 @@ ALTER TABLE ONLY public.api_keys
 
 
 --
--- Name: api_keys api_keys_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: api_keys api_keys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_keys
@@ -8121,7 +7553,7 @@ ALTER TABLE ONLY public.api_keys
 
 
 --
--- Name: api_usage_logs api_usage_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: api_usage_logs api_usage_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_usage_logs
@@ -8129,7 +7561,7 @@ ALTER TABLE ONLY public.api_usage_logs
 
 
 --
--- Name: approval_steps approval_steps_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_steps approval_steps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_steps
@@ -8137,7 +7569,7 @@ ALTER TABLE ONLY public.approval_steps
 
 
 --
--- Name: approval_steps approval_steps_workflow_id_step_order_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_steps approval_steps_workflow_id_step_order_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_steps
@@ -8145,7 +7577,7 @@ ALTER TABLE ONLY public.approval_steps
 
 
 --
--- Name: approval_workflows approval_workflows_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_workflows approval_workflows_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_workflows
@@ -8153,7 +7585,7 @@ ALTER TABLE ONLY public.approval_workflows
 
 
 --
--- Name: attachments attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: attachments attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.attachments
@@ -8161,7 +7593,7 @@ ALTER TABLE ONLY public.attachments
 
 
 --
--- Name: audit_logs audit_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: audit_logs audit_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.audit_logs
@@ -8169,7 +7601,7 @@ ALTER TABLE ONLY public.audit_logs
 
 
 --
--- Name: benchmarking_data benchmarking_data_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: benchmarking_data benchmarking_data_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.benchmarking_data
@@ -8177,7 +7609,7 @@ ALTER TABLE ONLY public.benchmarking_data
 
 
 --
--- Name: billing_accounts billing_accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: billing_accounts billing_accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.billing_accounts
@@ -8185,7 +7617,7 @@ ALTER TABLE ONLY public.billing_accounts
 
 
 --
--- Name: billing_accounts billing_accounts_tenant_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: billing_accounts billing_accounts_tenant_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.billing_accounts
@@ -8193,7 +7625,7 @@ ALTER TABLE ONLY public.billing_accounts
 
 
 --
--- Name: blockchain_audit blockchain_audit_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: blockchain_audit blockchain_audit_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.blockchain_audit
@@ -8201,7 +7633,7 @@ ALTER TABLE ONLY public.blockchain_audit
 
 
 --
--- Name: blockchain_audit blockchain_audit_txn_hash_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: blockchain_audit blockchain_audit_txn_hash_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.blockchain_audit
@@ -8209,7 +7641,7 @@ ALTER TABLE ONLY public.blockchain_audit
 
 
 --
--- Name: chat_feedback chat_feedback_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_feedback chat_feedback_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_feedback
@@ -8217,7 +7649,7 @@ ALTER TABLE ONLY public.chat_feedback
 
 
 --
--- Name: chat_intents chat_intents_intent_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_intents chat_intents_intent_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_intents
@@ -8225,7 +7657,7 @@ ALTER TABLE ONLY public.chat_intents
 
 
 --
--- Name: chat_intents chat_intents_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_intents chat_intents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_intents
@@ -8233,7 +7665,7 @@ ALTER TABLE ONLY public.chat_intents
 
 
 --
--- Name: chat_queries chat_queries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_queries chat_queries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_queries
@@ -8241,7 +7673,7 @@ ALTER TABLE ONLY public.chat_queries
 
 
 --
--- Name: chat_responses chat_responses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_responses chat_responses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_responses
@@ -8249,7 +7681,7 @@ ALTER TABLE ONLY public.chat_responses
 
 
 --
--- Name: chat_sessions chat_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_sessions chat_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_sessions
@@ -8257,7 +7689,7 @@ ALTER TABLE ONLY public.chat_sessions
 
 
 --
--- Name: compliance_audit compliance_audit_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_audit compliance_audit_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_audit
@@ -8265,7 +7697,7 @@ ALTER TABLE ONLY public.compliance_audit
 
 
 --
--- Name: compliance_calendar compliance_calendar_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_calendar compliance_calendar_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_calendar
@@ -8273,7 +7705,7 @@ ALTER TABLE ONLY public.compliance_calendar
 
 
 --
--- Name: compliance_documents compliance_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_documents compliance_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_documents
@@ -8281,7 +7713,7 @@ ALTER TABLE ONLY public.compliance_documents
 
 
 --
--- Name: compliance_rules compliance_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_rules compliance_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_rules
@@ -8289,7 +7721,7 @@ ALTER TABLE ONLY public.compliance_rules
 
 
 --
--- Name: compliance_submissions compliance_submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_submissions compliance_submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_submissions
@@ -8297,7 +7729,7 @@ ALTER TABLE ONLY public.compliance_submissions
 
 
 --
--- Name: connector_sync_logs connector_sync_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: connector_sync_logs connector_sync_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connector_sync_logs
@@ -8305,7 +7737,7 @@ ALTER TABLE ONLY public.connector_sync_logs
 
 
 --
--- Name: connector_types connector_types_connector_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: connector_types connector_types_connector_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connector_types
@@ -8313,7 +7745,7 @@ ALTER TABLE ONLY public.connector_types
 
 
 --
--- Name: connector_types connector_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: connector_types connector_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connector_types
@@ -8321,7 +7753,7 @@ ALTER TABLE ONLY public.connector_types
 
 
 --
--- Name: correlation_matrix correlation_matrix_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: correlation_matrix correlation_matrix_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.correlation_matrix
@@ -8329,7 +7761,7 @@ ALTER TABLE ONLY public.correlation_matrix
 
 
 --
--- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.countries
@@ -8337,7 +7769,7 @@ ALTER TABLE ONLY public.countries
 
 
 --
--- Name: currencies currencies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: currencies currencies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.currencies
@@ -8345,7 +7777,7 @@ ALTER TABLE ONLY public.currencies
 
 
 --
--- Name: custom_report_definitions custom_report_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: custom_report_definitions custom_report_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.custom_report_definitions
@@ -8353,7 +7785,7 @@ ALTER TABLE ONLY public.custom_report_definitions
 
 
 --
--- Name: dashboard_widgets dashboard_widgets_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: dashboard_widgets dashboard_widgets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dashboard_widgets
@@ -8361,7 +7793,7 @@ ALTER TABLE ONLY public.dashboard_widgets
 
 
 --
--- Name: dashboards dashboards_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: dashboards dashboards_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dashboards
@@ -8369,7 +7801,7 @@ ALTER TABLE ONLY public.dashboards
 
 
 --
--- Name: data_consent data_consent_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_consent data_consent_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_consent
@@ -8377,7 +7809,7 @@ ALTER TABLE ONLY public.data_consent
 
 
 --
--- Name: data_consent data_consent_user_id_consent_type_version_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_consent data_consent_user_id_consent_type_version_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_consent
@@ -8385,7 +7817,7 @@ ALTER TABLE ONLY public.data_consent
 
 
 --
--- Name: data_ingestion_logs data_ingestion_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_ingestion_logs data_ingestion_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_ingestion_logs
@@ -8393,7 +7825,7 @@ ALTER TABLE ONLY public.data_ingestion_logs
 
 
 --
--- Name: data_lineage data_lineage_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_lineage data_lineage_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_lineage
@@ -8401,7 +7833,7 @@ ALTER TABLE ONLY public.data_lineage
 
 
 --
--- Name: data_masking_rules data_masking_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_masking_rules data_masking_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_masking_rules
@@ -8409,7 +7841,7 @@ ALTER TABLE ONLY public.data_masking_rules
 
 
 --
--- Name: data_quality_scores data_quality_scores_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_quality_scores data_quality_scores_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_quality_scores
@@ -8417,7 +7849,7 @@ ALTER TABLE ONLY public.data_quality_scores
 
 
 --
--- Name: data_retention_policies data_retention_policies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_retention_policies data_retention_policies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_retention_policies
@@ -8425,7 +7857,7 @@ ALTER TABLE ONLY public.data_retention_policies
 
 
 --
--- Name: data_sources data_sources_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_sources data_sources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_sources
@@ -8433,7 +7865,7 @@ ALTER TABLE ONLY public.data_sources
 
 
 --
--- Name: data_uploads data_uploads_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_uploads data_uploads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_uploads
@@ -8441,7 +7873,7 @@ ALTER TABLE ONLY public.data_uploads
 
 
 --
--- Name: data_validation_rules data_validation_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_validation_rules data_validation_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_validation_rules
@@ -8449,7 +7881,7 @@ ALTER TABLE ONLY public.data_validation_rules
 
 
 --
--- Name: deployment_logs deployment_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: deployment_logs deployment_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.deployment_logs
@@ -8457,7 +7889,7 @@ ALTER TABLE ONLY public.deployment_logs
 
 
 --
--- Name: distribution_lists distribution_lists_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_lists distribution_lists_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_lists
@@ -8465,7 +7897,7 @@ ALTER TABLE ONLY public.distribution_lists
 
 
 --
--- Name: distribution_lists distribution_lists_tenant_id_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_lists distribution_lists_tenant_id_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_lists
@@ -8473,7 +7905,7 @@ ALTER TABLE ONLY public.distribution_lists
 
 
 --
--- Name: distribution_members distribution_members_list_id_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_members distribution_members_list_id_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_members
@@ -8481,7 +7913,7 @@ ALTER TABLE ONLY public.distribution_members
 
 
 --
--- Name: distribution_members distribution_members_list_id_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_members distribution_members_list_id_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_members
@@ -8489,7 +7921,7 @@ ALTER TABLE ONLY public.distribution_members
 
 
 --
--- Name: distribution_members distribution_members_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_members distribution_members_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_members
@@ -8497,7 +7929,7 @@ ALTER TABLE ONLY public.distribution_members
 
 
 --
--- Name: domains domains_domain_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: domains domains_domain_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.domains
@@ -8505,7 +7937,7 @@ ALTER TABLE ONLY public.domains
 
 
 --
--- Name: domains domains_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: domains domains_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.domains
@@ -8513,7 +7945,7 @@ ALTER TABLE ONLY public.domains
 
 
 --
--- Name: domains domains_slug_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: domains domains_slug_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.domains
@@ -8521,7 +7953,7 @@ ALTER TABLE ONLY public.domains
 
 
 --
--- Name: email_queue email_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: email_queue email_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.email_queue
@@ -8529,7 +7961,7 @@ ALTER TABLE ONLY public.email_queue
 
 
 --
--- Name: error_logs error_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: error_logs error_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.error_logs
@@ -8537,7 +7969,7 @@ ALTER TABLE ONLY public.error_logs
 
 
 --
--- Name: esg_scores esg_scores_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: esg_scores esg_scores_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.esg_scores
@@ -8545,7 +7977,7 @@ ALTER TABLE ONLY public.esg_scores
 
 
 --
--- Name: etl_jobs etl_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: etl_jobs etl_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.etl_jobs
@@ -8553,7 +7985,7 @@ ALTER TABLE ONLY public.etl_jobs
 
 
 --
--- Name: exchange_rates exchange_rates_from_currency_to_currency_effective_date_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: exchange_rates exchange_rates_from_currency_to_currency_effective_date_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.exchange_rates
@@ -8561,7 +7993,7 @@ ALTER TABLE ONLY public.exchange_rates
 
 
 --
--- Name: exchange_rates exchange_rates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: exchange_rates exchange_rates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.exchange_rates
@@ -8569,7 +8001,7 @@ ALTER TABLE ONLY public.exchange_rates
 
 
 --
--- Name: executive_narratives executive_narratives_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: executive_narratives executive_narratives_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.executive_narratives
@@ -8577,7 +8009,7 @@ ALTER TABLE ONLY public.executive_narratives
 
 
 --
--- Name: export_history export_history_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: export_history export_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_history
@@ -8585,7 +8017,7 @@ ALTER TABLE ONLY public.export_history
 
 
 --
--- Name: export_templates export_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: export_templates export_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_templates
@@ -8593,7 +8025,7 @@ ALTER TABLE ONLY public.export_templates
 
 
 --
--- Name: external_feeds external_feeds_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: external_feeds external_feeds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.external_feeds
@@ -8601,7 +8033,7 @@ ALTER TABLE ONLY public.external_feeds
 
 
 --
--- Name: feature_flags feature_flags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: feature_flags feature_flags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.feature_flags
@@ -8609,7 +8041,7 @@ ALTER TABLE ONLY public.feature_flags
 
 
 --
--- Name: feature_flags feature_flags_tenant_id_flag_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: feature_flags feature_flags_tenant_id_flag_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.feature_flags
@@ -8617,7 +8049,7 @@ ALTER TABLE ONLY public.feature_flags
 
 
 --
--- Name: fiscal_calendars fiscal_calendars_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fiscal_calendars fiscal_calendars_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.fiscal_calendars
@@ -8625,7 +8057,7 @@ ALTER TABLE ONLY public.fiscal_calendars
 
 
 --
--- Name: fiscal_calendars fiscal_calendars_tenant_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fiscal_calendars fiscal_calendars_tenant_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.fiscal_calendars
@@ -8633,7 +8065,7 @@ ALTER TABLE ONLY public.fiscal_calendars
 
 
 --
--- Name: forecast_models forecast_models_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: forecast_models forecast_models_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.forecast_models
@@ -8641,7 +8073,7 @@ ALTER TABLE ONLY public.forecast_models
 
 
 --
--- Name: gdpr_requests gdpr_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: gdpr_requests gdpr_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gdpr_requests
@@ -8649,7 +8081,7 @@ ALTER TABLE ONLY public.gdpr_requests
 
 
 --
--- Name: integration_logs integration_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: integration_logs integration_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.integration_logs
@@ -8657,7 +8089,7 @@ ALTER TABLE ONLY public.integration_logs
 
 
 --
--- Name: ip_allowlist ip_allowlist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ip_allowlist ip_allowlist_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ip_allowlist
@@ -8665,7 +8097,7 @@ ALTER TABLE ONLY public.ip_allowlist
 
 
 --
--- Name: ip_allowlist ip_allowlist_tenant_id_cidr_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ip_allowlist ip_allowlist_tenant_id_cidr_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ip_allowlist
@@ -8673,7 +8105,7 @@ ALTER TABLE ONLY public.ip_allowlist
 
 
 --
--- Name: job_queue job_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: job_queue job_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.job_queue
@@ -8681,7 +8113,7 @@ ALTER TABLE ONLY public.job_queue
 
 
 --
--- Name: kpi_benchmarks kpi_benchmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: kpi_benchmarks kpi_benchmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.kpi_benchmarks
@@ -8689,7 +8121,7 @@ ALTER TABLE ONLY public.kpi_benchmarks
 
 
 --
--- Name: kpi_history kpi_history_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: kpi_history kpi_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.kpi_history
@@ -8697,7 +8129,7 @@ ALTER TABLE ONLY public.kpi_history
 
 
 --
--- Name: llm_usage_logs llm_usage_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: llm_usage_logs llm_usage_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.llm_usage_logs
@@ -8705,7 +8137,7 @@ ALTER TABLE ONLY public.llm_usage_logs
 
 
 --
--- Name: localization localization_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: localization localization_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.localization
@@ -8713,7 +8145,7 @@ ALTER TABLE ONLY public.localization
 
 
 --
--- Name: localization localization_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: localization localization_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.localization
@@ -8721,7 +8153,7 @@ ALTER TABLE ONLY public.localization
 
 
 --
--- Name: message_streams message_streams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: message_streams message_streams_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.message_streams
@@ -8729,7 +8161,7 @@ ALTER TABLE ONLY public.message_streams
 
 
 --
--- Name: metric_definitions metric_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: metric_definitions metric_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.metric_definitions
@@ -8737,7 +8169,7 @@ ALTER TABLE ONLY public.metric_definitions
 
 
 --
--- Name: metric_definitions metric_definitions_tenant_id_metric_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: metric_definitions metric_definitions_tenant_id_metric_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.metric_definitions
@@ -8745,7 +8177,7 @@ ALTER TABLE ONLY public.metric_definitions
 
 
 --
--- Name: mfa_settings mfa_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: mfa_settings mfa_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mfa_settings
@@ -8753,7 +8185,7 @@ ALTER TABLE ONLY public.mfa_settings
 
 
 --
--- Name: mfa_settings mfa_settings_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: mfa_settings mfa_settings_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mfa_settings
@@ -8761,7 +8193,7 @@ ALTER TABLE ONLY public.mfa_settings
 
 
 --
--- Name: model_training_history model_training_history_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: model_training_history model_training_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.model_training_history
@@ -8769,7 +8201,7 @@ ALTER TABLE ONLY public.model_training_history
 
 
 --
--- Name: notification_templates notification_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification_templates notification_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notification_templates
@@ -8777,7 +8209,7 @@ ALTER TABLE ONLY public.notification_templates
 
 
 --
--- Name: notification_templates notification_templates_tenant_id_template_code_channel_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification_templates notification_templates_tenant_id_template_code_channel_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notification_templates
@@ -8785,7 +8217,7 @@ ALTER TABLE ONLY public.notification_templates
 
 
 --
--- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notifications
@@ -8793,7 +8225,7 @@ ALTER TABLE ONLY public.notifications
 
 
 --
--- Name: oauth_providers oauth_providers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: oauth_providers oauth_providers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.oauth_providers
@@ -8801,7 +8233,7 @@ ALTER TABLE ONLY public.oauth_providers
 
 
 --
--- Name: oauth_providers oauth_providers_tenant_id_provider_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: oauth_providers oauth_providers_tenant_id_provider_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.oauth_providers
@@ -8809,7 +8241,7 @@ ALTER TABLE ONLY public.oauth_providers
 
 
 --
--- Name: partner_integrations partner_integrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: partner_integrations partner_integrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.partner_integrations
@@ -8817,7 +8249,7 @@ ALTER TABLE ONLY public.partner_integrations
 
 
 --
--- Name: password_reset_tokens password_reset_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: password_reset_tokens password_reset_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.password_reset_tokens
@@ -8825,7 +8257,7 @@ ALTER TABLE ONLY public.password_reset_tokens
 
 
 --
--- Name: password_reset_tokens password_reset_tokens_token_hash_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: password_reset_tokens password_reset_tokens_token_hash_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.password_reset_tokens
@@ -8833,7 +8265,7 @@ ALTER TABLE ONLY public.password_reset_tokens
 
 
 --
--- Name: permissions permissions_perm_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: permissions permissions_perm_code_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.permissions
@@ -8841,7 +8273,7 @@ ALTER TABLE ONLY public.permissions
 
 
 --
--- Name: permissions permissions_perm_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: permissions permissions_perm_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.permissions
@@ -8849,7 +8281,7 @@ ALTER TABLE ONLY public.permissions
 
 
 --
--- Name: permissions permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: permissions permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.permissions
@@ -8857,7 +8289,7 @@ ALTER TABLE ONLY public.permissions
 
 
 --
--- Name: plan_features plan_features_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: plan_features plan_features_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.plan_features
@@ -8865,7 +8297,7 @@ ALTER TABLE ONLY public.plan_features
 
 
 --
--- Name: plan_features plan_features_plan_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: plan_features plan_features_plan_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.plan_features
@@ -8873,7 +8305,7 @@ ALTER TABLE ONLY public.plan_features
 
 
 --
--- Name: preferences preferences_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: preferences preferences_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.preferences
@@ -8881,7 +8313,7 @@ ALTER TABLE ONLY public.preferences
 
 
 --
--- Name: preferences preferences_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: preferences preferences_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.preferences
@@ -8889,7 +8321,7 @@ ALTER TABLE ONLY public.preferences
 
 
 --
--- Name: rate_limit_config rate_limit_config_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: rate_limit_config rate_limit_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.rate_limit_config
@@ -8897,7 +8329,7 @@ ALTER TABLE ONLY public.rate_limit_config
 
 
 --
--- Name: recommendations recommendations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: recommendations recommendations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.recommendations
@@ -8905,7 +8337,7 @@ ALTER TABLE ONLY public.recommendations
 
 
 --
--- Name: regions regions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: regions regions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.regions
@@ -8913,7 +8345,7 @@ ALTER TABLE ONLY public.regions
 
 
 --
--- Name: regions regions_region_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: regions regions_region_code_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.regions
@@ -8921,7 +8353,7 @@ ALTER TABLE ONLY public.regions
 
 
 --
--- Name: regulatory_contacts regulatory_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: regulatory_contacts regulatory_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.regulatory_contacts
@@ -8929,7 +8361,7 @@ ALTER TABLE ONLY public.regulatory_contacts
 
 
 --
--- Name: report_access_policies report_access_policies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_access_policies report_access_policies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_access_policies
@@ -8937,7 +8369,7 @@ ALTER TABLE ONLY public.report_access_policies
 
 
 --
--- Name: report_annotations report_annotations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_annotations report_annotations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_annotations
@@ -8945,7 +8377,7 @@ ALTER TABLE ONLY public.report_annotations
 
 
 --
--- Name: report_approvals report_approvals_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_approvals report_approvals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_approvals
@@ -8953,7 +8385,7 @@ ALTER TABLE ONLY public.report_approvals
 
 
 --
--- Name: report_bookmarks report_bookmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_bookmarks report_bookmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_bookmarks
@@ -8961,7 +8393,7 @@ ALTER TABLE ONLY public.report_bookmarks
 
 
 --
--- Name: report_bookmarks report_bookmarks_user_id_report_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_bookmarks report_bookmarks_user_id_report_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_bookmarks
@@ -8969,7 +8401,7 @@ ALTER TABLE ONLY public.report_bookmarks
 
 
 --
--- Name: report_comments report_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_comments report_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_comments
@@ -8977,7 +8409,7 @@ ALTER TABLE ONLY public.report_comments
 
 
 --
--- Name: report_data report_data_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_data report_data_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_data
@@ -8985,7 +8417,7 @@ ALTER TABLE ONLY public.report_data
 
 
 --
--- Name: report_fields report_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_fields report_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_fields
@@ -8993,7 +8425,7 @@ ALTER TABLE ONLY public.report_fields
 
 
 --
--- Name: report_filters report_filters_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_filters report_filters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_filters
@@ -9001,7 +8433,7 @@ ALTER TABLE ONLY public.report_filters
 
 
 --
--- Name: report_join_definitions report_join_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_join_definitions report_join_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_join_definitions
@@ -9009,7 +8441,7 @@ ALTER TABLE ONLY public.report_join_definitions
 
 
 --
--- Name: report_kpis report_kpis_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_kpis report_kpis_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_kpis
@@ -9017,7 +8449,7 @@ ALTER TABLE ONLY public.report_kpis
 
 
 --
--- Name: report_run_history report_run_history_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_run_history report_run_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_run_history
@@ -9025,7 +8457,7 @@ ALTER TABLE ONLY public.report_run_history
 
 
 --
--- Name: report_sharing report_sharing_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_sharing report_sharing_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_sharing
@@ -9033,7 +8465,7 @@ ALTER TABLE ONLY public.report_sharing
 
 
 --
--- Name: report_sharing report_sharing_share_token_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_sharing report_sharing_share_token_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_sharing
@@ -9041,7 +8473,7 @@ ALTER TABLE ONLY public.report_sharing
 
 
 --
--- Name: report_subscriptions report_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_subscriptions report_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_subscriptions
@@ -9049,7 +8481,7 @@ ALTER TABLE ONLY public.report_subscriptions
 
 
 --
--- Name: report_subscriptions report_subscriptions_user_id_report_id_delivery_channel_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_subscriptions report_subscriptions_user_id_report_id_delivery_channel_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_subscriptions
@@ -9057,7 +8489,7 @@ ALTER TABLE ONLY public.report_subscriptions
 
 
 --
--- Name: report_tags report_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_tags report_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_tags
@@ -9065,7 +8497,7 @@ ALTER TABLE ONLY public.report_tags
 
 
 --
--- Name: report_tags report_tags_report_id_tag_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_tags report_tags_report_id_tag_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_tags
@@ -9073,7 +8505,7 @@ ALTER TABLE ONLY public.report_tags
 
 
 --
--- Name: report_templates report_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_templates report_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_templates
@@ -9081,7 +8513,7 @@ ALTER TABLE ONLY public.report_templates
 
 
 --
--- Name: report_themes report_themes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_themes report_themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_themes
@@ -9089,7 +8521,7 @@ ALTER TABLE ONLY public.report_themes
 
 
 --
--- Name: report_versions report_versions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_versions report_versions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_versions
@@ -9097,7 +8529,7 @@ ALTER TABLE ONLY public.report_versions
 
 
 --
--- Name: report_versions report_versions_report_id_version_number_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_versions report_versions_report_id_version_number_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_versions
@@ -9105,7 +8537,7 @@ ALTER TABLE ONLY public.report_versions
 
 
 --
--- Name: report_view_logs report_view_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_view_logs report_view_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_view_logs
@@ -9113,7 +8545,7 @@ ALTER TABLE ONLY public.report_view_logs
 
 
 --
--- Name: reports_master reports_master_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: reports_master reports_master_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reports_master
@@ -9121,7 +8553,7 @@ ALTER TABLE ONLY public.reports_master
 
 
 --
--- Name: role_permissions role_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: role_permissions role_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.role_permissions
@@ -9129,7 +8561,7 @@ ALTER TABLE ONLY public.role_permissions
 
 
 --
--- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.roles
@@ -9137,7 +8569,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- Name: saved_filters saved_filters_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: saved_filters saved_filters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.saved_filters
@@ -9145,7 +8577,7 @@ ALTER TABLE ONLY public.saved_filters
 
 
 --
--- Name: scenario_simulations scenario_simulations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scenario_simulations scenario_simulations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scenario_simulations
@@ -9153,7 +8585,7 @@ ALTER TABLE ONLY public.scenario_simulations
 
 
 --
--- Name: scheduled_tasks scheduled_tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scheduled_tasks scheduled_tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scheduled_tasks
@@ -9161,7 +8593,7 @@ ALTER TABLE ONLY public.scheduled_tasks
 
 
 --
--- Name: scorecard_definitions scorecard_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scorecard_definitions scorecard_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_definitions
@@ -9169,7 +8601,7 @@ ALTER TABLE ONLY public.scorecard_definitions
 
 
 --
--- Name: scorecard_kpis scorecard_kpis_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scorecard_kpis scorecard_kpis_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_kpis
@@ -9177,7 +8609,7 @@ ALTER TABLE ONLY public.scorecard_kpis
 
 
 --
--- Name: scorecard_kpis scorecard_kpis_scorecard_id_kpi_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scorecard_kpis scorecard_kpis_scorecard_id_kpi_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_kpis
@@ -9185,7 +8617,7 @@ ALTER TABLE ONLY public.scorecard_kpis
 
 
 --
--- Name: search_history search_history_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: search_history search_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.search_history
@@ -9193,7 +8625,7 @@ ALTER TABLE ONLY public.search_history
 
 
 --
--- Name: security_events security_events_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: security_events security_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.security_events
@@ -9201,7 +8633,7 @@ ALTER TABLE ONLY public.security_events
 
 
 --
--- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.sessions
@@ -9209,7 +8641,7 @@ ALTER TABLE ONLY public.sessions
 
 
 --
--- Name: sessions sessions_token_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sessions sessions_token_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.sessions
@@ -9217,7 +8649,7 @@ ALTER TABLE ONLY public.sessions
 
 
 --
--- Name: settings settings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: settings settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.settings
@@ -9225,7 +8657,7 @@ ALTER TABLE ONLY public.settings
 
 
 --
--- Name: settings settings_tenant_id_setting_key_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: settings settings_tenant_id_setting_key_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.settings
@@ -9233,7 +8665,7 @@ ALTER TABLE ONLY public.settings
 
 
 --
--- Name: source_mappings source_mappings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: source_mappings source_mappings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.source_mappings
@@ -9241,7 +8673,7 @@ ALTER TABLE ONLY public.source_mappings
 
 
 --
--- Name: subscription_plans subscription_plans_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: subscription_plans subscription_plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.subscription_plans
@@ -9249,7 +8681,7 @@ ALTER TABLE ONLY public.subscription_plans
 
 
 --
--- Name: subscription_plans subscription_plans_plan_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: subscription_plans subscription_plans_plan_code_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.subscription_plans
@@ -9257,7 +8689,7 @@ ALTER TABLE ONLY public.subscription_plans
 
 
 --
--- Name: system_metrics system_metrics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: system_metrics system_metrics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.system_metrics
@@ -9265,7 +8697,7 @@ ALTER TABLE ONLY public.system_metrics
 
 
 --
--- Name: task_history task_history_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: task_history task_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.task_history
@@ -9273,7 +8705,7 @@ ALTER TABLE ONLY public.task_history
 
 
 --
--- Name: team_members team_members_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: team_members team_members_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.team_members
@@ -9281,7 +8713,7 @@ ALTER TABLE ONLY public.team_members
 
 
 --
--- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.teams
@@ -9289,7 +8721,7 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: teams teams_tenant_id_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: teams teams_tenant_id_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.teams
@@ -9297,7 +8729,7 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: tenant_invitations tenant_invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenant_invitations tenant_invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_invitations
@@ -9305,7 +8737,7 @@ ALTER TABLE ONLY public.tenant_invitations
 
 
 --
--- Name: tenant_invitations tenant_invitations_token_hash_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenant_invitations tenant_invitations_token_hash_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_invitations
@@ -9313,7 +8745,7 @@ ALTER TABLE ONLY public.tenant_invitations
 
 
 --
--- Name: tenant_subscriptions tenant_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenant_subscriptions tenant_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_subscriptions
@@ -9321,7 +8753,7 @@ ALTER TABLE ONLY public.tenant_subscriptions
 
 
 --
--- Name: tenants tenants_domain_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenants tenants_domain_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenants
@@ -9329,7 +8761,7 @@ ALTER TABLE ONLY public.tenants
 
 
 --
--- Name: tenants tenants_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenants tenants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenants
@@ -9337,7 +8769,7 @@ ALTER TABLE ONLY public.tenants
 
 
 --
--- Name: translations translations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: translations translations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.translations
@@ -9345,7 +8777,7 @@ ALTER TABLE ONLY public.translations
 
 
 --
--- Name: translations translations_translation_key_language_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: translations translations_translation_key_language_code_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.translations
@@ -9353,7 +8785,7 @@ ALTER TABLE ONLY public.translations
 
 
 --
--- Name: trend_analysis trend_analysis_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: trend_analysis trend_analysis_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.trend_analysis
@@ -9361,7 +8793,7 @@ ALTER TABLE ONLY public.trend_analysis
 
 
 --
--- Name: upload_validation_rules upload_validation_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: upload_validation_rules upload_validation_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.upload_validation_rules
@@ -9369,7 +8801,7 @@ ALTER TABLE ONLY public.upload_validation_rules
 
 
 --
--- Name: usage_metrics usage_metrics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: usage_metrics usage_metrics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.usage_metrics
@@ -9377,7 +8809,7 @@ ALTER TABLE ONLY public.usage_metrics
 
 
 --
--- Name: user_devices user_devices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_devices user_devices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_devices
@@ -9385,7 +8817,7 @@ ALTER TABLE ONLY public.user_devices
 
 
 --
--- Name: user_devices user_devices_user_id_device_fingerprint_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_devices user_devices_user_id_device_fingerprint_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_devices
@@ -9393,7 +8825,7 @@ ALTER TABLE ONLY public.user_devices
 
 
 --
--- Name: user_roles user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_roles user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_roles
@@ -9401,7 +8833,7 @@ ALTER TABLE ONLY public.user_roles
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -9409,7 +8841,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: users users_tenant_id_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_tenant_id_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -9417,7 +8849,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: webhooks webhooks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: webhooks webhooks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.webhooks
@@ -9425,7 +8857,7 @@ ALTER TABLE ONLY public.webhooks
 
 
 --
--- Name: workflow_definitions workflow_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: workflow_definitions workflow_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.workflow_definitions
@@ -9433,7 +8865,7 @@ ALTER TABLE ONLY public.workflow_definitions
 
 
 --
--- Name: workflow_instances workflow_instances_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: workflow_instances workflow_instances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.workflow_instances
@@ -9441,1449 +8873,1449 @@ ALTER TABLE ONLY public.workflow_instances
 
 
 --
--- Name: idx_activity_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_activity_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_activity_user ON public.activity_logs USING btree (user_id);
 
 
 --
--- Name: idx_alert_logs_rule; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_alert_logs_rule; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_alert_logs_rule ON public.alert_logs USING btree (rule_id);
 
 
 --
--- Name: idx_alert_logs_ts; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_alert_logs_ts; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_alert_logs_ts ON public.alert_logs USING btree (triggered_at);
 
 
 --
--- Name: idx_annotations_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_annotations_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_annotations_report ON public.report_annotations USING btree (report_id);
 
 
 --
--- Name: idx_annotations_run; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_annotations_run; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_annotations_run ON public.report_annotations USING btree (run_id);
 
 
 --
--- Name: idx_annotations_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_annotations_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_annotations_user ON public.report_annotations USING btree (user_id);
 
 
 --
--- Name: idx_announcements_ten; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_announcements_ten; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_announcements_ten ON public.announcements USING btree (tenant_id);
 
 
 --
--- Name: idx_announcements_vis; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_announcements_vis; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_announcements_vis ON public.announcements USING btree (visible_from, visible_to);
 
 
 --
--- Name: idx_anomaly_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_anomaly_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_anomaly_report ON public.anomaly_logs USING btree (report_id);
 
 
 --
--- Name: idx_anomaly_severity; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_anomaly_severity; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_anomaly_severity ON public.anomaly_logs USING btree (severity);
 
 
 --
--- Name: idx_api_keys_active; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_api_keys_active; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_api_keys_active ON public.api_keys USING btree (is_active);
 
 
 --
--- Name: idx_api_keys_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_api_keys_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_api_keys_tenant ON public.api_keys USING btree (tenant_id);
 
 
 --
--- Name: idx_api_usage_created; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_api_usage_created; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_api_usage_created ON public.api_usage_logs USING btree (created_at);
 
 
 --
--- Name: idx_api_usage_endpoint; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_api_usage_endpoint; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_api_usage_endpoint ON public.api_usage_logs USING btree (endpoint);
 
 
 --
--- Name: idx_api_usage_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_api_usage_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_api_usage_key ON public.api_usage_logs USING btree (api_key_id);
 
 
 --
--- Name: idx_api_usage_logs_created_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_api_usage_logs_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_api_usage_logs_created_at ON public.api_usage_logs USING btree (created_at DESC);
 
 
 --
--- Name: idx_api_usage_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_api_usage_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_api_usage_tenant ON public.api_usage_logs USING btree (tenant_id);
 
 
 --
--- Name: idx_approvals_approver; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_approvals_approver; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_approvals_approver ON public.report_approvals USING btree (approver_id);
 
 
 --
--- Name: idx_approvals_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_approvals_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_approvals_report ON public.report_approvals USING btree (report_id);
 
 
 --
--- Name: idx_approvals_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_approvals_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_approvals_status ON public.report_approvals USING btree (status);
 
 
 --
--- Name: idx_apstep_workflow; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_apstep_workflow; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_apstep_workflow ON public.approval_steps USING btree (workflow_id);
 
 
 --
--- Name: idx_apwf_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_apwf_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_apwf_report ON public.approval_workflows USING btree (report_id);
 
 
 --
--- Name: idx_apwf_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_apwf_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_apwf_tenant ON public.approval_workflows USING btree (tenant_id);
 
 
 --
--- Name: idx_audit_created_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_audit_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_audit_created_at ON public.audit_logs USING btree (created_at);
 
 
 --
--- Name: idx_audit_event_type; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_audit_event_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_audit_event_type ON public.audit_logs USING btree (action);
 
 
 --
--- Name: idx_audit_logs_created_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_audit_logs_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_audit_logs_created_at ON public.audit_logs USING btree (created_at DESC);
 
 
 --
--- Name: idx_audit_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_audit_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_audit_tenant ON public.audit_logs USING btree (tenant_id);
 
 
 --
--- Name: idx_audit_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_audit_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_audit_user ON public.audit_logs USING btree (user_id);
 
 
 --
--- Name: idx_bookmarks_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_bookmarks_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_bookmarks_report ON public.report_bookmarks USING btree (report_id);
 
 
 --
--- Name: idx_bookmarks_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_bookmarks_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_bookmarks_user ON public.report_bookmarks USING btree (user_id);
 
 
 --
--- Name: idx_cal_due_date; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_cal_due_date; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_cal_due_date ON public.compliance_calendar USING btree (due_date);
 
 
 --
--- Name: idx_cal_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_cal_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_cal_report ON public.compliance_calendar USING btree (report_id);
 
 
 --
--- Name: idx_cal_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_cal_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_cal_status ON public.compliance_calendar USING btree (status);
 
 
 --
--- Name: idx_cal_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_cal_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_cal_tenant ON public.compliance_calendar USING btree (tenant_id);
 
 
 --
--- Name: idx_chat_q_session; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_chat_q_session; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_chat_q_session ON public.chat_queries USING btree (session_id);
 
 
 --
--- Name: idx_chat_r_query; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_chat_r_query; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_chat_r_query ON public.chat_responses USING btree (query_id);
 
 
 --
--- Name: idx_chat_sess_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_chat_sess_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_chat_sess_tenant ON public.chat_sessions USING btree (tenant_id);
 
 
 --
--- Name: idx_chat_sess_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_chat_sess_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_chat_sess_user ON public.chat_sessions USING btree (user_id);
 
 
 --
--- Name: idx_conn_sync_source; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_conn_sync_source; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_conn_sync_source ON public.connector_sync_logs USING btree (source_id);
 
 
 --
--- Name: idx_conn_sync_started; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_conn_sync_started; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_conn_sync_started ON public.connector_sync_logs USING btree (started_at);
 
 
 --
--- Name: idx_conn_sync_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_conn_sync_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_conn_sync_status ON public.connector_sync_logs USING btree (status);
 
 
 --
--- Name: idx_conn_sync_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_conn_sync_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_conn_sync_tenant ON public.connector_sync_logs USING btree (tenant_id);
 
 
 --
--- Name: idx_consent_type; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_consent_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_consent_type ON public.data_consent USING btree (consent_type);
 
 
 --
--- Name: idx_consent_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_consent_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_consent_user ON public.data_consent USING btree (user_id);
 
 
 --
--- Name: idx_countries_currency; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_countries_currency; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_countries_currency ON public.countries USING btree (currency_code);
 
 
 --
--- Name: idx_countries_region; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_countries_region; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_countries_region ON public.countries USING btree (region_id);
 
 
 --
--- Name: idx_custom_rpt_created; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_custom_rpt_created; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_custom_rpt_created ON public.custom_report_definitions USING btree (created_by);
 
 
 --
--- Name: idx_custom_rpt_domain; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_custom_rpt_domain; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_custom_rpt_domain ON public.custom_report_definitions USING btree (domain_id);
 
 
 --
--- Name: idx_custom_rpt_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_custom_rpt_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_custom_rpt_tenant ON public.custom_report_definitions USING btree (tenant_id);
 
 
 --
--- Name: idx_dashboards_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_dashboards_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_dashboards_tenant ON public.dashboards USING btree (tenant_id);
 
 
 --
--- Name: idx_dashboards_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_dashboards_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_dashboards_user ON public.dashboards USING btree (user_id);
 
 
 --
--- Name: idx_distlist_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_distlist_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_distlist_tenant ON public.distribution_lists USING btree (tenant_id);
 
 
 --
--- Name: idx_distmem_list; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_distmem_list; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_distmem_list ON public.distribution_members USING btree (list_id);
 
 
 --
--- Name: idx_distmem_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_distmem_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_distmem_user ON public.distribution_members USING btree (user_id);
 
 
 --
--- Name: idx_dqs_upload; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_dqs_upload; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_dqs_upload ON public.data_quality_scores USING btree (upload_id);
 
 
 --
--- Name: idx_dw_dashboard; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_dw_dashboard; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_dw_dashboard ON public.dashboard_widgets USING btree (dashboard_id);
 
 
 --
--- Name: idx_dw_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_dw_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_dw_report ON public.dashboard_widgets USING btree (report_id);
 
 
 --
--- Name: idx_email_queue_retry; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_email_queue_retry; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_email_queue_retry ON public.email_queue USING btree (next_retry_at);
 
 
 --
--- Name: idx_email_queue_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_email_queue_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_email_queue_status ON public.email_queue USING btree (status);
 
 
 --
--- Name: idx_email_queue_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_email_queue_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_email_queue_tenant ON public.email_queue USING btree (tenant_id);
 
 
 --
--- Name: idx_etl_jobs_started_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_etl_jobs_started_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_etl_jobs_started_at ON public.etl_jobs USING btree (started_at DESC);
 
 
 --
--- Name: idx_etl_source; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_etl_source; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_etl_source ON public.etl_jobs USING btree (source_id);
 
 
 --
--- Name: idx_etl_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_etl_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_etl_status ON public.etl_jobs USING btree (status);
 
 
 --
--- Name: idx_etl_upload; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_etl_upload; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_etl_upload ON public.etl_jobs USING btree (upload_id);
 
 
 --
--- Name: idx_export_history_dt; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_export_history_dt; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_export_history_dt ON public.export_history USING btree (created_at);
 
 
 --
--- Name: idx_export_history_rpt; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_export_history_rpt; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_export_history_rpt ON public.export_history USING btree (report_id);
 
 
 --
--- Name: idx_export_history_ten; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_export_history_ten; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_export_history_ten ON public.export_history USING btree (tenant_id);
 
 
 --
--- Name: idx_export_tmpl_format; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_export_tmpl_format; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_export_tmpl_format ON public.export_templates USING btree (format);
 
 
 --
--- Name: idx_export_tmpl_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_export_tmpl_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_export_tmpl_tenant ON public.export_templates USING btree (tenant_id);
 
 
 --
--- Name: idx_exrates_date; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_exrates_date; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_exrates_date ON public.exchange_rates USING btree (effective_date);
 
 
 --
--- Name: idx_exrates_from; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_exrates_from; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_exrates_from ON public.exchange_rates USING btree (from_currency);
 
 
 --
--- Name: idx_exrates_to; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_exrates_to; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_exrates_to ON public.exchange_rates USING btree (to_currency);
 
 
 --
--- Name: idx_forecast_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_forecast_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_forecast_report ON public.forecast_models USING btree (report_id);
 
 
 --
--- Name: idx_gdpr_due_by; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_gdpr_due_by; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_gdpr_due_by ON public.gdpr_requests USING btree (due_by);
 
 
 --
--- Name: idx_gdpr_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_gdpr_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_gdpr_status ON public.gdpr_requests USING btree (status);
 
 
 --
--- Name: idx_gdpr_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_gdpr_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_gdpr_tenant ON public.gdpr_requests USING btree (tenant_id);
 
 
 --
--- Name: idx_ingestion_upload; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_ingestion_upload; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_ingestion_upload ON public.data_ingestion_logs USING btree (upload_id);
 
 
 --
--- Name: idx_insights_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_insights_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_insights_report ON public.ai_insights USING btree (report_id);
 
 
 --
--- Name: idx_insights_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_insights_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_insights_tenant ON public.ai_insights USING btree (tenant_id);
 
 
 --
--- Name: idx_insights_type; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_insights_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_insights_type ON public.ai_insights USING btree (insight_type);
 
 
 --
--- Name: idx_intlogs_created; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_intlogs_created; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_intlogs_created ON public.integration_logs USING btree (created_at);
 
 
 --
--- Name: idx_intlogs_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_intlogs_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_intlogs_status ON public.integration_logs USING btree (status);
 
 
 --
--- Name: idx_intlogs_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_intlogs_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_intlogs_tenant ON public.integration_logs USING btree (tenant_id);
 
 
 --
--- Name: idx_invitations_email; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_invitations_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_invitations_email ON public.tenant_invitations USING btree (email);
 
 
 --
--- Name: idx_invitations_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_invitations_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_invitations_status ON public.tenant_invitations USING btree (status);
 
 
 --
--- Name: idx_invitations_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_invitations_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_invitations_tenant ON public.tenant_invitations USING btree (tenant_id);
 
 
 --
--- Name: idx_ip_allowlist_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_ip_allowlist_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_ip_allowlist_tenant ON public.ip_allowlist USING btree (tenant_id);
 
 
 --
--- Name: idx_jobq_priority; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_jobq_priority; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_jobq_priority ON public.job_queue USING btree (priority, scheduled_at);
 
 
 --
--- Name: idx_jobq_scheduled; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_jobq_scheduled; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_jobq_scheduled ON public.job_queue USING btree (scheduled_at);
 
 
 --
--- Name: idx_jobq_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_jobq_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_jobq_status ON public.job_queue USING btree (status);
 
 
 --
--- Name: idx_jobq_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_jobq_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_jobq_tenant ON public.job_queue USING btree (tenant_id);
 
 
 --
--- Name: idx_jobq_type; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_jobq_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_jobq_type ON public.job_queue USING btree (job_type);
 
 
 --
--- Name: idx_kpi_history_kpi; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_kpi_history_kpi; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_kpi_history_kpi ON public.kpi_history USING btree (kpi_id);
 
 
 --
--- Name: idx_kpi_history_recorded; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_kpi_history_recorded; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_kpi_history_recorded ON public.kpi_history USING btree (recorded_at);
 
 
 --
--- Name: idx_kpi_history_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_kpi_history_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_kpi_history_tenant ON public.kpi_history USING btree (tenant_id);
 
 
 --
--- Name: idx_lineage_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_lineage_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_lineage_report ON public.data_lineage USING btree (report_id);
 
 
 --
--- Name: idx_lineage_source; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_lineage_source; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_lineage_source ON public.data_lineage USING btree (source_id);
 
 
 --
--- Name: idx_llm_created_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_llm_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_llm_created_at ON public.llm_usage_logs USING btree (created_at);
 
 
 --
--- Name: idx_llm_feature; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_llm_feature; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_llm_feature ON public.llm_usage_logs USING btree (feature);
 
 
 --
--- Name: idx_llm_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_llm_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_llm_tenant ON public.llm_usage_logs USING btree (tenant_id);
 
 
 --
--- Name: idx_masking_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_masking_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_masking_tenant ON public.data_masking_rules USING btree (tenant_id);
 
 
 --
--- Name: idx_metric_def_domain; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_metric_def_domain; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_metric_def_domain ON public.metric_definitions USING btree (domain_id);
 
 
 --
--- Name: idx_metric_def_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_metric_def_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_metric_def_tenant ON public.metric_definitions USING btree (tenant_id);
 
 
 --
--- Name: idx_mfa_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_mfa_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_mfa_user ON public.mfa_settings USING btree (user_id);
 
 
 --
--- Name: idx_mth_model; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_mth_model; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_mth_model ON public.model_training_history USING btree (model_id);
 
 
 --
--- Name: idx_mth_trained_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_mth_trained_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_mth_trained_at ON public.model_training_history USING btree (trained_at);
 
 
 --
--- Name: idx_mv_report_performance_metrics_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_mv_report_performance_metrics_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX idx_mv_report_performance_metrics_report ON public.mv_report_performance_metrics USING btree (report_id);
 
 
 --
--- Name: idx_mv_tenant_usage_stats_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_mv_tenant_usage_stats_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX idx_mv_tenant_usage_stats_tenant ON public.mv_tenant_usage_stats USING btree (tenant_id);
 
 
 --
--- Name: idx_notif_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_notif_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_notif_status ON public.notifications USING btree (status);
 
 
 --
--- Name: idx_notif_tmpl_code; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_notif_tmpl_code; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_notif_tmpl_code ON public.notification_templates USING btree (template_code);
 
 
 --
--- Name: idx_notif_tmpl_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_notif_tmpl_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_notif_tmpl_tenant ON public.notification_templates USING btree (tenant_id);
 
 
 --
--- Name: idx_notif_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_notif_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_notif_user ON public.notifications USING btree (user_id);
 
 
 --
--- Name: idx_oauth_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_oauth_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_oauth_tenant ON public.oauth_providers USING btree (tenant_id);
 
 
 --
--- Name: idx_prt_expires; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_prt_expires; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_prt_expires ON public.password_reset_tokens USING btree (expires_at);
 
 
 --
--- Name: idx_prt_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_prt_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_prt_user ON public.password_reset_tokens USING btree (user_id);
 
 
 --
--- Name: idx_rap_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_rap_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_rap_report ON public.report_access_policies USING btree (report_id);
 
 
 --
--- Name: idx_rap_role; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_rap_role; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_rap_role ON public.report_access_policies USING btree (role_id);
 
 
 --
--- Name: idx_rap_team; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_rap_team; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_rap_team ON public.report_access_policies USING btree (team_id);
 
 
 --
--- Name: idx_rap_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_rap_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_rap_user ON public.report_access_policies USING btree (user_id);
 
 
 --
--- Name: idx_regions_parent; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_regions_parent; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_regions_parent ON public.regions USING btree (parent_region_id);
 
 
 --
--- Name: idx_report_data_date; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_report_data_date; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_report_data_date ON public.report_data USING btree (report_date);
 
 
 --
--- Name: idx_report_data_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_report_data_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_report_data_report ON public.report_data USING btree (report_id);
 
 
 --
--- Name: idx_report_data_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_report_data_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_report_data_tenant ON public.report_data USING btree (tenant_id);
 
 
 --
--- Name: idx_report_kpis_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_report_kpis_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_report_kpis_report ON public.report_kpis USING btree (report_id);
 
 
 --
--- Name: idx_report_view_logs_viewed_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_report_view_logs_viewed_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_report_view_logs_viewed_at ON public.report_view_logs USING btree (viewed_at DESC);
 
 
 --
--- Name: idx_reports_active; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_reports_active; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_reports_active ON public.reports_master USING btree (is_active);
 
 
 --
--- Name: idx_reports_compliance; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_reports_compliance; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_reports_compliance ON public.reports_master USING btree (compliance_status);
 
 
 --
--- Name: idx_reports_domain; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_reports_domain; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_reports_domain ON public.reports_master USING btree (domain_id);
 
 
 --
--- Name: idx_reports_frequency; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_reports_frequency; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_reports_frequency ON public.reports_master USING btree (frequency);
 
 
 --
--- Name: idx_retention_domain; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_retention_domain; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_retention_domain ON public.data_retention_policies USING btree (domain_id);
 
 
 --
--- Name: idx_retention_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_retention_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_retention_tenant ON public.data_retention_policies USING btree (tenant_id);
 
 
 --
--- Name: idx_rpt_fields_domain; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_rpt_fields_domain; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_rpt_fields_domain ON public.report_fields USING btree (domain_id);
 
 
 --
--- Name: idx_run_history_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_run_history_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_run_history_report ON public.report_run_history USING btree (report_id);
 
 
 --
--- Name: idx_run_history_started; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_run_history_started; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_run_history_started ON public.report_run_history USING btree (started_at);
 
 
 --
--- Name: idx_run_history_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_run_history_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_run_history_status ON public.report_run_history USING btree (status);
 
 
 --
--- Name: idx_run_history_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_run_history_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_run_history_tenant ON public.report_run_history USING btree (tenant_id);
 
 
 --
--- Name: idx_saved_filters_rpt; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_saved_filters_rpt; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_saved_filters_rpt ON public.saved_filters USING btree (report_id);
 
 
 --
--- Name: idx_saved_filters_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_saved_filters_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_saved_filters_user ON public.saved_filters USING btree (user_id);
 
 
 --
--- Name: idx_sc_kpis_kpi; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sc_kpis_kpi; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sc_kpis_kpi ON public.scorecard_kpis USING btree (kpi_id);
 
 
 --
--- Name: idx_sc_kpis_scorecard; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sc_kpis_scorecard; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sc_kpis_scorecard ON public.scorecard_kpis USING btree (scorecard_id);
 
 
 --
--- Name: idx_scorecard_domain; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_scorecard_domain; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_scorecard_domain ON public.scorecard_definitions USING btree (domain_id);
 
 
 --
--- Name: idx_scorecard_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_scorecard_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_scorecard_tenant ON public.scorecard_definitions USING btree (tenant_id);
 
 
 --
--- Name: idx_search_hist_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_search_hist_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_search_hist_tenant ON public.search_history USING btree (tenant_id);
 
 
 --
--- Name: idx_search_hist_ts; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_search_hist_ts; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_search_hist_ts ON public.search_history USING btree (searched_at);
 
 
 --
--- Name: idx_search_hist_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_search_hist_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_search_hist_user ON public.search_history USING btree (user_id);
 
 
 --
--- Name: idx_sec_events_created; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sec_events_created; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sec_events_created ON public.security_events USING btree (created_at);
 
 
 --
--- Name: idx_sec_events_severity; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sec_events_severity; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sec_events_severity ON public.security_events USING btree (severity);
 
 
 --
--- Name: idx_sec_events_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sec_events_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sec_events_tenant ON public.security_events USING btree (tenant_id);
 
 
 --
--- Name: idx_sec_events_type; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sec_events_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sec_events_type ON public.security_events USING btree (event_type);
 
 
 --
--- Name: idx_sec_events_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sec_events_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sec_events_user ON public.security_events USING btree (user_id);
 
 
 --
--- Name: idx_security_events_created_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_security_events_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_security_events_created_at ON public.security_events USING btree (created_at DESC);
 
 
 --
--- Name: idx_sessions_expires; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sessions_expires; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sessions_expires ON public.sessions USING btree (expires_at);
 
 
 --
--- Name: idx_sessions_expires_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sessions_expires_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sessions_expires_at ON public.sessions USING btree (expires_at);
 
 
 --
--- Name: idx_sessions_token; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sessions_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sessions_token ON public.sessions USING btree (token);
 
 
 --
--- Name: idx_sessions_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sessions_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sessions_user ON public.sessions USING btree (user_id);
 
 
 --
--- Name: idx_sharing_recipient; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sharing_recipient; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sharing_recipient ON public.report_sharing USING btree (recipient_user);
 
 
 --
--- Name: idx_sharing_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sharing_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sharing_report ON public.report_sharing USING btree (report_id);
 
 
 --
--- Name: idx_sharing_token; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sharing_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sharing_token ON public.report_sharing USING btree (share_token);
 
 
 --
--- Name: idx_sub_compliance; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sub_compliance; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sub_compliance ON public.compliance_submissions USING btree (compliance_id);
 
 
 --
--- Name: idx_sub_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sub_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sub_status ON public.compliance_submissions USING btree (status);
 
 
 --
--- Name: idx_subscriptions_rpt; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_subscriptions_rpt; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_subscriptions_rpt ON public.report_subscriptions USING btree (report_id);
 
 
 --
--- Name: idx_subscriptions_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_subscriptions_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_subscriptions_user ON public.report_subscriptions USING btree (user_id);
 
 
 --
--- Name: idx_sysmet_recorded; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sysmet_recorded; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sysmet_recorded ON public.system_metrics USING btree (recorded_at);
 
 
 --
--- Name: idx_sysmet_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_sysmet_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_sysmet_tenant ON public.system_metrics USING btree (tenant_id);
 
 
 --
--- Name: idx_tasks_next_run; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_tasks_next_run; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tasks_next_run ON public.scheduled_tasks USING btree (next_run_at);
 
 
 --
--- Name: idx_tasks_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_tasks_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tasks_report ON public.scheduled_tasks USING btree (report_id);
 
 
 --
--- Name: idx_tasks_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_tasks_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tasks_status ON public.scheduled_tasks USING btree (status);
 
 
 --
--- Name: idx_tasks_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_tasks_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tasks_tenant ON public.scheduled_tasks USING btree (tenant_id);
 
 
 --
--- Name: idx_team_members_team; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_team_members_team; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_team_members_team ON public.team_members USING btree (team_id);
 
 
 --
--- Name: idx_team_members_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_team_members_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_team_members_user ON public.team_members USING btree (user_id);
 
 
 --
--- Name: idx_teams_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_teams_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_teams_tenant ON public.teams USING btree (tenant_id);
 
 
 --
--- Name: idx_tenant_subs_plan; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_tenant_subs_plan; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tenant_subs_plan ON public.tenant_subscriptions USING btree (plan_id);
 
 
 --
--- Name: idx_tenant_subs_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_tenant_subs_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tenant_subs_status ON public.tenant_subscriptions USING btree (status);
 
 
 --
--- Name: idx_tenant_subs_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_tenant_subs_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_tenant_subs_tenant ON public.tenant_subscriptions USING btree (tenant_id);
 
 
 --
--- Name: idx_themes_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_themes_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_themes_tenant ON public.report_themes USING btree (tenant_id);
 
 
 --
--- Name: idx_translations_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_translations_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_translations_key ON public.translations USING btree (translation_key);
 
 
 --
--- Name: idx_translations_lang; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_translations_lang; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_translations_lang ON public.translations USING btree (language_code);
 
 
 --
--- Name: idx_trend_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_trend_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_trend_report ON public.trend_analysis USING btree (report_id);
 
 
 --
--- Name: idx_uploads_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_uploads_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_uploads_report ON public.data_uploads USING btree (report_id);
 
 
 --
--- Name: idx_uploads_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_uploads_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_uploads_status ON public.data_uploads USING btree (upload_status);
 
 
 --
--- Name: idx_uploads_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_uploads_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_uploads_tenant ON public.data_uploads USING btree (tenant_id);
 
 
 --
--- Name: idx_usage_module; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_usage_module; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_usage_module ON public.usage_metrics USING btree (module);
 
 
 --
--- Name: idx_usage_recorded; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_usage_recorded; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_usage_recorded ON public.usage_metrics USING btree (recorded_at);
 
 
 --
--- Name: idx_usage_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_usage_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_usage_tenant ON public.usage_metrics USING btree (tenant_id);
 
 
 --
--- Name: idx_user_devices_trusted; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_user_devices_trusted; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_user_devices_trusted ON public.user_devices USING btree (is_trusted);
 
 
 --
--- Name: idx_user_devices_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_user_devices_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_user_devices_user ON public.user_devices USING btree (user_id);
 
 
 --
--- Name: idx_users_email; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_users_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_users_email ON public.users USING btree (email);
 
 
 --
--- Name: idx_users_role; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_users_role; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_users_role ON public.users USING btree (role_id);
 
 
 --
--- Name: idx_users_status; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_users_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_users_status ON public.users USING btree (status);
 
 
 --
--- Name: idx_users_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_users_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_users_tenant ON public.users USING btree (tenant_id);
 
 
 --
--- Name: idx_view_logs_report; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_view_logs_report; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_view_logs_report ON public.report_view_logs USING btree (report_id);
 
 
 --
--- Name: idx_view_logs_tenant; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_view_logs_tenant; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_view_logs_tenant ON public.report_view_logs USING btree (tenant_id);
 
 
 --
--- Name: idx_view_logs_user; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_view_logs_user; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_view_logs_user ON public.report_view_logs USING btree (user_id);
 
 
 --
--- Name: idx_view_logs_viewed_at; Type: INDEX; Schema: public; Owner: postgres
+-- Name: idx_view_logs_viewed_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_view_logs_viewed_at ON public.report_view_logs USING btree (viewed_at);
 
 
 --
--- Name: api_usage_logs trg_api_usage_update_last_used; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: api_usage_logs trg_api_usage_update_last_used; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_api_usage_update_last_used AFTER INSERT ON public.api_usage_logs FOR EACH ROW EXECUTE FUNCTION public.update_api_key_usage();
 
 
 --
--- Name: dashboards trg_dashboards_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: dashboards trg_dashboards_updated_at; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_dashboards_updated_at BEFORE UPDATE ON public.dashboards FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 
 --
--- Name: data_sources trg_data_sources_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: data_sources trg_data_sources_updated_at; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_data_sources_updated_at BEFORE UPDATE ON public.data_sources FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 
 --
--- Name: localization trg_localization_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: localization trg_localization_updated_at; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_localization_updated_at BEFORE UPDATE ON public.localization FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 
 --
--- Name: preferences trg_preferences_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: preferences trg_preferences_updated_at; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_preferences_updated_at BEFORE UPDATE ON public.preferences FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 
 --
--- Name: roles trg_prevent_system_role_deletion; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: roles trg_prevent_system_role_deletion; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_prevent_system_role_deletion BEFORE DELETE ON public.roles FOR EACH ROW EXECUTE FUNCTION public.prevent_system_role_deletion();
 
 
 --
--- Name: report_run_history trg_report_run_history_log; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: report_run_history trg_report_run_history_log; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_report_run_history_log AFTER INSERT ON public.report_run_history FOR EACH ROW EXECUTE FUNCTION public.log_report_run();
 
 
 --
--- Name: reports_master trg_reports_master_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: reports_master trg_reports_master_updated_at; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_reports_master_updated_at BEFORE UPDATE ON public.reports_master FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 
 --
--- Name: sessions trg_session_update_last_login; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: sessions trg_session_update_last_login; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_session_update_last_login AFTER INSERT ON public.sessions FOR EACH ROW EXECUTE FUNCTION public.update_user_last_login();
 
 
 --
--- Name: tenants trg_tenants_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: tenants trg_tenants_updated_at; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_tenants_updated_at BEFORE UPDATE ON public.tenants FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 
 --
--- Name: users trg_users_email_validation; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: users trg_users_email_validation; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_users_email_validation BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW EXECUTE FUNCTION public.validate_email();
 
 
 --
--- Name: users trg_users_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+-- Name: users trg_users_updated_at; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER trg_users_updated_at BEFORE UPDATE ON public.users FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 
 --
--- Name: activity_logs activity_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: activity_logs activity_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.activity_logs
@@ -10891,7 +10323,7 @@ ALTER TABLE ONLY public.activity_logs
 
 
 --
--- Name: activity_logs activity_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: activity_logs activity_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.activity_logs
@@ -10899,7 +10331,7 @@ ALTER TABLE ONLY public.activity_logs
 
 
 --
--- Name: ai_insights ai_insights_model_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ai_insights ai_insights_model_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ai_insights
@@ -10907,7 +10339,7 @@ ALTER TABLE ONLY public.ai_insights
 
 
 --
--- Name: ai_insights ai_insights_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ai_insights ai_insights_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ai_insights
@@ -10915,7 +10347,7 @@ ALTER TABLE ONLY public.ai_insights
 
 
 --
--- Name: ai_insights ai_insights_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ai_insights ai_insights_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ai_insights
@@ -10923,7 +10355,7 @@ ALTER TABLE ONLY public.ai_insights
 
 
 --
--- Name: alert_logs alert_logs_resolved_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alert_logs alert_logs_resolved_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_logs
@@ -10931,7 +10363,7 @@ ALTER TABLE ONLY public.alert_logs
 
 
 --
--- Name: alert_logs alert_logs_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alert_logs alert_logs_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_logs
@@ -10939,7 +10371,7 @@ ALTER TABLE ONLY public.alert_logs
 
 
 --
--- Name: alert_logs alert_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alert_logs alert_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_logs
@@ -10947,7 +10379,7 @@ ALTER TABLE ONLY public.alert_logs
 
 
 --
--- Name: alert_rules alert_rules_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alert_rules alert_rules_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_rules
@@ -10955,7 +10387,7 @@ ALTER TABLE ONLY public.alert_rules
 
 
 --
--- Name: alert_rules alert_rules_kpi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alert_rules alert_rules_kpi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_rules
@@ -10963,7 +10395,7 @@ ALTER TABLE ONLY public.alert_rules
 
 
 --
--- Name: alert_rules alert_rules_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alert_rules alert_rules_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_rules
@@ -10971,7 +10403,7 @@ ALTER TABLE ONLY public.alert_rules
 
 
 --
--- Name: alert_rules alert_rules_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alert_rules alert_rules_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.alert_rules
@@ -10979,7 +10411,7 @@ ALTER TABLE ONLY public.alert_rules
 
 
 --
--- Name: announcements announcements_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: announcements announcements_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.announcements
@@ -10987,7 +10419,7 @@ ALTER TABLE ONLY public.announcements
 
 
 --
--- Name: announcements announcements_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: announcements announcements_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.announcements
@@ -10995,7 +10427,7 @@ ALTER TABLE ONLY public.announcements
 
 
 --
--- Name: anomaly_logs anomaly_logs_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: anomaly_logs anomaly_logs_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.anomaly_logs
@@ -11003,7 +10435,7 @@ ALTER TABLE ONLY public.anomaly_logs
 
 
 --
--- Name: anomaly_logs anomaly_logs_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: anomaly_logs anomaly_logs_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.anomaly_logs
@@ -11011,7 +10443,7 @@ ALTER TABLE ONLY public.anomaly_logs
 
 
 --
--- Name: anomaly_logs anomaly_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: anomaly_logs anomaly_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.anomaly_logs
@@ -11019,7 +10451,7 @@ ALTER TABLE ONLY public.anomaly_logs
 
 
 --
--- Name: api_keys api_keys_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: api_keys api_keys_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_keys
@@ -11027,7 +10459,7 @@ ALTER TABLE ONLY public.api_keys
 
 
 --
--- Name: api_keys api_keys_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: api_keys api_keys_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_keys
@@ -11035,7 +10467,7 @@ ALTER TABLE ONLY public.api_keys
 
 
 --
--- Name: api_usage_logs api_usage_logs_api_key_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: api_usage_logs api_usage_logs_api_key_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_usage_logs
@@ -11043,7 +10475,7 @@ ALTER TABLE ONLY public.api_usage_logs
 
 
 --
--- Name: api_usage_logs api_usage_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: api_usage_logs api_usage_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_usage_logs
@@ -11051,7 +10483,7 @@ ALTER TABLE ONLY public.api_usage_logs
 
 
 --
--- Name: api_usage_logs api_usage_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: api_usage_logs api_usage_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_usage_logs
@@ -11059,7 +10491,7 @@ ALTER TABLE ONLY public.api_usage_logs
 
 
 --
--- Name: approval_steps approval_steps_approver_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_steps approval_steps_approver_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_steps
@@ -11067,7 +10499,7 @@ ALTER TABLE ONLY public.approval_steps
 
 
 --
--- Name: approval_steps approval_steps_approver_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_steps approval_steps_approver_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_steps
@@ -11075,7 +10507,7 @@ ALTER TABLE ONLY public.approval_steps
 
 
 --
--- Name: approval_steps approval_steps_workflow_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_steps approval_steps_workflow_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_steps
@@ -11083,7 +10515,7 @@ ALTER TABLE ONLY public.approval_steps
 
 
 --
--- Name: approval_workflows approval_workflows_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_workflows approval_workflows_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_workflows
@@ -11091,7 +10523,7 @@ ALTER TABLE ONLY public.approval_workflows
 
 
 --
--- Name: approval_workflows approval_workflows_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_workflows approval_workflows_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_workflows
@@ -11099,7 +10531,7 @@ ALTER TABLE ONLY public.approval_workflows
 
 
 --
--- Name: approval_workflows approval_workflows_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_workflows approval_workflows_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_workflows
@@ -11107,7 +10539,7 @@ ALTER TABLE ONLY public.approval_workflows
 
 
 --
--- Name: approval_workflows approval_workflows_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: approval_workflows approval_workflows_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.approval_workflows
@@ -11115,7 +10547,7 @@ ALTER TABLE ONLY public.approval_workflows
 
 
 --
--- Name: attachments attachments_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: attachments attachments_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.attachments
@@ -11123,7 +10555,7 @@ ALTER TABLE ONLY public.attachments
 
 
 --
--- Name: attachments attachments_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: attachments attachments_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.attachments
@@ -11131,7 +10563,7 @@ ALTER TABLE ONLY public.attachments
 
 
 --
--- Name: attachments attachments_uploaded_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: attachments attachments_uploaded_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.attachments
@@ -11139,7 +10571,7 @@ ALTER TABLE ONLY public.attachments
 
 
 --
--- Name: audit_logs audit_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: audit_logs audit_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.audit_logs
@@ -11147,7 +10579,7 @@ ALTER TABLE ONLY public.audit_logs
 
 
 --
--- Name: audit_logs audit_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: audit_logs audit_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.audit_logs
@@ -11155,7 +10587,7 @@ ALTER TABLE ONLY public.audit_logs
 
 
 --
--- Name: benchmarking_data benchmarking_data_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: benchmarking_data benchmarking_data_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.benchmarking_data
@@ -11163,7 +10595,7 @@ ALTER TABLE ONLY public.benchmarking_data
 
 
 --
--- Name: benchmarking_data benchmarking_data_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: benchmarking_data benchmarking_data_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.benchmarking_data
@@ -11171,7 +10603,7 @@ ALTER TABLE ONLY public.benchmarking_data
 
 
 --
--- Name: benchmarking_data benchmarking_data_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: benchmarking_data benchmarking_data_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.benchmarking_data
@@ -11179,7 +10611,7 @@ ALTER TABLE ONLY public.benchmarking_data
 
 
 --
--- Name: billing_accounts billing_accounts_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: billing_accounts billing_accounts_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.billing_accounts
@@ -11187,7 +10619,7 @@ ALTER TABLE ONLY public.billing_accounts
 
 
 --
--- Name: blockchain_audit blockchain_audit_compliance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: blockchain_audit blockchain_audit_compliance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.blockchain_audit
@@ -11195,7 +10627,7 @@ ALTER TABLE ONLY public.blockchain_audit
 
 
 --
--- Name: chat_feedback chat_feedback_response_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_feedback chat_feedback_response_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_feedback
@@ -11203,7 +10635,7 @@ ALTER TABLE ONLY public.chat_feedback
 
 
 --
--- Name: chat_feedback chat_feedback_session_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_feedback chat_feedback_session_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_feedback
@@ -11211,7 +10643,7 @@ ALTER TABLE ONLY public.chat_feedback
 
 
 --
--- Name: chat_queries chat_queries_intent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_queries chat_queries_intent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_queries
@@ -11219,7 +10651,7 @@ ALTER TABLE ONLY public.chat_queries
 
 
 --
--- Name: chat_queries chat_queries_session_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_queries chat_queries_session_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_queries
@@ -11227,7 +10659,7 @@ ALTER TABLE ONLY public.chat_queries
 
 
 --
--- Name: chat_responses chat_responses_query_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_responses chat_responses_query_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_responses
@@ -11235,7 +10667,7 @@ ALTER TABLE ONLY public.chat_responses
 
 
 --
--- Name: chat_sessions chat_sessions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_sessions chat_sessions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_sessions
@@ -11243,7 +10675,7 @@ ALTER TABLE ONLY public.chat_sessions
 
 
 --
--- Name: chat_sessions chat_sessions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: chat_sessions chat_sessions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.chat_sessions
@@ -11251,7 +10683,7 @@ ALTER TABLE ONLY public.chat_sessions
 
 
 --
--- Name: compliance_audit compliance_audit_performed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_audit compliance_audit_performed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_audit
@@ -11259,7 +10691,7 @@ ALTER TABLE ONLY public.compliance_audit
 
 
 --
--- Name: compliance_audit compliance_audit_submission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_audit compliance_audit_submission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_audit
@@ -11267,7 +10699,7 @@ ALTER TABLE ONLY public.compliance_audit
 
 
 --
--- Name: compliance_calendar compliance_calendar_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_calendar compliance_calendar_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_calendar
@@ -11275,7 +10707,7 @@ ALTER TABLE ONLY public.compliance_calendar
 
 
 --
--- Name: compliance_calendar compliance_calendar_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_calendar compliance_calendar_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_calendar
@@ -11283,7 +10715,7 @@ ALTER TABLE ONLY public.compliance_calendar
 
 
 --
--- Name: compliance_calendar compliance_calendar_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_calendar compliance_calendar_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_calendar
@@ -11291,7 +10723,7 @@ ALTER TABLE ONLY public.compliance_calendar
 
 
 --
--- Name: compliance_documents compliance_documents_compliance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_documents compliance_documents_compliance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_documents
@@ -11299,7 +10731,7 @@ ALTER TABLE ONLY public.compliance_documents
 
 
 --
--- Name: compliance_documents compliance_documents_uploaded_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_documents compliance_documents_uploaded_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_documents
@@ -11307,7 +10739,7 @@ ALTER TABLE ONLY public.compliance_documents
 
 
 --
--- Name: compliance_rules compliance_rules_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_rules compliance_rules_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_rules
@@ -11315,7 +10747,7 @@ ALTER TABLE ONLY public.compliance_rules
 
 
 --
--- Name: compliance_submissions compliance_submissions_compliance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_submissions compliance_submissions_compliance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_submissions
@@ -11323,7 +10755,7 @@ ALTER TABLE ONLY public.compliance_submissions
 
 
 --
--- Name: compliance_submissions compliance_submissions_submitted_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: compliance_submissions compliance_submissions_submitted_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.compliance_submissions
@@ -11331,7 +10763,7 @@ ALTER TABLE ONLY public.compliance_submissions
 
 
 --
--- Name: connector_sync_logs connector_sync_logs_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: connector_sync_logs connector_sync_logs_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connector_sync_logs
@@ -11339,7 +10771,7 @@ ALTER TABLE ONLY public.connector_sync_logs
 
 
 --
--- Name: connector_sync_logs connector_sync_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: connector_sync_logs connector_sync_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.connector_sync_logs
@@ -11347,7 +10779,7 @@ ALTER TABLE ONLY public.connector_sync_logs
 
 
 --
--- Name: correlation_matrix correlation_matrix_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: correlation_matrix correlation_matrix_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.correlation_matrix
@@ -11355,7 +10787,7 @@ ALTER TABLE ONLY public.correlation_matrix
 
 
 --
--- Name: correlation_matrix correlation_matrix_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: correlation_matrix correlation_matrix_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.correlation_matrix
@@ -11363,7 +10795,7 @@ ALTER TABLE ONLY public.correlation_matrix
 
 
 --
--- Name: countries countries_currency_code_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: countries countries_currency_code_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.countries
@@ -11371,7 +10803,7 @@ ALTER TABLE ONLY public.countries
 
 
 --
--- Name: countries countries_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: countries countries_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.countries
@@ -11379,7 +10811,7 @@ ALTER TABLE ONLY public.countries
 
 
 --
--- Name: custom_report_definitions custom_report_definitions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: custom_report_definitions custom_report_definitions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.custom_report_definitions
@@ -11387,7 +10819,7 @@ ALTER TABLE ONLY public.custom_report_definitions
 
 
 --
--- Name: custom_report_definitions custom_report_definitions_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: custom_report_definitions custom_report_definitions_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.custom_report_definitions
@@ -11395,7 +10827,7 @@ ALTER TABLE ONLY public.custom_report_definitions
 
 
 --
--- Name: custom_report_definitions custom_report_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: custom_report_definitions custom_report_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.custom_report_definitions
@@ -11403,7 +10835,7 @@ ALTER TABLE ONLY public.custom_report_definitions
 
 
 --
--- Name: dashboard_widgets dashboard_widgets_dashboard_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: dashboard_widgets dashboard_widgets_dashboard_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dashboard_widgets
@@ -11411,7 +10843,7 @@ ALTER TABLE ONLY public.dashboard_widgets
 
 
 --
--- Name: dashboard_widgets dashboard_widgets_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: dashboard_widgets dashboard_widgets_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dashboard_widgets
@@ -11419,7 +10851,7 @@ ALTER TABLE ONLY public.dashboard_widgets
 
 
 --
--- Name: dashboards dashboards_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: dashboards dashboards_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dashboards
@@ -11427,7 +10859,7 @@ ALTER TABLE ONLY public.dashboards
 
 
 --
--- Name: dashboards dashboards_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: dashboards dashboards_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dashboards
@@ -11435,7 +10867,7 @@ ALTER TABLE ONLY public.dashboards
 
 
 --
--- Name: dashboards dashboards_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: dashboards dashboards_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dashboards
@@ -11443,7 +10875,7 @@ ALTER TABLE ONLY public.dashboards
 
 
 --
--- Name: data_consent data_consent_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_consent data_consent_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_consent
@@ -11451,7 +10883,7 @@ ALTER TABLE ONLY public.data_consent
 
 
 --
--- Name: data_consent data_consent_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_consent data_consent_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_consent
@@ -11459,7 +10891,7 @@ ALTER TABLE ONLY public.data_consent
 
 
 --
--- Name: data_ingestion_logs data_ingestion_logs_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_ingestion_logs data_ingestion_logs_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_ingestion_logs
@@ -11467,7 +10899,7 @@ ALTER TABLE ONLY public.data_ingestion_logs
 
 
 --
--- Name: data_lineage data_lineage_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_lineage data_lineage_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_lineage
@@ -11475,7 +10907,7 @@ ALTER TABLE ONLY public.data_lineage
 
 
 --
--- Name: data_lineage data_lineage_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_lineage data_lineage_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_lineage
@@ -11483,7 +10915,7 @@ ALTER TABLE ONLY public.data_lineage
 
 
 --
--- Name: data_lineage data_lineage_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_lineage data_lineage_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_lineage
@@ -11491,7 +10923,7 @@ ALTER TABLE ONLY public.data_lineage
 
 
 --
--- Name: data_masking_rules data_masking_rules_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_masking_rules data_masking_rules_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_masking_rules
@@ -11499,7 +10931,7 @@ ALTER TABLE ONLY public.data_masking_rules
 
 
 --
--- Name: data_masking_rules data_masking_rules_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_masking_rules data_masking_rules_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_masking_rules
@@ -11507,7 +10939,7 @@ ALTER TABLE ONLY public.data_masking_rules
 
 
 --
--- Name: data_quality_scores data_quality_scores_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_quality_scores data_quality_scores_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_quality_scores
@@ -11515,7 +10947,7 @@ ALTER TABLE ONLY public.data_quality_scores
 
 
 --
--- Name: data_retention_policies data_retention_policies_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_retention_policies data_retention_policies_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_retention_policies
@@ -11523,7 +10955,7 @@ ALTER TABLE ONLY public.data_retention_policies
 
 
 --
--- Name: data_retention_policies data_retention_policies_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_retention_policies data_retention_policies_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_retention_policies
@@ -11531,7 +10963,7 @@ ALTER TABLE ONLY public.data_retention_policies
 
 
 --
--- Name: data_retention_policies data_retention_policies_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_retention_policies data_retention_policies_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_retention_policies
@@ -11539,7 +10971,7 @@ ALTER TABLE ONLY public.data_retention_policies
 
 
 --
--- Name: data_retention_policies data_retention_policies_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_retention_policies data_retention_policies_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_retention_policies
@@ -11547,7 +10979,7 @@ ALTER TABLE ONLY public.data_retention_policies
 
 
 --
--- Name: data_sources data_sources_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_sources data_sources_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_sources
@@ -11555,7 +10987,7 @@ ALTER TABLE ONLY public.data_sources
 
 
 --
--- Name: data_uploads data_uploads_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_uploads data_uploads_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_uploads
@@ -11563,7 +10995,7 @@ ALTER TABLE ONLY public.data_uploads
 
 
 --
--- Name: data_uploads data_uploads_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_uploads data_uploads_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_uploads
@@ -11571,7 +11003,7 @@ ALTER TABLE ONLY public.data_uploads
 
 
 --
--- Name: data_uploads data_uploads_uploaded_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_uploads data_uploads_uploaded_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_uploads
@@ -11579,7 +11011,7 @@ ALTER TABLE ONLY public.data_uploads
 
 
 --
--- Name: data_validation_rules data_validation_rules_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: data_validation_rules data_validation_rules_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.data_validation_rules
@@ -11587,7 +11019,7 @@ ALTER TABLE ONLY public.data_validation_rules
 
 
 --
--- Name: deployment_logs deployment_logs_deployed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: deployment_logs deployment_logs_deployed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.deployment_logs
@@ -11595,7 +11027,7 @@ ALTER TABLE ONLY public.deployment_logs
 
 
 --
--- Name: distribution_lists distribution_lists_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_lists distribution_lists_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_lists
@@ -11603,7 +11035,7 @@ ALTER TABLE ONLY public.distribution_lists
 
 
 --
--- Name: distribution_lists distribution_lists_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_lists distribution_lists_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_lists
@@ -11611,7 +11043,7 @@ ALTER TABLE ONLY public.distribution_lists
 
 
 --
--- Name: distribution_lists distribution_lists_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_lists distribution_lists_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_lists
@@ -11619,7 +11051,7 @@ ALTER TABLE ONLY public.distribution_lists
 
 
 --
--- Name: distribution_members distribution_members_added_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_members distribution_members_added_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_members
@@ -11627,7 +11059,7 @@ ALTER TABLE ONLY public.distribution_members
 
 
 --
--- Name: distribution_members distribution_members_list_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_members distribution_members_list_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_members
@@ -11635,7 +11067,7 @@ ALTER TABLE ONLY public.distribution_members
 
 
 --
--- Name: distribution_members distribution_members_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: distribution_members distribution_members_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.distribution_members
@@ -11643,7 +11075,7 @@ ALTER TABLE ONLY public.distribution_members
 
 
 --
--- Name: email_queue email_queue_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: email_queue email_queue_template_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.email_queue
@@ -11651,7 +11083,7 @@ ALTER TABLE ONLY public.email_queue
 
 
 --
--- Name: email_queue email_queue_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: email_queue email_queue_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.email_queue
@@ -11659,7 +11091,7 @@ ALTER TABLE ONLY public.email_queue
 
 
 --
--- Name: error_logs error_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: error_logs error_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.error_logs
@@ -11667,7 +11099,7 @@ ALTER TABLE ONLY public.error_logs
 
 
 --
--- Name: esg_scores esg_scores_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: esg_scores esg_scores_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.esg_scores
@@ -11675,7 +11107,7 @@ ALTER TABLE ONLY public.esg_scores
 
 
 --
--- Name: etl_jobs etl_jobs_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: etl_jobs etl_jobs_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.etl_jobs
@@ -11683,7 +11115,7 @@ ALTER TABLE ONLY public.etl_jobs
 
 
 --
--- Name: etl_jobs etl_jobs_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: etl_jobs etl_jobs_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.etl_jobs
@@ -11691,7 +11123,7 @@ ALTER TABLE ONLY public.etl_jobs
 
 
 --
--- Name: exchange_rates exchange_rates_from_currency_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: exchange_rates exchange_rates_from_currency_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.exchange_rates
@@ -11699,7 +11131,7 @@ ALTER TABLE ONLY public.exchange_rates
 
 
 --
--- Name: exchange_rates exchange_rates_to_currency_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: exchange_rates exchange_rates_to_currency_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.exchange_rates
@@ -11707,7 +11139,7 @@ ALTER TABLE ONLY public.exchange_rates
 
 
 --
--- Name: executive_narratives executive_narratives_approved_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: executive_narratives executive_narratives_approved_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.executive_narratives
@@ -11715,7 +11147,7 @@ ALTER TABLE ONLY public.executive_narratives
 
 
 --
--- Name: executive_narratives executive_narratives_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: executive_narratives executive_narratives_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.executive_narratives
@@ -11723,7 +11155,7 @@ ALTER TABLE ONLY public.executive_narratives
 
 
 --
--- Name: executive_narratives executive_narratives_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: executive_narratives executive_narratives_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.executive_narratives
@@ -11731,7 +11163,7 @@ ALTER TABLE ONLY public.executive_narratives
 
 
 --
--- Name: export_history export_history_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: export_history export_history_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_history
@@ -11739,7 +11171,7 @@ ALTER TABLE ONLY public.export_history
 
 
 --
--- Name: export_history export_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: export_history export_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_history
@@ -11747,7 +11179,7 @@ ALTER TABLE ONLY public.export_history
 
 
 --
--- Name: export_history export_history_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: export_history export_history_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_history
@@ -11755,7 +11187,7 @@ ALTER TABLE ONLY public.export_history
 
 
 --
--- Name: export_templates export_templates_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: export_templates export_templates_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_templates
@@ -11763,7 +11195,7 @@ ALTER TABLE ONLY public.export_templates
 
 
 --
--- Name: export_templates export_templates_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: export_templates export_templates_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.export_templates
@@ -11771,7 +11203,7 @@ ALTER TABLE ONLY public.export_templates
 
 
 --
--- Name: external_feeds external_feeds_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: external_feeds external_feeds_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.external_feeds
@@ -11779,7 +11211,7 @@ ALTER TABLE ONLY public.external_feeds
 
 
 --
--- Name: feature_flags feature_flags_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: feature_flags feature_flags_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.feature_flags
@@ -11787,7 +11219,7 @@ ALTER TABLE ONLY public.feature_flags
 
 
 --
--- Name: feature_flags feature_flags_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: feature_flags feature_flags_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.feature_flags
@@ -11795,7 +11227,7 @@ ALTER TABLE ONLY public.feature_flags
 
 
 --
--- Name: fiscal_calendars fiscal_calendars_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fiscal_calendars fiscal_calendars_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.fiscal_calendars
@@ -11803,7 +11235,7 @@ ALTER TABLE ONLY public.fiscal_calendars
 
 
 --
--- Name: report_data fk_rd_source; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_data fk_rd_source; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_data
@@ -11811,7 +11243,7 @@ ALTER TABLE ONLY public.report_data
 
 
 --
--- Name: role_permissions fk_rp_granted_by; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: role_permissions fk_rp_granted_by; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.role_permissions
@@ -11819,7 +11251,7 @@ ALTER TABLE ONLY public.role_permissions
 
 
 --
--- Name: forecast_models forecast_models_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: forecast_models forecast_models_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.forecast_models
@@ -11827,7 +11259,7 @@ ALTER TABLE ONLY public.forecast_models
 
 
 --
--- Name: forecast_models forecast_models_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: forecast_models forecast_models_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.forecast_models
@@ -11835,7 +11267,7 @@ ALTER TABLE ONLY public.forecast_models
 
 
 --
--- Name: gdpr_requests gdpr_requests_assigned_to_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: gdpr_requests gdpr_requests_assigned_to_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gdpr_requests
@@ -11843,7 +11275,7 @@ ALTER TABLE ONLY public.gdpr_requests
 
 
 --
--- Name: gdpr_requests gdpr_requests_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: gdpr_requests gdpr_requests_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gdpr_requests
@@ -11851,7 +11283,7 @@ ALTER TABLE ONLY public.gdpr_requests
 
 
 --
--- Name: gdpr_requests gdpr_requests_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: gdpr_requests gdpr_requests_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gdpr_requests
@@ -11859,7 +11291,7 @@ ALTER TABLE ONLY public.gdpr_requests
 
 
 --
--- Name: integration_logs integration_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: integration_logs integration_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.integration_logs
@@ -11867,7 +11299,7 @@ ALTER TABLE ONLY public.integration_logs
 
 
 --
--- Name: ip_allowlist ip_allowlist_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ip_allowlist ip_allowlist_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ip_allowlist
@@ -11875,7 +11307,7 @@ ALTER TABLE ONLY public.ip_allowlist
 
 
 --
--- Name: ip_allowlist ip_allowlist_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ip_allowlist ip_allowlist_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ip_allowlist
@@ -11883,7 +11315,7 @@ ALTER TABLE ONLY public.ip_allowlist
 
 
 --
--- Name: job_queue job_queue_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: job_queue job_queue_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.job_queue
@@ -11891,7 +11323,7 @@ ALTER TABLE ONLY public.job_queue
 
 
 --
--- Name: kpi_benchmarks kpi_benchmarks_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: kpi_benchmarks kpi_benchmarks_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.kpi_benchmarks
@@ -11899,7 +11331,7 @@ ALTER TABLE ONLY public.kpi_benchmarks
 
 
 --
--- Name: kpi_benchmarks kpi_benchmarks_kpi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: kpi_benchmarks kpi_benchmarks_kpi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.kpi_benchmarks
@@ -11907,7 +11339,7 @@ ALTER TABLE ONLY public.kpi_benchmarks
 
 
 --
--- Name: kpi_history kpi_history_kpi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: kpi_history kpi_history_kpi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.kpi_history
@@ -11915,7 +11347,7 @@ ALTER TABLE ONLY public.kpi_history
 
 
 --
--- Name: kpi_history kpi_history_run_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: kpi_history kpi_history_run_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.kpi_history
@@ -11923,7 +11355,7 @@ ALTER TABLE ONLY public.kpi_history
 
 
 --
--- Name: kpi_history kpi_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: kpi_history kpi_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.kpi_history
@@ -11931,7 +11363,7 @@ ALTER TABLE ONLY public.kpi_history
 
 
 --
--- Name: llm_usage_logs llm_usage_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: llm_usage_logs llm_usage_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.llm_usage_logs
@@ -11939,7 +11371,7 @@ ALTER TABLE ONLY public.llm_usage_logs
 
 
 --
--- Name: llm_usage_logs llm_usage_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: llm_usage_logs llm_usage_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.llm_usage_logs
@@ -11947,7 +11379,7 @@ ALTER TABLE ONLY public.llm_usage_logs
 
 
 --
--- Name: localization localization_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: localization localization_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.localization
@@ -11955,7 +11387,7 @@ ALTER TABLE ONLY public.localization
 
 
 --
--- Name: message_streams message_streams_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: message_streams message_streams_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.message_streams
@@ -11963,7 +11395,7 @@ ALTER TABLE ONLY public.message_streams
 
 
 --
--- Name: metric_definitions metric_definitions_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: metric_definitions metric_definitions_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.metric_definitions
@@ -11971,7 +11403,7 @@ ALTER TABLE ONLY public.metric_definitions
 
 
 --
--- Name: metric_definitions metric_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: metric_definitions metric_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.metric_definitions
@@ -11979,7 +11411,7 @@ ALTER TABLE ONLY public.metric_definitions
 
 
 --
--- Name: mfa_settings mfa_settings_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: mfa_settings mfa_settings_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mfa_settings
@@ -11987,7 +11419,7 @@ ALTER TABLE ONLY public.mfa_settings
 
 
 --
--- Name: model_training_history model_training_history_model_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: model_training_history model_training_history_model_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.model_training_history
@@ -11995,7 +11427,7 @@ ALTER TABLE ONLY public.model_training_history
 
 
 --
--- Name: model_training_history model_training_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: model_training_history model_training_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.model_training_history
@@ -12003,7 +11435,7 @@ ALTER TABLE ONLY public.model_training_history
 
 
 --
--- Name: notification_templates notification_templates_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notification_templates notification_templates_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notification_templates
@@ -12011,7 +11443,7 @@ ALTER TABLE ONLY public.notification_templates
 
 
 --
--- Name: notifications notifications_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notifications notifications_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notifications
@@ -12019,7 +11451,7 @@ ALTER TABLE ONLY public.notifications
 
 
 --
--- Name: notifications notifications_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notifications notifications_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notifications
@@ -12027,7 +11459,7 @@ ALTER TABLE ONLY public.notifications
 
 
 --
--- Name: notifications notifications_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notifications notifications_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notifications
@@ -12035,7 +11467,7 @@ ALTER TABLE ONLY public.notifications
 
 
 --
--- Name: oauth_providers oauth_providers_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: oauth_providers oauth_providers_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.oauth_providers
@@ -12043,7 +11475,7 @@ ALTER TABLE ONLY public.oauth_providers
 
 
 --
--- Name: partner_integrations partner_integrations_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: partner_integrations partner_integrations_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.partner_integrations
@@ -12051,7 +11483,7 @@ ALTER TABLE ONLY public.partner_integrations
 
 
 --
--- Name: password_reset_tokens password_reset_tokens_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: password_reset_tokens password_reset_tokens_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.password_reset_tokens
@@ -12059,7 +11491,7 @@ ALTER TABLE ONLY public.password_reset_tokens
 
 
 --
--- Name: plan_features plan_features_plan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: plan_features plan_features_plan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.plan_features
@@ -12067,7 +11499,7 @@ ALTER TABLE ONLY public.plan_features
 
 
 --
--- Name: preferences preferences_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: preferences preferences_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.preferences
@@ -12075,7 +11507,7 @@ ALTER TABLE ONLY public.preferences
 
 
 --
--- Name: rate_limit_config rate_limit_config_plan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: rate_limit_config rate_limit_config_plan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.rate_limit_config
@@ -12083,7 +11515,7 @@ ALTER TABLE ONLY public.rate_limit_config
 
 
 --
--- Name: rate_limit_config rate_limit_config_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: rate_limit_config rate_limit_config_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.rate_limit_config
@@ -12091,7 +11523,7 @@ ALTER TABLE ONLY public.rate_limit_config
 
 
 --
--- Name: recommendations recommendations_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: recommendations recommendations_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.recommendations
@@ -12099,7 +11531,7 @@ ALTER TABLE ONLY public.recommendations
 
 
 --
--- Name: recommendations recommendations_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: recommendations recommendations_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.recommendations
@@ -12107,7 +11539,7 @@ ALTER TABLE ONLY public.recommendations
 
 
 --
--- Name: regions regions_parent_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: regions regions_parent_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.regions
@@ -12115,7 +11547,7 @@ ALTER TABLE ONLY public.regions
 
 
 --
--- Name: regulatory_contacts regulatory_contacts_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: regulatory_contacts regulatory_contacts_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.regulatory_contacts
@@ -12123,7 +11555,7 @@ ALTER TABLE ONLY public.regulatory_contacts
 
 
 --
--- Name: regulatory_contacts regulatory_contacts_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: regulatory_contacts regulatory_contacts_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.regulatory_contacts
@@ -12131,7 +11563,7 @@ ALTER TABLE ONLY public.regulatory_contacts
 
 
 --
--- Name: report_access_policies report_access_policies_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_access_policies report_access_policies_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_access_policies
@@ -12139,7 +11571,7 @@ ALTER TABLE ONLY public.report_access_policies
 
 
 --
--- Name: report_access_policies report_access_policies_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_access_policies report_access_policies_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_access_policies
@@ -12147,7 +11579,7 @@ ALTER TABLE ONLY public.report_access_policies
 
 
 --
--- Name: report_access_policies report_access_policies_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_access_policies report_access_policies_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_access_policies
@@ -12155,7 +11587,7 @@ ALTER TABLE ONLY public.report_access_policies
 
 
 --
--- Name: report_access_policies report_access_policies_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_access_policies report_access_policies_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_access_policies
@@ -12163,7 +11595,7 @@ ALTER TABLE ONLY public.report_access_policies
 
 
 --
--- Name: report_access_policies report_access_policies_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_access_policies report_access_policies_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_access_policies
@@ -12171,7 +11603,7 @@ ALTER TABLE ONLY public.report_access_policies
 
 
 --
--- Name: report_access_policies report_access_policies_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_access_policies report_access_policies_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_access_policies
@@ -12179,7 +11611,7 @@ ALTER TABLE ONLY public.report_access_policies
 
 
 --
--- Name: report_annotations report_annotations_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_annotations report_annotations_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_annotations
@@ -12187,7 +11619,7 @@ ALTER TABLE ONLY public.report_annotations
 
 
 --
--- Name: report_annotations report_annotations_run_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_annotations report_annotations_run_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_annotations
@@ -12195,7 +11627,7 @@ ALTER TABLE ONLY public.report_annotations
 
 
 --
--- Name: report_annotations report_annotations_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_annotations report_annotations_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_annotations
@@ -12203,7 +11635,7 @@ ALTER TABLE ONLY public.report_annotations
 
 
 --
--- Name: report_annotations report_annotations_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_annotations report_annotations_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_annotations
@@ -12211,7 +11643,7 @@ ALTER TABLE ONLY public.report_annotations
 
 
 --
--- Name: report_approvals report_approvals_approver_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_approvals report_approvals_approver_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_approvals
@@ -12219,7 +11651,7 @@ ALTER TABLE ONLY public.report_approvals
 
 
 --
--- Name: report_approvals report_approvals_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_approvals report_approvals_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_approvals
@@ -12227,7 +11659,7 @@ ALTER TABLE ONLY public.report_approvals
 
 
 --
--- Name: report_approvals report_approvals_requested_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_approvals report_approvals_requested_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_approvals
@@ -12235,7 +11667,7 @@ ALTER TABLE ONLY public.report_approvals
 
 
 --
--- Name: report_approvals report_approvals_run_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_approvals report_approvals_run_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_approvals
@@ -12243,7 +11675,7 @@ ALTER TABLE ONLY public.report_approvals
 
 
 --
--- Name: report_approvals report_approvals_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_approvals report_approvals_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_approvals
@@ -12251,7 +11683,7 @@ ALTER TABLE ONLY public.report_approvals
 
 
 --
--- Name: report_bookmarks report_bookmarks_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_bookmarks report_bookmarks_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_bookmarks
@@ -12259,7 +11691,7 @@ ALTER TABLE ONLY public.report_bookmarks
 
 
 --
--- Name: report_bookmarks report_bookmarks_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_bookmarks report_bookmarks_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_bookmarks
@@ -12267,7 +11699,7 @@ ALTER TABLE ONLY public.report_bookmarks
 
 
 --
--- Name: report_comments report_comments_parent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_comments report_comments_parent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_comments
@@ -12275,7 +11707,7 @@ ALTER TABLE ONLY public.report_comments
 
 
 --
--- Name: report_comments report_comments_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_comments report_comments_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_comments
@@ -12283,7 +11715,7 @@ ALTER TABLE ONLY public.report_comments
 
 
 --
--- Name: report_comments report_comments_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_comments report_comments_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_comments
@@ -12291,7 +11723,7 @@ ALTER TABLE ONLY public.report_comments
 
 
 --
--- Name: report_data report_data_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_data report_data_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_data
@@ -12299,7 +11731,7 @@ ALTER TABLE ONLY public.report_data
 
 
 --
--- Name: report_data report_data_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_data report_data_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_data
@@ -12307,7 +11739,7 @@ ALTER TABLE ONLY public.report_data
 
 
 --
--- Name: report_data report_data_uploaded_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_data report_data_uploaded_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_data
@@ -12315,7 +11747,7 @@ ALTER TABLE ONLY public.report_data
 
 
 --
--- Name: report_fields report_fields_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_fields report_fields_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_fields
@@ -12323,7 +11755,7 @@ ALTER TABLE ONLY public.report_fields
 
 
 --
--- Name: report_fields report_fields_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_fields report_fields_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_fields
@@ -12331,7 +11763,7 @@ ALTER TABLE ONLY public.report_fields
 
 
 --
--- Name: report_filters report_filters_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_filters report_filters_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_filters
@@ -12339,7 +11771,7 @@ ALTER TABLE ONLY public.report_filters
 
 
 --
--- Name: report_join_definitions report_join_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_join_definitions report_join_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_join_definitions
@@ -12347,7 +11779,7 @@ ALTER TABLE ONLY public.report_join_definitions
 
 
 --
--- Name: report_kpis report_kpis_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_kpis report_kpis_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_kpis
@@ -12355,7 +11787,7 @@ ALTER TABLE ONLY public.report_kpis
 
 
 --
--- Name: report_run_history report_run_history_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_run_history report_run_history_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_run_history
@@ -12363,7 +11795,7 @@ ALTER TABLE ONLY public.report_run_history
 
 
 --
--- Name: report_run_history report_run_history_result_data_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_run_history report_run_history_result_data_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_run_history
@@ -12371,7 +11803,7 @@ ALTER TABLE ONLY public.report_run_history
 
 
 --
--- Name: report_run_history report_run_history_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_run_history report_run_history_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_run_history
@@ -12379,7 +11811,7 @@ ALTER TABLE ONLY public.report_run_history
 
 
 --
--- Name: report_run_history report_run_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_run_history report_run_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_run_history
@@ -12387,7 +11819,7 @@ ALTER TABLE ONLY public.report_run_history
 
 
 --
--- Name: report_run_history report_run_history_triggered_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_run_history report_run_history_triggered_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_run_history
@@ -12395,7 +11827,7 @@ ALTER TABLE ONLY public.report_run_history
 
 
 --
--- Name: report_sharing report_sharing_recipient_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_sharing report_sharing_recipient_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_sharing
@@ -12403,7 +11835,7 @@ ALTER TABLE ONLY public.report_sharing
 
 
 --
--- Name: report_sharing report_sharing_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_sharing report_sharing_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_sharing
@@ -12411,7 +11843,7 @@ ALTER TABLE ONLY public.report_sharing
 
 
 --
--- Name: report_sharing report_sharing_shared_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_sharing report_sharing_shared_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_sharing
@@ -12419,7 +11851,7 @@ ALTER TABLE ONLY public.report_sharing
 
 
 --
--- Name: report_sharing report_sharing_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_sharing report_sharing_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_sharing
@@ -12427,7 +11859,7 @@ ALTER TABLE ONLY public.report_sharing
 
 
 --
--- Name: report_subscriptions report_subscriptions_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_subscriptions report_subscriptions_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_subscriptions
@@ -12435,7 +11867,7 @@ ALTER TABLE ONLY public.report_subscriptions
 
 
 --
--- Name: report_subscriptions report_subscriptions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_subscriptions report_subscriptions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_subscriptions
@@ -12443,7 +11875,7 @@ ALTER TABLE ONLY public.report_subscriptions
 
 
 --
--- Name: report_tags report_tags_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_tags report_tags_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_tags
@@ -12451,7 +11883,7 @@ ALTER TABLE ONLY public.report_tags
 
 
 --
--- Name: report_templates report_templates_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_templates report_templates_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_templates
@@ -12459,7 +11891,7 @@ ALTER TABLE ONLY public.report_templates
 
 
 --
--- Name: report_templates report_templates_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_templates report_templates_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_templates
@@ -12467,7 +11899,7 @@ ALTER TABLE ONLY public.report_templates
 
 
 --
--- Name: report_themes report_themes_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_themes report_themes_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_themes
@@ -12475,7 +11907,7 @@ ALTER TABLE ONLY public.report_themes
 
 
 --
--- Name: report_themes report_themes_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_themes report_themes_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_themes
@@ -12483,7 +11915,7 @@ ALTER TABLE ONLY public.report_themes
 
 
 --
--- Name: report_versions report_versions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_versions report_versions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_versions
@@ -12491,7 +11923,7 @@ ALTER TABLE ONLY public.report_versions
 
 
 --
--- Name: report_versions report_versions_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_versions report_versions_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_versions
@@ -12499,7 +11931,7 @@ ALTER TABLE ONLY public.report_versions
 
 
 --
--- Name: report_view_logs report_view_logs_dashboard_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_view_logs report_view_logs_dashboard_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_view_logs
@@ -12507,7 +11939,7 @@ ALTER TABLE ONLY public.report_view_logs
 
 
 --
--- Name: report_view_logs report_view_logs_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_view_logs report_view_logs_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_view_logs
@@ -12515,7 +11947,7 @@ ALTER TABLE ONLY public.report_view_logs
 
 
 --
--- Name: report_view_logs report_view_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_view_logs report_view_logs_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_view_logs
@@ -12523,7 +11955,7 @@ ALTER TABLE ONLY public.report_view_logs
 
 
 --
--- Name: report_view_logs report_view_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: report_view_logs report_view_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.report_view_logs
@@ -12531,7 +11963,7 @@ ALTER TABLE ONLY public.report_view_logs
 
 
 --
--- Name: reports_master reports_master_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: reports_master reports_master_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reports_master
@@ -12539,7 +11971,7 @@ ALTER TABLE ONLY public.reports_master
 
 
 --
--- Name: reports_master reports_master_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: reports_master reports_master_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reports_master
@@ -12547,7 +11979,7 @@ ALTER TABLE ONLY public.reports_master
 
 
 --
--- Name: role_permissions role_permissions_perm_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: role_permissions role_permissions_perm_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.role_permissions
@@ -12555,7 +11987,7 @@ ALTER TABLE ONLY public.role_permissions
 
 
 --
--- Name: role_permissions role_permissions_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: role_permissions role_permissions_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.role_permissions
@@ -12563,7 +11995,7 @@ ALTER TABLE ONLY public.role_permissions
 
 
 --
--- Name: roles roles_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: roles roles_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.roles
@@ -12571,7 +12003,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- Name: saved_filters saved_filters_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: saved_filters saved_filters_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.saved_filters
@@ -12579,7 +12011,7 @@ ALTER TABLE ONLY public.saved_filters
 
 
 --
--- Name: saved_filters saved_filters_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: saved_filters saved_filters_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.saved_filters
@@ -12587,7 +12019,7 @@ ALTER TABLE ONLY public.saved_filters
 
 
 --
--- Name: scenario_simulations scenario_simulations_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scenario_simulations scenario_simulations_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scenario_simulations
@@ -12595,7 +12027,7 @@ ALTER TABLE ONLY public.scenario_simulations
 
 
 --
--- Name: scenario_simulations scenario_simulations_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scenario_simulations scenario_simulations_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scenario_simulations
@@ -12603,7 +12035,7 @@ ALTER TABLE ONLY public.scenario_simulations
 
 
 --
--- Name: scenario_simulations scenario_simulations_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scenario_simulations scenario_simulations_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scenario_simulations
@@ -12611,7 +12043,7 @@ ALTER TABLE ONLY public.scenario_simulations
 
 
 --
--- Name: scenario_simulations scenario_simulations_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scenario_simulations scenario_simulations_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scenario_simulations
@@ -12619,7 +12051,7 @@ ALTER TABLE ONLY public.scenario_simulations
 
 
 --
--- Name: scheduled_tasks scheduled_tasks_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scheduled_tasks scheduled_tasks_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scheduled_tasks
@@ -12627,7 +12059,7 @@ ALTER TABLE ONLY public.scheduled_tasks
 
 
 --
--- Name: scheduled_tasks scheduled_tasks_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scheduled_tasks scheduled_tasks_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scheduled_tasks
@@ -12635,7 +12067,7 @@ ALTER TABLE ONLY public.scheduled_tasks
 
 
 --
--- Name: scheduled_tasks scheduled_tasks_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scheduled_tasks scheduled_tasks_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scheduled_tasks
@@ -12643,7 +12075,7 @@ ALTER TABLE ONLY public.scheduled_tasks
 
 
 --
--- Name: scorecard_definitions scorecard_definitions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scorecard_definitions scorecard_definitions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_definitions
@@ -12651,7 +12083,7 @@ ALTER TABLE ONLY public.scorecard_definitions
 
 
 --
--- Name: scorecard_definitions scorecard_definitions_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scorecard_definitions scorecard_definitions_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_definitions
@@ -12659,7 +12091,7 @@ ALTER TABLE ONLY public.scorecard_definitions
 
 
 --
--- Name: scorecard_definitions scorecard_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scorecard_definitions scorecard_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_definitions
@@ -12667,7 +12099,7 @@ ALTER TABLE ONLY public.scorecard_definitions
 
 
 --
--- Name: scorecard_kpis scorecard_kpis_kpi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scorecard_kpis scorecard_kpis_kpi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_kpis
@@ -12675,7 +12107,7 @@ ALTER TABLE ONLY public.scorecard_kpis
 
 
 --
--- Name: scorecard_kpis scorecard_kpis_scorecard_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: scorecard_kpis scorecard_kpis_scorecard_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.scorecard_kpis
@@ -12683,7 +12115,7 @@ ALTER TABLE ONLY public.scorecard_kpis
 
 
 --
--- Name: search_history search_history_selected_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: search_history search_history_selected_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.search_history
@@ -12691,7 +12123,7 @@ ALTER TABLE ONLY public.search_history
 
 
 --
--- Name: search_history search_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: search_history search_history_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.search_history
@@ -12699,7 +12131,7 @@ ALTER TABLE ONLY public.search_history
 
 
 --
--- Name: search_history search_history_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: search_history search_history_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.search_history
@@ -12707,7 +12139,7 @@ ALTER TABLE ONLY public.search_history
 
 
 --
--- Name: security_events security_events_resolved_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: security_events security_events_resolved_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.security_events
@@ -12715,7 +12147,7 @@ ALTER TABLE ONLY public.security_events
 
 
 --
--- Name: security_events security_events_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: security_events security_events_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.security_events
@@ -12723,7 +12155,7 @@ ALTER TABLE ONLY public.security_events
 
 
 --
--- Name: security_events security_events_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: security_events security_events_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.security_events
@@ -12731,7 +12163,7 @@ ALTER TABLE ONLY public.security_events
 
 
 --
--- Name: sessions sessions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sessions sessions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.sessions
@@ -12739,7 +12171,7 @@ ALTER TABLE ONLY public.sessions
 
 
 --
--- Name: settings settings_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: settings settings_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.settings
@@ -12747,7 +12179,7 @@ ALTER TABLE ONLY public.settings
 
 
 --
--- Name: settings settings_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: settings settings_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.settings
@@ -12755,7 +12187,7 @@ ALTER TABLE ONLY public.settings
 
 
 --
--- Name: source_mappings source_mappings_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: source_mappings source_mappings_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.source_mappings
@@ -12763,7 +12195,7 @@ ALTER TABLE ONLY public.source_mappings
 
 
 --
--- Name: source_mappings source_mappings_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: source_mappings source_mappings_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.source_mappings
@@ -12771,7 +12203,7 @@ ALTER TABLE ONLY public.source_mappings
 
 
 --
--- Name: system_metrics system_metrics_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: system_metrics system_metrics_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.system_metrics
@@ -12779,7 +12211,7 @@ ALTER TABLE ONLY public.system_metrics
 
 
 --
--- Name: task_history task_history_instance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: task_history task_history_instance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.task_history
@@ -12787,7 +12219,7 @@ ALTER TABLE ONLY public.task_history
 
 
 --
--- Name: task_history task_history_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: task_history task_history_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.task_history
@@ -12795,7 +12227,7 @@ ALTER TABLE ONLY public.task_history
 
 
 --
--- Name: team_members team_members_added_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: team_members team_members_added_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.team_members
@@ -12803,7 +12235,7 @@ ALTER TABLE ONLY public.team_members
 
 
 --
--- Name: team_members team_members_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: team_members team_members_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.team_members
@@ -12811,7 +12243,7 @@ ALTER TABLE ONLY public.team_members
 
 
 --
--- Name: team_members team_members_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: team_members team_members_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.team_members
@@ -12819,7 +12251,7 @@ ALTER TABLE ONLY public.team_members
 
 
 --
--- Name: teams teams_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: teams teams_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.teams
@@ -12827,7 +12259,7 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: teams teams_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: teams teams_domain_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.teams
@@ -12835,7 +12267,7 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: teams teams_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: teams teams_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.teams
@@ -12843,7 +12275,7 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: tenant_invitations tenant_invitations_invited_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenant_invitations tenant_invitations_invited_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_invitations
@@ -12851,7 +12283,7 @@ ALTER TABLE ONLY public.tenant_invitations
 
 
 --
--- Name: tenant_invitations tenant_invitations_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenant_invitations tenant_invitations_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_invitations
@@ -12859,7 +12291,7 @@ ALTER TABLE ONLY public.tenant_invitations
 
 
 --
--- Name: tenant_invitations tenant_invitations_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenant_invitations tenant_invitations_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_invitations
@@ -12867,7 +12299,7 @@ ALTER TABLE ONLY public.tenant_invitations
 
 
 --
--- Name: tenant_subscriptions tenant_subscriptions_changed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenant_subscriptions tenant_subscriptions_changed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_subscriptions
@@ -12875,7 +12307,7 @@ ALTER TABLE ONLY public.tenant_subscriptions
 
 
 --
--- Name: tenant_subscriptions tenant_subscriptions_plan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenant_subscriptions tenant_subscriptions_plan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_subscriptions
@@ -12883,7 +12315,7 @@ ALTER TABLE ONLY public.tenant_subscriptions
 
 
 --
--- Name: tenant_subscriptions tenant_subscriptions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: tenant_subscriptions tenant_subscriptions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tenant_subscriptions
@@ -12891,7 +12323,7 @@ ALTER TABLE ONLY public.tenant_subscriptions
 
 
 --
--- Name: trend_analysis trend_analysis_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: trend_analysis trend_analysis_insight_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.trend_analysis
@@ -12899,7 +12331,7 @@ ALTER TABLE ONLY public.trend_analysis
 
 
 --
--- Name: trend_analysis trend_analysis_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: trend_analysis trend_analysis_report_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.trend_analysis
@@ -12907,7 +12339,7 @@ ALTER TABLE ONLY public.trend_analysis
 
 
 --
--- Name: upload_validation_rules upload_validation_rules_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: upload_validation_rules upload_validation_rules_rule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.upload_validation_rules
@@ -12915,7 +12347,7 @@ ALTER TABLE ONLY public.upload_validation_rules
 
 
 --
--- Name: upload_validation_rules upload_validation_rules_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: upload_validation_rules upload_validation_rules_upload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.upload_validation_rules
@@ -12923,7 +12355,7 @@ ALTER TABLE ONLY public.upload_validation_rules
 
 
 --
--- Name: usage_metrics usage_metrics_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: usage_metrics usage_metrics_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.usage_metrics
@@ -12931,7 +12363,7 @@ ALTER TABLE ONLY public.usage_metrics
 
 
 --
--- Name: user_devices user_devices_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_devices user_devices_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_devices
@@ -12939,7 +12371,7 @@ ALTER TABLE ONLY public.user_devices
 
 
 --
--- Name: user_roles user_roles_assigned_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_roles user_roles_assigned_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_roles
@@ -12947,7 +12379,7 @@ ALTER TABLE ONLY public.user_roles
 
 
 --
--- Name: user_roles user_roles_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_roles user_roles_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_roles
@@ -12955,7 +12387,7 @@ ALTER TABLE ONLY public.user_roles
 
 
 --
--- Name: user_roles user_roles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: user_roles user_roles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_roles
@@ -12963,7 +12395,7 @@ ALTER TABLE ONLY public.user_roles
 
 
 --
--- Name: users users_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -12971,7 +12403,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: users users_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -12979,7 +12411,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: webhooks webhooks_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: webhooks webhooks_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.webhooks
@@ -12987,7 +12419,7 @@ ALTER TABLE ONLY public.webhooks
 
 
 --
--- Name: workflow_definitions workflow_definitions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: workflow_definitions workflow_definitions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.workflow_definitions
@@ -12995,7 +12427,7 @@ ALTER TABLE ONLY public.workflow_definitions
 
 
 --
--- Name: workflow_definitions workflow_definitions_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: workflow_definitions workflow_definitions_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.workflow_definitions
@@ -13003,7 +12435,7 @@ ALTER TABLE ONLY public.workflow_definitions
 
 
 --
--- Name: workflow_definitions workflow_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: workflow_definitions workflow_definitions_tenant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.workflow_definitions
@@ -13011,7 +12443,7 @@ ALTER TABLE ONLY public.workflow_definitions
 
 
 --
--- Name: workflow_instances workflow_instances_workflow_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: workflow_instances workflow_instances_workflow_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.workflow_instances
@@ -13019,1800 +12451,8 @@ ALTER TABLE ONLY public.workflow_instances
 
 
 --
--- Name: TABLE activity_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.activity_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE activity_logs_activity_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.activity_logs_activity_id_seq TO deemona_app;
-
-
---
--- Name: TABLE ai_insights; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.ai_insights TO deemona_app;
-
-
---
--- Name: SEQUENCE ai_insights_insight_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.ai_insights_insight_id_seq TO deemona_app;
-
-
---
--- Name: TABLE alert_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.alert_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE alert_logs_log_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.alert_logs_log_id_seq TO deemona_app;
-
-
---
--- Name: TABLE alert_rules; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.alert_rules TO deemona_app;
-
-
---
--- Name: SEQUENCE alert_rules_rule_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.alert_rules_rule_id_seq TO deemona_app;
-
-
---
--- Name: TABLE announcements; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.announcements TO deemona_app;
-
-
---
--- Name: SEQUENCE announcements_announcement_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.announcements_announcement_id_seq TO deemona_app;
-
-
---
--- Name: TABLE anomaly_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.anomaly_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE anomaly_logs_anomaly_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.anomaly_logs_anomaly_id_seq TO deemona_app;
-
-
---
--- Name: TABLE api_keys; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.api_keys TO deemona_app;
-
-
---
--- Name: SEQUENCE api_keys_api_key_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.api_keys_api_key_id_seq TO deemona_app;
-
-
---
--- Name: TABLE api_usage_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.api_usage_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE api_usage_logs_log_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.api_usage_logs_log_id_seq TO deemona_app;
-
-
---
--- Name: TABLE approval_steps; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.approval_steps TO deemona_app;
-
-
---
--- Name: SEQUENCE approval_steps_step_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.approval_steps_step_id_seq TO deemona_app;
-
-
---
--- Name: TABLE approval_workflows; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.approval_workflows TO deemona_app;
-
-
---
--- Name: SEQUENCE approval_workflows_workflow_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.approval_workflows_workflow_id_seq TO deemona_app;
-
-
---
--- Name: TABLE attachments; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.attachments TO deemona_app;
-
-
---
--- Name: SEQUENCE attachments_attachment_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.attachments_attachment_id_seq TO deemona_app;
-
-
---
--- Name: TABLE audit_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.audit_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE audit_logs_log_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.audit_logs_log_id_seq TO deemona_app;
-
-
---
--- Name: TABLE benchmarking_data; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.benchmarking_data TO deemona_app;
-
-
---
--- Name: SEQUENCE benchmarking_data_benchmark_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.benchmarking_data_benchmark_id_seq TO deemona_app;
-
-
---
--- Name: TABLE billing_accounts; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.billing_accounts TO deemona_app;
-
-
---
--- Name: SEQUENCE billing_accounts_account_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.billing_accounts_account_id_seq TO deemona_app;
-
-
---
--- Name: TABLE blockchain_audit; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.blockchain_audit TO deemona_app;
-
-
---
--- Name: SEQUENCE blockchain_audit_audit_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.blockchain_audit_audit_id_seq TO deemona_app;
-
-
---
--- Name: TABLE chat_feedback; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.chat_feedback TO deemona_app;
-
-
---
--- Name: SEQUENCE chat_feedback_feedback_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.chat_feedback_feedback_id_seq TO deemona_app;
-
-
---
--- Name: TABLE chat_intents; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.chat_intents TO deemona_app;
-
-
---
--- Name: SEQUENCE chat_intents_intent_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.chat_intents_intent_id_seq TO deemona_app;
-
-
---
--- Name: TABLE chat_queries; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.chat_queries TO deemona_app;
-
-
---
--- Name: SEQUENCE chat_queries_query_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.chat_queries_query_id_seq TO deemona_app;
-
-
---
--- Name: TABLE chat_responses; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.chat_responses TO deemona_app;
-
-
---
--- Name: SEQUENCE chat_responses_response_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.chat_responses_response_id_seq TO deemona_app;
-
-
---
--- Name: TABLE chat_sessions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.chat_sessions TO deemona_app;
-
-
---
--- Name: SEQUENCE chat_sessions_session_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.chat_sessions_session_id_seq TO deemona_app;
-
-
---
--- Name: TABLE compliance_audit; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.compliance_audit TO deemona_app;
-
-
---
--- Name: SEQUENCE compliance_audit_audit_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.compliance_audit_audit_id_seq TO deemona_app;
-
-
---
--- Name: TABLE compliance_calendar; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.compliance_calendar TO deemona_app;
-
-
---
--- Name: SEQUENCE compliance_calendar_compliance_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.compliance_calendar_compliance_id_seq TO deemona_app;
-
-
---
--- Name: TABLE compliance_documents; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.compliance_documents TO deemona_app;
-
-
---
--- Name: SEQUENCE compliance_documents_doc_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.compliance_documents_doc_id_seq TO deemona_app;
-
-
---
--- Name: TABLE compliance_rules; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.compliance_rules TO deemona_app;
-
-
---
--- Name: SEQUENCE compliance_rules_rule_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.compliance_rules_rule_id_seq TO deemona_app;
-
-
---
--- Name: TABLE compliance_submissions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.compliance_submissions TO deemona_app;
-
-
---
--- Name: SEQUENCE compliance_submissions_submission_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.compliance_submissions_submission_id_seq TO deemona_app;
-
-
---
--- Name: TABLE connector_sync_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.connector_sync_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE connector_sync_logs_sync_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.connector_sync_logs_sync_id_seq TO deemona_app;
-
-
---
--- Name: TABLE connector_types; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.connector_types TO deemona_app;
-
-
---
--- Name: SEQUENCE connector_types_connector_type_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.connector_types_connector_type_id_seq TO deemona_app;
-
-
---
--- Name: TABLE correlation_matrix; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.correlation_matrix TO deemona_app;
-
-
---
--- Name: SEQUENCE correlation_matrix_corr_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.correlation_matrix_corr_id_seq TO deemona_app;
-
-
---
--- Name: TABLE countries; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.countries TO deemona_app;
-
-
---
--- Name: TABLE currencies; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.currencies TO deemona_app;
-
-
---
--- Name: TABLE custom_report_definitions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.custom_report_definitions TO deemona_app;
-
-
---
--- Name: SEQUENCE custom_report_definitions_custom_report_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.custom_report_definitions_custom_report_id_seq TO deemona_app;
-
-
---
--- Name: TABLE dashboard_widgets; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.dashboard_widgets TO deemona_app;
-
-
---
--- Name: SEQUENCE dashboard_widgets_widget_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.dashboard_widgets_widget_id_seq TO deemona_app;
-
-
---
--- Name: TABLE dashboards; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.dashboards TO deemona_app;
-
-
---
--- Name: SEQUENCE dashboards_dashboard_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.dashboards_dashboard_id_seq TO deemona_app;
-
-
---
--- Name: TABLE data_consent; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.data_consent TO deemona_app;
-
-
---
--- Name: SEQUENCE data_consent_consent_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.data_consent_consent_id_seq TO deemona_app;
-
-
---
--- Name: TABLE data_ingestion_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.data_ingestion_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE data_ingestion_logs_log_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.data_ingestion_logs_log_id_seq TO deemona_app;
-
-
---
--- Name: TABLE data_lineage; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.data_lineage TO deemona_app;
-
-
---
--- Name: SEQUENCE data_lineage_lineage_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.data_lineage_lineage_id_seq TO deemona_app;
-
-
---
--- Name: TABLE data_masking_rules; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.data_masking_rules TO deemona_app;
-
-
---
--- Name: SEQUENCE data_masking_rules_rule_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.data_masking_rules_rule_id_seq TO deemona_app;
-
-
---
--- Name: TABLE data_quality_scores; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.data_quality_scores TO deemona_app;
-
-
---
--- Name: SEQUENCE data_quality_scores_quality_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.data_quality_scores_quality_id_seq TO deemona_app;
-
-
---
--- Name: TABLE data_retention_policies; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.data_retention_policies TO deemona_app;
-
-
---
--- Name: SEQUENCE data_retention_policies_policy_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.data_retention_policies_policy_id_seq TO deemona_app;
-
-
---
--- Name: TABLE data_sources; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.data_sources TO deemona_app;
-
-
---
--- Name: SEQUENCE data_sources_source_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.data_sources_source_id_seq TO deemona_app;
-
-
---
--- Name: TABLE data_uploads; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.data_uploads TO deemona_app;
-
-
---
--- Name: SEQUENCE data_uploads_upload_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.data_uploads_upload_id_seq TO deemona_app;
-
-
---
--- Name: TABLE data_validation_rules; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.data_validation_rules TO deemona_app;
-
-
---
--- Name: SEQUENCE data_validation_rules_rule_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.data_validation_rules_rule_id_seq TO deemona_app;
-
-
---
--- Name: TABLE deployment_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.deployment_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE deployment_logs_deploy_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.deployment_logs_deploy_id_seq TO deemona_app;
-
-
---
--- Name: TABLE distribution_lists; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.distribution_lists TO deemona_app;
-
-
---
--- Name: SEQUENCE distribution_lists_list_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.distribution_lists_list_id_seq TO deemona_app;
-
-
---
--- Name: TABLE distribution_members; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.distribution_members TO deemona_app;
-
-
---
--- Name: SEQUENCE distribution_members_member_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.distribution_members_member_id_seq TO deemona_app;
-
-
---
--- Name: TABLE domains; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.domains TO deemona_app;
-
-
---
--- Name: SEQUENCE domains_domain_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.domains_domain_id_seq TO deemona_app;
-
-
---
--- Name: TABLE email_queue; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.email_queue TO deemona_app;
-
-
---
--- Name: SEQUENCE email_queue_queue_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.email_queue_queue_id_seq TO deemona_app;
-
-
---
--- Name: TABLE error_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.error_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE error_logs_error_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.error_logs_error_id_seq TO deemona_app;
-
-
---
--- Name: TABLE esg_scores; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.esg_scores TO deemona_app;
-
-
---
--- Name: SEQUENCE esg_scores_esg_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.esg_scores_esg_id_seq TO deemona_app;
-
-
---
--- Name: TABLE etl_jobs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.etl_jobs TO deemona_app;
-
-
---
--- Name: SEQUENCE etl_jobs_job_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.etl_jobs_job_id_seq TO deemona_app;
-
-
---
--- Name: TABLE exchange_rates; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.exchange_rates TO deemona_app;
-
-
---
--- Name: SEQUENCE exchange_rates_rate_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.exchange_rates_rate_id_seq TO deemona_app;
-
-
---
--- Name: TABLE executive_narratives; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.executive_narratives TO deemona_app;
-
-
---
--- Name: SEQUENCE executive_narratives_narrative_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.executive_narratives_narrative_id_seq TO deemona_app;
-
-
---
--- Name: TABLE export_history; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.export_history TO deemona_app;
-
-
---
--- Name: SEQUENCE export_history_export_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.export_history_export_id_seq TO deemona_app;
-
-
---
--- Name: TABLE export_templates; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.export_templates TO deemona_app;
-
-
---
--- Name: SEQUENCE export_templates_template_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.export_templates_template_id_seq TO deemona_app;
-
-
---
--- Name: TABLE external_feeds; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.external_feeds TO deemona_app;
-
-
---
--- Name: SEQUENCE external_feeds_feed_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.external_feeds_feed_id_seq TO deemona_app;
-
-
---
--- Name: TABLE feature_flags; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.feature_flags TO deemona_app;
-
-
---
--- Name: SEQUENCE feature_flags_flag_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.feature_flags_flag_id_seq TO deemona_app;
-
-
---
--- Name: TABLE fiscal_calendars; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.fiscal_calendars TO deemona_app;
-
-
---
--- Name: SEQUENCE fiscal_calendars_calendar_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.fiscal_calendars_calendar_id_seq TO deemona_app;
-
-
---
--- Name: TABLE forecast_models; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.forecast_models TO deemona_app;
-
-
---
--- Name: SEQUENCE forecast_models_model_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.forecast_models_model_id_seq TO deemona_app;
-
-
---
--- Name: TABLE gdpr_requests; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.gdpr_requests TO deemona_app;
-
-
---
--- Name: SEQUENCE gdpr_requests_request_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.gdpr_requests_request_id_seq TO deemona_app;
-
-
---
--- Name: TABLE integration_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.integration_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE integration_logs_log_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.integration_logs_log_id_seq TO deemona_app;
-
-
---
--- Name: TABLE ip_allowlist; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.ip_allowlist TO deemona_app;
-
-
---
--- Name: SEQUENCE ip_allowlist_entry_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.ip_allowlist_entry_id_seq TO deemona_app;
-
-
---
--- Name: TABLE job_queue; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.job_queue TO deemona_app;
-
-
---
--- Name: SEQUENCE job_queue_job_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.job_queue_job_id_seq TO deemona_app;
-
-
---
--- Name: TABLE kpi_benchmarks; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.kpi_benchmarks TO deemona_app;
-
-
---
--- Name: SEQUENCE kpi_benchmarks_benchmark_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.kpi_benchmarks_benchmark_id_seq TO deemona_app;
-
-
---
--- Name: TABLE kpi_history; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.kpi_history TO deemona_app;
-
-
---
--- Name: SEQUENCE kpi_history_history_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.kpi_history_history_id_seq TO deemona_app;
-
-
---
--- Name: TABLE llm_usage_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.llm_usage_logs TO deemona_app;
-
-
---
--- Name: SEQUENCE llm_usage_logs_usage_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.llm_usage_logs_usage_id_seq TO deemona_app;
-
-
---
--- Name: TABLE localization; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.localization TO deemona_app;
-
-
---
--- Name: SEQUENCE localization_loc_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.localization_loc_id_seq TO deemona_app;
-
-
---
--- Name: TABLE message_streams; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.message_streams TO deemona_app;
-
-
---
--- Name: SEQUENCE message_streams_stream_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.message_streams_stream_id_seq TO deemona_app;
-
-
---
--- Name: TABLE metric_definitions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.metric_definitions TO deemona_app;
-
-
---
--- Name: SEQUENCE metric_definitions_metric_def_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.metric_definitions_metric_def_id_seq TO deemona_app;
-
-
---
--- Name: TABLE mfa_settings; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.mfa_settings TO deemona_app;
-
-
---
--- Name: SEQUENCE mfa_settings_mfa_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.mfa_settings_mfa_id_seq TO deemona_app;
-
-
---
--- Name: TABLE model_training_history; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.model_training_history TO deemona_app;
-
-
---
--- Name: SEQUENCE model_training_history_training_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.model_training_history_training_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_run_history; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_run_history TO deemona_app;
-
-
---
--- Name: TABLE reports_master; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.reports_master TO deemona_app;
-
-
---
--- Name: TABLE report_view_logs; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_view_logs TO deemona_app;
-
-
---
--- Name: TABLE tenants; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.tenants TO deemona_app;
-
-
---
--- Name: TABLE users; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.users TO deemona_app;
-
-
---
--- Name: TABLE notification_templates; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.notification_templates TO deemona_app;
-
-
---
--- Name: SEQUENCE notification_templates_template_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.notification_templates_template_id_seq TO deemona_app;
-
-
---
--- Name: TABLE notifications; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.notifications TO deemona_app;
-
-
---
--- Name: SEQUENCE notifications_notif_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.notifications_notif_id_seq TO deemona_app;
-
-
---
--- Name: TABLE oauth_providers; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.oauth_providers TO deemona_app;
-
-
---
--- Name: SEQUENCE oauth_providers_provider_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.oauth_providers_provider_id_seq TO deemona_app;
-
-
---
--- Name: TABLE partner_integrations; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.partner_integrations TO deemona_app;
-
-
---
--- Name: SEQUENCE partner_integrations_partner_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.partner_integrations_partner_id_seq TO deemona_app;
-
-
---
--- Name: TABLE password_reset_tokens; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.password_reset_tokens TO deemona_app;
-
-
---
--- Name: SEQUENCE password_reset_tokens_token_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.password_reset_tokens_token_id_seq TO deemona_app;
-
-
---
--- Name: TABLE permissions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.permissions TO deemona_app;
-
-
---
--- Name: SEQUENCE permissions_perm_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.permissions_perm_id_seq TO deemona_app;
-
-
---
--- Name: TABLE plan_features; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.plan_features TO deemona_app;
-
-
---
--- Name: SEQUENCE plan_features_feature_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.plan_features_feature_id_seq TO deemona_app;
-
-
---
--- Name: TABLE preferences; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.preferences TO deemona_app;
-
-
---
--- Name: SEQUENCE preferences_pref_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.preferences_pref_id_seq TO deemona_app;
-
-
---
--- Name: TABLE rate_limit_config; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.rate_limit_config TO deemona_app;
-
-
---
--- Name: SEQUENCE rate_limit_config_config_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.rate_limit_config_config_id_seq TO deemona_app;
-
-
---
--- Name: TABLE recommendations; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.recommendations TO deemona_app;
-
-
---
--- Name: SEQUENCE recommendations_rec_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.recommendations_rec_id_seq TO deemona_app;
-
-
---
--- Name: TABLE regions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.regions TO deemona_app;
-
-
---
--- Name: SEQUENCE regions_region_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.regions_region_id_seq TO deemona_app;
-
-
---
--- Name: TABLE regulatory_contacts; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.regulatory_contacts TO deemona_app;
-
-
---
--- Name: SEQUENCE regulatory_contacts_contact_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.regulatory_contacts_contact_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_access_policies; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_access_policies TO deemona_app;
-
-
---
--- Name: SEQUENCE report_access_policies_policy_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_access_policies_policy_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_annotations; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_annotations TO deemona_app;
-
-
---
--- Name: SEQUENCE report_annotations_annotation_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_annotations_annotation_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_approvals; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_approvals TO deemona_app;
-
-
---
--- Name: SEQUENCE report_approvals_approval_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_approvals_approval_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_bookmarks; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_bookmarks TO deemona_app;
-
-
---
--- Name: SEQUENCE report_bookmarks_bookmark_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_bookmarks_bookmark_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_comments; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_comments TO deemona_app;
-
-
---
--- Name: SEQUENCE report_comments_comment_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_comments_comment_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_data; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_data TO deemona_app;
-
-
---
--- Name: SEQUENCE report_data_data_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_data_data_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_fields; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_fields TO deemona_app;
-
-
---
--- Name: SEQUENCE report_fields_field_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_fields_field_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_filters; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_filters TO deemona_app;
-
-
---
--- Name: SEQUENCE report_filters_filter_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_filters_filter_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_join_definitions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_join_definitions TO deemona_app;
-
-
---
--- Name: SEQUENCE report_join_definitions_join_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_join_definitions_join_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_kpis; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_kpis TO deemona_app;
-
-
---
--- Name: SEQUENCE report_kpis_kpi_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_kpis_kpi_id_seq TO deemona_app;
-
-
---
--- Name: SEQUENCE report_run_history_run_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_run_history_run_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_sharing; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_sharing TO deemona_app;
-
-
---
--- Name: SEQUENCE report_sharing_share_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_sharing_share_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_subscriptions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_subscriptions TO deemona_app;
-
-
---
--- Name: SEQUENCE report_subscriptions_subscription_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_subscriptions_subscription_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_tags; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_tags TO deemona_app;
-
-
---
--- Name: SEQUENCE report_tags_tag_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_tags_tag_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_templates; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_templates TO deemona_app;
-
-
---
--- Name: SEQUENCE report_templates_template_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_templates_template_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_themes; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_themes TO deemona_app;
-
-
---
--- Name: SEQUENCE report_themes_theme_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_themes_theme_id_seq TO deemona_app;
-
-
---
--- Name: TABLE report_versions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.report_versions TO deemona_app;
-
-
---
--- Name: SEQUENCE report_versions_version_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_versions_version_id_seq TO deemona_app;
-
-
---
--- Name: SEQUENCE report_view_logs_view_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.report_view_logs_view_id_seq TO deemona_app;
-
-
---
--- Name: SEQUENCE reports_master_report_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.reports_master_report_id_seq TO deemona_app;
-
-
---
--- Name: TABLE role_permissions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.role_permissions TO deemona_app;
-
-
---
--- Name: TABLE roles; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.roles TO deemona_app;
-
-
---
--- Name: SEQUENCE roles_role_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.roles_role_id_seq TO deemona_app;
-
-
---
--- Name: TABLE saved_filters; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.saved_filters TO deemona_app;
-
-
---
--- Name: SEQUENCE saved_filters_filter_set_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.saved_filters_filter_set_id_seq TO deemona_app;
-
-
---
--- Name: TABLE scenario_simulations; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.scenario_simulations TO deemona_app;
-
-
---
--- Name: SEQUENCE scenario_simulations_scenario_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.scenario_simulations_scenario_id_seq TO deemona_app;
-
-
---
--- Name: TABLE scheduled_tasks; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.scheduled_tasks TO deemona_app;
-
-
---
--- Name: SEQUENCE scheduled_tasks_task_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.scheduled_tasks_task_id_seq TO deemona_app;
-
-
---
--- Name: TABLE scorecard_definitions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.scorecard_definitions TO deemona_app;
-
-
---
--- Name: SEQUENCE scorecard_definitions_scorecard_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.scorecard_definitions_scorecard_id_seq TO deemona_app;
-
-
---
--- Name: TABLE scorecard_kpis; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.scorecard_kpis TO deemona_app;
-
-
---
--- Name: SEQUENCE scorecard_kpis_sc_kpi_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.scorecard_kpis_sc_kpi_id_seq TO deemona_app;
-
-
---
--- Name: TABLE search_history; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.search_history TO deemona_app;
-
-
---
--- Name: SEQUENCE search_history_search_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.search_history_search_id_seq TO deemona_app;
-
-
---
--- Name: TABLE security_events; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.security_events TO deemona_app;
-
-
---
--- Name: SEQUENCE security_events_event_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.security_events_event_id_seq TO deemona_app;
-
-
---
--- Name: TABLE sessions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.sessions TO deemona_app;
-
-
---
--- Name: SEQUENCE sessions_session_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.sessions_session_id_seq TO deemona_app;
-
-
---
--- Name: TABLE settings; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.settings TO deemona_app;
-
-
---
--- Name: SEQUENCE settings_setting_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.settings_setting_id_seq TO deemona_app;
-
-
---
--- Name: TABLE source_mappings; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.source_mappings TO deemona_app;
-
-
---
--- Name: SEQUENCE source_mappings_mapping_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.source_mappings_mapping_id_seq TO deemona_app;
-
-
---
--- Name: TABLE subscription_plans; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.subscription_plans TO deemona_app;
-
-
---
--- Name: SEQUENCE subscription_plans_plan_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.subscription_plans_plan_id_seq TO deemona_app;
-
-
---
--- Name: TABLE system_metrics; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.system_metrics TO deemona_app;
-
-
---
--- Name: SEQUENCE system_metrics_metric_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.system_metrics_metric_id_seq TO deemona_app;
-
-
---
--- Name: TABLE task_history; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.task_history TO deemona_app;
-
-
---
--- Name: SEQUENCE task_history_history_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.task_history_history_id_seq TO deemona_app;
-
-
---
--- Name: TABLE team_members; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.team_members TO deemona_app;
-
-
---
--- Name: TABLE teams; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.teams TO deemona_app;
-
-
---
--- Name: SEQUENCE teams_team_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.teams_team_id_seq TO deemona_app;
-
-
---
--- Name: TABLE tenant_invitations; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.tenant_invitations TO deemona_app;
-
-
---
--- Name: SEQUENCE tenant_invitations_invitation_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.tenant_invitations_invitation_id_seq TO deemona_app;
-
-
---
--- Name: TABLE tenant_subscriptions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.tenant_subscriptions TO deemona_app;
-
-
---
--- Name: SEQUENCE tenant_subscriptions_subscription_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.tenant_subscriptions_subscription_id_seq TO deemona_app;
-
-
---
--- Name: SEQUENCE tenants_tenant_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.tenants_tenant_id_seq TO deemona_app;
-
-
---
--- Name: TABLE translations; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.translations TO deemona_app;
-
-
---
--- Name: SEQUENCE translations_translation_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.translations_translation_id_seq TO deemona_app;
-
-
---
--- Name: TABLE trend_analysis; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.trend_analysis TO deemona_app;
-
-
---
--- Name: SEQUENCE trend_analysis_trend_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.trend_analysis_trend_id_seq TO deemona_app;
-
-
---
--- Name: TABLE upload_validation_rules; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.upload_validation_rules TO deemona_app;
-
-
---
--- Name: TABLE usage_metrics; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.usage_metrics TO deemona_app;
-
-
---
--- Name: SEQUENCE usage_metrics_usage_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.usage_metrics_usage_id_seq TO deemona_app;
-
-
---
--- Name: TABLE user_devices; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.user_devices TO deemona_app;
-
-
---
--- Name: SEQUENCE user_devices_device_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.user_devices_device_id_seq TO deemona_app;
-
-
---
--- Name: TABLE user_roles; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.user_roles TO deemona_app;
-
-
---
--- Name: SEQUENCE users_user_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.users_user_id_seq TO deemona_app;
-
-
---
--- Name: TABLE webhooks; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.webhooks TO deemona_app;
-
-
---
--- Name: SEQUENCE webhooks_hook_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.webhooks_hook_id_seq TO deemona_app;
-
-
---
--- Name: TABLE workflow_definitions; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.workflow_definitions TO deemona_app;
-
-
---
--- Name: SEQUENCE workflow_definitions_workflow_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.workflow_definitions_workflow_id_seq TO deemona_app;
-
-
---
--- Name: TABLE workflow_instances; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE public.workflow_instances TO deemona_app;
-
-
---
--- Name: SEQUENCE workflow_instances_instance_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE public.workflow_instances_instance_id_seq TO deemona_app;
-
-
---
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 5eDm5kufdxhMTcNqa6Wikl1HJKefduJhUtO0cxiuC3fBCYdo3TupQfjdh8x2YIk
+\unrestrict IpVuyKCBNEkR3VK3ateefP9EwdQOfNsusbUlUusHbsMhkigFjpVX8kteUr3DyXz
 
