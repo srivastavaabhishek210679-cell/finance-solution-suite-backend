@@ -10,27 +10,16 @@ router.get('/run', async (req: Request, res: Response) => {
   try {
     console.log('🔧 Starting database setup...');
 
-    // Read minimal_setup.sql
-    const setupSQL = fs.readFileSync(
-      path.join(__dirname, '../../minimal_setup.sql'),
+    // Read full schema SQL
+    const schemaSQL = fs.readFileSync(
+      path.join(__dirname, '../../full_schema.sql'),
       'utf8'
     );
 
-    // Read seed-final-fixed.sql
-    const seedSQL = fs.readFileSync(
-      path.join(__dirname, '../../seed-final-fixed.sql'),
-      'utf8'
-    );
-
-    // Run setup SQL
-    console.log('📦 Creating tables...');
-    await pool.query(setupSQL);
-    console.log('✅ Tables created!');
-
-    // Run seed SQL
-    console.log('🌱 Seeding data...');
-    await pool.query(seedSQL);
-    console.log('✅ Data seeded!');
+    // Run schema SQL
+    console.log('📦 Creating all tables...');
+    await pool.query(schemaSQL);
+    console.log('✅ All tables created!');
 
     // Verify tables
     const result = await pool.query(`
