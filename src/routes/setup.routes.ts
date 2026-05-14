@@ -226,4 +226,64 @@ router.get('/fix-schema', async (req: Request, res: Response) => {
   }
 });
 
+// Create permissions and role_permissions tables
+router.get('/create-permissions', async (req: Request, res: Response) => {
+  try {
+    console.log('Creating permissions tables...');
+
+    // Create permissions table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS permissions (
+        perm_id SERIAL PRIMARY KEY,
+        perm_code VARCHAR(100) UNIQUE NOT NULL,
+        perm_name VARCHAR(255) NOT NULL,
+        description TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // Create role_permissions junction table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS role_permissions (
+        role_perm_id SERIAL PRIMARY KEY,
+        role_id INTEGER REFERENCES roles(role_id),
+        perm_id INTEGER REFERENCES permissions(perm_id),
+        assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(role_id, perm_id)
+      );
+    `);
+
+    // Insert basic permissions
+    await pool.query(`
+      INSERT INTO permissions (perm_code, perm_name, description)
+      VALUES 
+        ('admin.all', 'Full Admin Access', 'Complete system access'),
+        ('reports.view', 'View Reports', 'Can view all reports'),
+        ('reports.edit', 'Edit Reports', 'Can edit reports'),
+        ('users.view', 'View Users', 'Can view user list'),
+        ('users.edit', 'Edit Users', 'Can manage users')
+      ON CONFLICT (perm_code) DO NOTHING;
+    `);
+
+    // Assign all permissions to Admin role (role_id = 1)
+    await pool.query(`
+      INSERT INTO role_permissions (role_id, perm_id)
+      SELECT 1, perm_id FROM permissions
+      ON CONFLICT (role_id, perm_id) DO NOTHING;
+    `);
+
+    res.json({
+      success: true,
+      message: 'Permissions tables created and admin role configured!'
+    });
+
+  } catch (error: any) {
+    console.error('Failed to create permissions:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 export default router;
