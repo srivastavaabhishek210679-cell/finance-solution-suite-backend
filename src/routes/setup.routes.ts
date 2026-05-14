@@ -238,7 +238,7 @@ router.get('/import-data', async (req: Request, res: Response) => {
 
     // Read data SQL
     const dataSQL = fs.readFileSync(
-       path.join(__dirname, '../../domains_and_reports.sql'), 
+       path.join(__dirname, '../../complete_dashboard_data.sql'),
       'utf8'
     );
 
