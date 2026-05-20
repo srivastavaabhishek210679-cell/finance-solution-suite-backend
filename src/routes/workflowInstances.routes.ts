@@ -1,21 +1,17 @@
 import { Router } from 'express';
-import { BaseController } from '../controllers/base.controller';
-import { BaseService } from '../services/base.service';
+import { WorkflowController } from '../controllers/workflow.controller';
 import { authenticate } from '../middleware/auth';
 
-const router = Router();
-const workflow_instancesService = new BaseService('workflow_instances', 'instance_id');
-const workflow_instancesController = new BaseController(workflow_instancesService);
+const router     = Router();
+const controller = new WorkflowController();
 
-// Require authentication
-router.use(authenticate);
+// ── Public GET routes ──────────────────────────────────────────
+router.get('/',    controller.getAllInstances.bind(controller));
+router.get('/:id', controller.getInstanceById.bind(controller));
 
-// CRUD routes for workflow_instances
-router.get('/', workflow_instancesController.getAll);
-router.get('/search', workflow_instancesController.search);
-router.get('/:id', workflow_instancesController.getById);
-router.post('/', workflow_instancesController.create);
-router.put('/:id', workflow_instancesController.update);
-router.delete('/:id', workflow_instancesController.delete);
+// ── Protected write routes ─────────────────────────────────────
+router.delete('/:id', authenticate, (req, res) => {
+  res.json({ message: 'Instance deletion not supported' });
+});
 
 export default router;

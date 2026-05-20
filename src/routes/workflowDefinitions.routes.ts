@@ -1,21 +1,20 @@
 import { Router } from 'express';
-import { BaseController } from '../controllers/base.controller';
-import { BaseService } from '../services/base.service';
+import { WorkflowController } from '../controllers/workflow.controller';
 import { authenticate } from '../middleware/auth';
 
-const router = Router();
-const workflow_definitionsService = new BaseService('workflow_definitions', 'workflow_id');
-const workflow_definitionsController = new BaseController(workflow_definitionsService);
+const router     = Router();
+const controller = new WorkflowController();
 
-// Require authentication
-router.use(authenticate);
+// ── Public GET routes ──────────────────────────────────────────
+router.get('/summary',    controller.getSummary.bind(controller));
+router.get('/',           controller.getAllDefinitions.bind(controller));
+router.get('/:id/stats',  controller.getDefinitionStats.bind(controller));
+router.get('/:id',        controller.getDefinitionById.bind(controller));
 
-// CRUD routes for workflow_definitions
-router.get('/', workflow_definitionsController.getAll);
-router.get('/search', workflow_definitionsController.search);
-router.get('/:id', workflow_definitionsController.getById);
-router.post('/', workflow_definitionsController.create);
-router.put('/:id', workflow_definitionsController.update);
-router.delete('/:id', workflow_definitionsController.delete);
+// ── Protected write + action routes ───────────────────────────
+router.post('/',           authenticate, controller.createDefinition.bind(controller));
+router.post('/:id/toggle', authenticate, controller.toggleDefinition.bind(controller));
+router.put('/:id',         authenticate, controller.updateDefinition.bind(controller));
+router.delete('/:id',      authenticate, controller.deleteDefinition.bind(controller));
 
 export default router;
