@@ -4,101 +4,135 @@ import pool from '../config/database';
 export class AnalyticsController {
   /**
    * GET /api/v1/analytics/dashboard-stats
-   * Aggregated KPI stats for the main dashboard
+   * Real KPI stats from kpi_values, kpi_definitions, risks, scheduled_reports
    */
   async getDashboardStats(req: Request, res: Response): Promise<void> {
     try {
-      // ── Total active reports ───────────────────────────────
-      const totalResult = await pool.query(
-        'SELECT COUNT(*) as total FROM reports_master WHERE is_active = true'
+      // ── KPI Definitions (used as "reports") ───────────────
+      const kpiTotal = await pool.query(
+        'SELECT COUNT(*) AS total FROM kpi_definitions WHERE is_active = true'
       );
-      const totalReports = parseInt(totalResult.rows[0].total);
+      const totalReports = parseInt(kpiTotal.rows[0].total);
 
-      // ── Compliance breakdown ───────────────────────────────
-      const complianceResult = await pool.query(`
-        SELECT compliance_status, COUNT(*) as count
-        FROM reports_master
-        WHERE is_active = true
-        GROUP BY compliance_status
+      // ── Scheduled Reports ─────────────────────────────────
+      const scheduledResult = await pool.query(`
+        SELECT
+          COUNT(*)                              AS total,
+          COUNT(*) FILTER (WHERE is_active = true)  AS active
+        FROM scheduled_reports
       `);
-      let requiredReports = 0;
-      let optionalReports = 0;
-      complianceResult.rows.forEach(row => {
-        if (row.compliance_status === 'Required') requiredReports = parseInt(row.count);
-        else optionalReports += parseInt(row.count);
-      });
+      const totalScheduled  = parseInt(scheduledResult.rows[0].total);
+      const activeScheduled = parseInt(scheduledResult.rows[0].active);
 
-      // ── Active domains ─────────────────────────────────────
+      // ── Risks — compliance rate + risk score ──────────────
+      const riskResult = await pool.query(`
+        SELECT
+          COUNT(*)                                                        AS total_risks,
+          COUNT(*) FILTER (WHERE status IN ('closed','mitigated'))        AS resolved_risks,
+          COUNT(*) FILTER (WHERE status = 'open')                        AS open_risks,
+          ROUND(AVG(risk_score)::numeric, 1)                             AS avg_risk_score,
+          ROUND(AVG(risk_score) FILTER (WHERE status = 'open')::numeric,1) AS open_risk_score
+        FROM risks
+      `);
+      const riskRow       = riskResult.rows[0];
+      const totalRisks    = parseInt(riskRow.total_risks);
+      const resolvedRisks = parseInt(riskRow.resolved_risks);
+      const complianceRate = totalRisks > 0
+        ? parseFloat(((resolvedRisks / totalRisks) * 100).toFixed(1))
+        : 0;
+      const riskScore = parseFloat(riskRow.open_risk_score || riskRow.avg_risk_score || 0);
+
+      // ── Active Domains (risk categories) ──────────────────
       const domainsResult = await pool.query(`
-        SELECT COUNT(DISTINCT d.domain_id) as count
-        FROM domains d
-        JOIN reports_master r ON r.domain_id = d.domain_id
-        WHERE r.is_active = true
+        SELECT COUNT(DISTINCT category) AS count FROM risks
       `);
       const activeDomains = parseInt(domainsResult.rows[0].count);
 
-      // ── Domain breakdown ───────────────────────────────────
+      // ── Domain Breakdown ───────────────────────────────────
       const domainBreakdown = await pool.query(`
-        SELECT d.domain_name as domain, COUNT(r.report_id) as count
-        FROM reports_master r
-        JOIN domains d ON r.domain_id = d.domain_id
-        WHERE r.is_active = true
-        GROUP BY d.domain_id, d.domain_name
+        SELECT category AS domain, COUNT(*) AS count
+        FROM risks
+        GROUP BY category
         ORDER BY count DESC
       `);
 
-      // ── Frequency breakdown ────────────────────────────────
-      const frequencyResult = await pool.query(`
-        SELECT frequency, COUNT(*) as count
-        FROM reports_master
-        WHERE is_active = true
-        GROUP BY frequency
+      // ── Risk Status Breakdown ─────────────────────────────
+      const riskStatusResult = await pool.query(`
+        SELECT status, COUNT(*) AS count
+        FROM risks
+        GROUP BY status
         ORDER BY count DESC
       `);
 
-      // ── Recent reports (last 30 days) ──────────────────────
-      const recentResult = await pool.query(`
-        SELECT COUNT(*) as count
-        FROM reports_master
-        WHERE created_at >= NOW() - INTERVAL '30 days'
-        AND is_active = true
-      `);
+      // ── Workflows ─────────────────────────────────────────
+      const workflowResult = await pool.query(`
+        SELECT
+          COUNT(*)                                        AS total,
+          COUNT(*) FILTER (WHERE status = 'active')      AS active
+        FROM workflow_definitions
+      `).catch(() => ({ rows: [{ total: 0, active: 0 }] }));
+      const activeWorkflows = parseInt(workflowResult.rows[0].active);
+      const totalWorkflows  = parseInt(workflowResult.rows[0].total);
+
+      // ── Latest KPI Values ─────────────────────────────────
+      const kpiValues = await pool.query(`
+        SELECT
+          kd.label,
+          kd.key,
+          kd.unit,
+          kv.value,
+          kv.prior_value,
+          kv.delta_percent,
+          kv.period_label
+        FROM kpi_values kv
+        JOIN kpi_definitions kd ON kv.kpi_def_id = kd.id
+        WHERE kv.is_forecast = false
+        ORDER BY kv.recorded_at DESC
+        LIMIT 10
+      `).catch(() => ({ rows: [] }));
 
       // ── Derived metrics ────────────────────────────────────
-      const complianceRate = totalReports > 0
-        ? parseFloat(((requiredReports / totalReports) * 100).toFixed(1))
-        : 0;
-      const riskScore     = parseFloat((25 - (complianceRate * 0.05)).toFixed(1));
-      const healthScore   = parseFloat((complianceRate * 0.92).toFixed(1));
+      const healthScore   = parseFloat(((complianceRate * 0.7) + ((100 - Math.min(riskScore, 100)) * 0.3)).toFixed(1));
+      const automationRate = totalWorkflows > 0
+        ? parseFloat(((activeWorkflows / totalWorkflows) * 100).toFixed(1)) : 0;
 
       res.json({
-        // Core KPIs (matches frontend extractStat keys)
+        // Core KPIs
         totalReports,
         activeReports:    totalReports,
-        requiredReports,
-        optionalReports,
+        requiredReports:  activeScheduled,
+        optionalReports:  totalScheduled - activeScheduled,
         activeDomains,
-        recentReports:    parseInt(recentResult.rows[0].count),
 
-        // Calculated metrics
+        // Risk & Compliance
         complianceRate,
         riskScore,
+        totalRisks,
+        openRisks:    parseInt(riskRow.open_risks),
+        resolvedRisks,
+
+        // Derived
         healthScore,
-        automationRate: 0,
+        automationRate,
+
+        // Workflows
+        activeWorkflows,
+        totalWorkflows,
 
         // Breakdowns for charts
-        domainBreakdown: domainBreakdown.rows.map(r => ({
+        domainBreakdown: domainBreakdown.rows.map((r: any) => ({
           domain: r.domain,
           count:  parseInt(r.count),
         })),
-        frequencyBreakdown: frequencyResult.rows.map(r => ({
-          frequency: r.frequency,
-          count:     parseInt(r.count),
+        riskStatusBreakdown: riskStatusResult.rows.map((r: any) => ({
+          status: r.status,
+          count:  parseInt(r.count),
         })),
+        latestKpis: kpiValues.rows,
       });
-    } catch (error) {
-      console.error('Error fetching dashboard stats:', error);
-      res.status(500).json({ error: 'Failed to fetch dashboard stats' });
+    } catch (error: any) {
+      console.error('Error fetching dashboard stats:', error.message);
+      res.status(500).json({ error: 'Failed to fetch dashboard stats', detail: error.message });
     }
   }
 
@@ -118,42 +152,23 @@ export class AnalyticsController {
    */
   async getSummary(req: Request, res: Response): Promise<void> {
     try {
-      // Total reports
-      const totalResult = await pool.query('SELECT COUNT(*) as total FROM reports_master WHERE is_active = true');
-      const total = parseInt(totalResult.rows[0].total);
-
-      // Reports by domain
-      const domainResult = await pool.query(`
-        SELECT d.domain_name, COUNT(r.report_id) as count
-        FROM reports_master r
-        JOIN domains d ON r.domain_id = d.domain_id
-        WHERE r.is_active = true
-        GROUP BY d.domain_name
-        ORDER BY count DESC
-        LIMIT 5
+      const totalKpis = await pool.query('SELECT COUNT(*) as total FROM kpi_definitions WHERE is_active = true');
+      const riskSummary = await pool.query(`
+        SELECT category as name, COUNT(*) as count
+        FROM risks GROUP BY category ORDER BY count DESC LIMIT 5
       `);
-
-      // Reports by compliance
-      const complianceResult = await pool.query(`
-        SELECT compliance_status as name, COUNT(report_id) as count
-        FROM reports_master
-        WHERE is_active = true
-        GROUP BY compliance_status
+      const riskCompliance = await pool.query(`
+        SELECT status as name, COUNT(*) as count FROM risks GROUP BY status
       `);
-
-      // Recent activity (last 30 days)
-      const recentResult = await pool.query(`
-        SELECT COUNT(*) as count
-        FROM reports_master
+      const recentRisks = await pool.query(`
+        SELECT COUNT(*) as count FROM risks
         WHERE created_at >= NOW() - INTERVAL '30 days'
-        AND is_active = true
       `);
-
       res.json({
-        totalReports: total,
-        topDomains: domainResult.rows,
-        complianceBreakdown: complianceResult.rows,
-        recentReports: parseInt(recentResult.rows[0].count),
+        totalReports:        parseInt(totalKpis.rows[0].total),
+        topDomains:          riskSummary.rows,
+        complianceBreakdown: riskCompliance.rows,
+        recentReports:       parseInt(recentRisks.rows[0].count),
       });
     } catch (error) {
       console.error('Error fetching analytics summary:', error);
@@ -167,21 +182,13 @@ export class AnalyticsController {
   async getReportsByDomain(req: Request, res: Response): Promise<void> {
     try {
       const result = await pool.query(`
-        SELECT 
-          d.domain_name as domain,
-          COUNT(r.report_id) as count,
-          d.color
-        FROM reports_master r
-        JOIN domains d ON r.domain_id = d.domain_id
-        WHERE r.is_active = true
-        GROUP BY d.domain_id, d.domain_name, d.color
-        ORDER BY count DESC
+        SELECT category as domain, COUNT(*) as count
+        FROM risks GROUP BY category ORDER BY count DESC
       `);
-
       res.json({
-        labels: result.rows.map(row => row.domain),
-        values: result.rows.map(row => parseInt(row.count)),
-        colors: result.rows.map(row => row.color || '#3B82F6'),
+        labels: result.rows.map((row: any) => row.domain),
+        values: result.rows.map((row: any) => parseInt(row.count)),
+        colors: result.rows.map(() => '#3B82F6'),
       });
     } catch (error) {
       console.error('Error fetching reports by domain:', error);
@@ -195,26 +202,12 @@ export class AnalyticsController {
   async getReportsByFrequency(req: Request, res: Response): Promise<void> {
     try {
       const result = await pool.query(`
-        SELECT 
-          frequency,
-          COUNT(report_id) as count
-        FROM reports_master
-        WHERE is_active = true
-        GROUP BY frequency
-        ORDER BY 
-          CASE frequency
-            WHEN 'Daily' THEN 1
-            WHEN 'Weekly' THEN 2
-            WHEN 'Monthly' THEN 3
-            WHEN 'Quarterly' THEN 4
-            WHEN 'Annually' THEN 5
-            ELSE 6
-          END
+        SELECT period_type as frequency, COUNT(*) as count
+        FROM kpi_values GROUP BY period_type ORDER BY count DESC
       `);
-
       res.json({
-        labels: result.rows.map(row => row.frequency),
-        values: result.rows.map(row => parseInt(row.count)),
+        labels: result.rows.map((row: any) => row.frequency),
+        values: result.rows.map((row: any) => parseInt(row.count)),
       });
     } catch (error) {
       console.error('Error fetching reports by frequency:', error);
@@ -228,25 +221,15 @@ export class AnalyticsController {
   async getReportsByCompliance(req: Request, res: Response): Promise<void> {
     try {
       const result = await pool.query(`
-        SELECT 
-          compliance_status,
-          COUNT(report_id) as count,
-          CASE compliance_status
-            WHEN 'Required' THEN '#EF4444'
-            WHEN 'Optional' THEN '#10B981'
-            WHEN 'Recommended' THEN '#F59E0B'
-            ELSE '#6B7280'
-          END as color
-        FROM reports_master
-        WHERE is_active = true
-        GROUP BY compliance_status
-        ORDER BY compliance_status
+        SELECT status as compliance_status, COUNT(*) as count,
+          CASE status WHEN 'open' THEN '#EF4444' WHEN 'closed' THEN '#10B981'
+            WHEN 'mitigated' THEN '#F59E0B' ELSE '#6B7280' END as color
+        FROM risks GROUP BY status ORDER BY status
       `);
-
       res.json({
-        labels: result.rows.map(row => row.compliance_status),
-        values: result.rows.map(row => parseInt(row.count)),
-        colors: result.rows.map(row => row.color),
+        labels: result.rows.map((row: any) => row.compliance_status),
+        values: result.rows.map((row: any) => parseInt(row.count)),
+        colors: result.rows.map((row: any) => row.color),
       });
     } catch (error) {
       console.error('Error fetching reports by compliance:', error);
@@ -263,8 +246,7 @@ export class AnalyticsController {
         SELECT 
           TO_CHAR(created_at, 'YYYY-MM') as month,
           COUNT(*) as count
-        FROM reports_master
-        WHERE created_at >= NOW() - INTERVAL '12 months'
+        FROM risks WHERE created_at >= NOW() - INTERVAL '12 months'
         AND is_active = true
         GROUP BY TO_CHAR(created_at, 'YYYY-MM')
         ORDER BY month
@@ -291,21 +273,7 @@ export class AnalyticsController {
           COUNT(*) as count
         FROM (
           SELECT jsonb_array_elements_text(stakeholders) as stakeholder
-          FROM reports_master
-          WHERE is_active = true
-          AND jsonb_array_length(stakeholders) > 0
-        ) s
-        GROUP BY stakeholder
-        ORDER BY count DESC
-        LIMIT 10
-      `);
-
-      res.json({
-        labels: result.rows.map(row => row.stakeholder),
-        values: result.rows.map(row => parseInt(row.count)),
-      });
-    } catch (error) {
-      console.error('Error fetching reports by stakeholder:', error);
+          FROM kpi_definitions WHERE is_active = true'Error fetching reports by stakeholder:', error);
       res.status(500).json({ error: 'Failed to fetch stakeholder statistics' });
     }
   }
@@ -319,25 +287,8 @@ export class AnalyticsController {
         WITH freq_counts AS (
           SELECT 
             frequency,
-            COUNT(report_id) as count
-          FROM reports_master
-          WHERE is_active = true
-          GROUP BY frequency
-        ),
-        total AS (
-          SELECT SUM(count) as total_count FROM freq_counts
-        )
-        SELECT 
-          fc.frequency,
-          fc.count,
-          ROUND((fc.count::numeric / t.total_count * 100), 2) as percentage
-        FROM freq_counts fc, total t
-        ORDER BY fc.count DESC
-      `);
-
-      res.json(result.rows);
-    } catch (error) {
-      console.error('Error fetching frequency distribution:', error);
+            COUNT(id) as count
+          FROM kpi_definitions WHERE is_active = true'Error fetching frequency distribution:', error);
       res.status(500).json({ error: 'Failed to fetch frequency distribution' });
     }
   }
@@ -351,26 +302,17 @@ export class AnalyticsController {
       const current = await pool.query(`
         SELECT 
           compliance_status as name,
-          COUNT(report_id) as count,
+          COUNT(id) as count,
           CASE compliance_status
             WHEN 'Required' THEN '#EF4444'
             WHEN 'Optional' THEN '#10B981'
             WHEN 'Recommended' THEN '#F59E0B'
             ELSE '#6B7280'
           END as color
-        FROM reports_master
-        WHERE is_active = true
-        GROUP BY compliance_status
-      `);
-
-      // Compliance rate over time (last 6 months)
-      const trends = await pool.query(`
-        SELECT 
-          TO_CHAR(created_at, 'YYYY-MM') as month,
+        FROM kpi_definitions WHERE is_active = true'YYYY-MM') as month,
           compliance_status as status,
           COUNT(*) as count
-        FROM reports_master
-        WHERE created_at >= NOW() - INTERVAL '6 months'
+        FROM risks WHERE created_at >= NOW() - INTERVAL '6 months'
         AND is_active = true
         GROUP BY TO_CHAR(created_at, 'YYYY-MM'), compliance_status
         ORDER BY month, compliance_status
