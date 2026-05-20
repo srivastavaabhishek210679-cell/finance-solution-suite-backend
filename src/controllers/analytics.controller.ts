@@ -3,6 +3,106 @@ import pool from '../config/database';
 
 export class AnalyticsController {
   /**
+   * GET /api/v1/analytics/dashboard-stats
+   * Aggregated KPI stats for the main dashboard
+   */
+  async getDashboardStats(req: Request, res: Response): Promise<void> {
+    try {
+      // ── Total active reports ───────────────────────────────
+      const totalResult = await pool.query(
+        'SELECT COUNT(*) as total FROM reports_master WHERE is_active = true'
+      );
+      const totalReports = parseInt(totalResult.rows[0].total);
+
+      // ── Compliance breakdown ───────────────────────────────
+      const complianceResult = await pool.query(`
+        SELECT compliance_status, COUNT(*) as count
+        FROM reports_master
+        WHERE is_active = true
+        GROUP BY compliance_status
+      `);
+      let requiredReports = 0;
+      let optionalReports = 0;
+      complianceResult.rows.forEach(row => {
+        if (row.compliance_status === 'Required') requiredReports = parseInt(row.count);
+        else optionalReports += parseInt(row.count);
+      });
+
+      // ── Active domains ─────────────────────────────────────
+      const domainsResult = await pool.query(`
+        SELECT COUNT(DISTINCT d.domain_id) as count
+        FROM domains d
+        JOIN reports_master r ON r.domain_id = d.domain_id
+        WHERE r.is_active = true
+      `);
+      const activeDomains = parseInt(domainsResult.rows[0].count);
+
+      // ── Domain breakdown ───────────────────────────────────
+      const domainBreakdown = await pool.query(`
+        SELECT d.domain_name as domain, COUNT(r.report_id) as count
+        FROM reports_master r
+        JOIN domains d ON r.domain_id = d.domain_id
+        WHERE r.is_active = true
+        GROUP BY d.domain_id, d.domain_name
+        ORDER BY count DESC
+      `);
+
+      // ── Frequency breakdown ────────────────────────────────
+      const frequencyResult = await pool.query(`
+        SELECT frequency, COUNT(*) as count
+        FROM reports_master
+        WHERE is_active = true
+        GROUP BY frequency
+        ORDER BY count DESC
+      `);
+
+      // ── Recent reports (last 30 days) ──────────────────────
+      const recentResult = await pool.query(`
+        SELECT COUNT(*) as count
+        FROM reports_master
+        WHERE created_at >= NOW() - INTERVAL '30 days'
+        AND is_active = true
+      `);
+
+      // ── Derived metrics ────────────────────────────────────
+      const complianceRate = totalReports > 0
+        ? parseFloat(((requiredReports / totalReports) * 100).toFixed(1))
+        : 0;
+      const riskScore     = parseFloat((25 - (complianceRate * 0.05)).toFixed(1));
+      const healthScore   = parseFloat((complianceRate * 0.92).toFixed(1));
+
+      res.json({
+        // Core KPIs (matches frontend extractStat keys)
+        totalReports,
+        activeReports:    totalReports,
+        requiredReports,
+        optionalReports,
+        activeDomains,
+        recentReports:    parseInt(recentResult.rows[0].count),
+
+        // Calculated metrics
+        complianceRate,
+        riskScore,
+        healthScore,
+        automationRate: 0,
+
+        // Breakdowns for charts
+        domainBreakdown: domainBreakdown.rows.map(r => ({
+          domain: r.domain,
+          count:  parseInt(r.count),
+        })),
+        frequencyBreakdown: frequencyResult.rows.map(r => ({
+          frequency: r.frequency,
+          count:     parseInt(r.count),
+        })),
+      });
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
+      res.status(500).json({ error: 'Failed to fetch dashboard stats' });
+    }
+  }
+
+  /**
    * GET /api/v1/analytics/test
    */
   async test(req: Request, res: Response): Promise<void> {

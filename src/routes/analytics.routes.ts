@@ -5,6 +5,7 @@ const router = Router();
 const analyticsController = new AnalyticsController();
 
 router.get('/test', analyticsController.test.bind(analyticsController));
+router.get('/dashboard-stats', analyticsController.getDashboardStats.bind(analyticsController));
 router.get('/summary', analyticsController.getSummary.bind(analyticsController));
 router.get('/reports-by-domain', analyticsController.getReportsByDomain.bind(analyticsController));
 router.get('/reports-by-frequency', analyticsController.getReportsByFrequency.bind(analyticsController));
