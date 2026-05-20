@@ -1,21 +1,17 @@
 import { Router } from 'express';
-import { BaseController } from '../controllers/base.controller';
-import { BaseService } from '../services/base.service';
+import { ComplianceCalendarController } from '../controllers/complianceCalendar.controller';
 import { authenticate } from '../middleware/auth';
 
-const router = Router();
-const compliance_calendarService = new BaseService('compliance_calendar', 'event_id');
-const compliance_calendarController = new BaseController(compliance_calendarService);
+const router     = Router();
+const controller = new ComplianceCalendarController();
 
-// Require authentication
-router.use(authenticate);
+// ── Public GET routes (no auth — frontend reads without login) ──
+router.get('/',         controller.getAll.bind(controller));
+router.get('/:id',      controller.getById.bind(controller));
 
-// CRUD routes for compliance_calendar
-router.get('/', compliance_calendarController.getAll);
-router.get('/search', compliance_calendarController.search);
-router.get('/:id', compliance_calendarController.getById);
-router.post('/', compliance_calendarController.create);
-router.put('/:id', compliance_calendarController.update);
-router.delete('/:id', compliance_calendarController.delete);
+// ── Protected write routes (require auth) ──────────────────────
+router.post('/',        authenticate, controller.create.bind(controller));
+router.put('/:id',      authenticate, controller.update.bind(controller));
+router.delete('/:id',   authenticate, controller.delete.bind(controller));
 
 export default router;
