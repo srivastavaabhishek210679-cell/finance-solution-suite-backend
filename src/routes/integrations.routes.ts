@@ -1,19 +1,20 @@
-import { Router } from 'express';
-import { NonTenantBaseController } from '../controllers/nonTenant.base.controller';
-import { authenticate } from '../middleware/auth';
+import { Router } from "express";
+import { IntegrationController } from "../controllers/integration.controller";
+import { authenticate } from "../middleware/auth";
 
-const router = Router();
-const controller = new NonTenantBaseController('integrations');
+const router     = Router();
+const controller = new IntegrationController();
 
-// All routes require authentication
-router.use(authenticate);
+// Public GET routes
+router.get("/sync/status",               controller.getSyncStatus.bind(controller));
+router.get("/oauth/:platform/authorize", controller.oauthAuthorize.bind(controller));
+router.get("/",                          controller.getAll.bind(controller));
+router.get("/:id",                       controller.getById.bind(controller));
 
-// CRUD routes for integrations
-router.get('/', controller.getAll);
-router.get('/search', controller.search);
-router.get('/:id', controller.getById);
-router.post('/', controller.create);
-router.put('/:id', controller.update);
-router.delete('/:id', controller.delete);
+// Protected routes
+router.post("/:id/sync",                 authenticate, controller.triggerSync.bind(controller));
+router.post("/:id/credentials",          authenticate, controller.saveCredentials.bind(controller));
+router.post("/oauth/:platform/callback", authenticate, controller.oauthCallback.bind(controller));
+router.put("/:id/toggle",                authenticate, controller.toggle.bind(controller));
 
 export default router;
