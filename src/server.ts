@@ -24,6 +24,8 @@ import aiAnalyticsRoutes from './routes/aiAnalytics.routes';
 import chatbotRoutes from './routes/chatbot.routes';
 import billingRoutes from './routes/billing.routes';
 import setupRoutes from './routes/setup.routes';
+import { globalLimiter, authLimiter, exportLimiter } from './middleware/rateLimiter';
+import { sanitizeInput } from './middleware/sanitize';
 
 dotenv.config();
 
@@ -74,6 +76,8 @@ app.use(express.json({ limit: '10mb' }));
 
 // Compression
 app.use(compression());
+app.use(globalLimiter);
+app.use(sanitizeInput);
 
 // Logging
 app.use(morgan('combined'));
@@ -101,8 +105,10 @@ const apiRouter = express.Router();
 // ============================================================
 // MODULE 1: AUTHENTICATION & USER MANAGEMENT
 // ============================================================
-apiRouter.use('/auth', authRoutes);
-apiRouter.use('/auth', authRoutes);
+apiRouter.use('/auth', authLimiter);
+  apiRouter.use('/auth', authRoutes);
+apiRouter.use('/auth', authLimiter);
+  apiRouter.use('/auth', authRoutes);
 // TEST: Add right after auth (which we know works)
 apiRouter.get('/test-after-auth', (req, res) => {
   res.json({ message: 'Test route after auth works!' });
@@ -145,7 +151,8 @@ apiRouter.use('/billing-accounts', require('./routes/billingAccounts.routes').de
 // ============================================================
 // MODULE 3: REPORTS & ANALYTICS
 // ============================================================
-apiRouter.use('/reports', reportRoutes);
+apiRouter.use('/reports/export', exportLimiter);
+  apiRouter.use('/reports', reportRoutes);
 apiRouter.use('/report', require('./routes/report.routes').default);
 apiRouter.use('/reports/master', require('./routes/reports.master.routes').default);
 apiRouter.use('/reports-master', require('./routes/reportsMaster.routes').default);
@@ -449,3 +456,8 @@ process.on('SIGINT', () => {
 startServer();
 
 export default app;
+
+
+
+
+
