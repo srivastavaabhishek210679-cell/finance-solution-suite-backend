@@ -1,4 +1,6 @@
+import { createRequire } from 'module';
 import { query } from '../config/database';
+const _require = createRequire(import.meta.url);
 // nodemailer loaded via require inside method to avoid ESM issues
 
 interface EmailOptions {
@@ -27,7 +29,7 @@ export class EmailService {
       return;
     }
 
-    this.transporter = require('nodemailer').createTransporter({
+    this.transporter = _require('nodemailer').createTransport({
       host,
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: process.env.SMTP_SECURE === 'true',
@@ -71,6 +73,7 @@ export class EmailService {
 }
 
 export const emailService = new EmailService();
+
 
 
 
