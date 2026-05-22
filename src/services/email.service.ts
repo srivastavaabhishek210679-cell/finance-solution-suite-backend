@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer');
 import { query } from '../config/database';
+// nodemailer loaded via require inside method to avoid ESM issues
 
 interface EmailOptions {
   to: string | string[];
@@ -71,5 +71,6 @@ export class EmailService {
 }
 
 export const emailService = new EmailService();
+
 
 
