@@ -27,7 +27,7 @@ export class EmailService {
       return;
     }
 
-    const nm = require('nodemailer'); this.transporter = nm.createTransporter({
+    const nm = require('nodemailer'); const nmLib = nm.default || nm; this.transporter = nmLib.createTransporter({
       host,
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: process.env.SMTP_SECURE === 'true',
@@ -71,6 +71,7 @@ export class EmailService {
 }
 
 export const emailService = new EmailService();
+
 
 
 
