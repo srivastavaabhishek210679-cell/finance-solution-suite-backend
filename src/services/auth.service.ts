@@ -149,7 +149,7 @@ export class AuthService {
 
       // Store hashed token
       await query(
-        `INSERT INTO password_reset_tokens (user_id, token, expires_at, created_at)
+        `INSERT INTO password_reset_tokens (user_id, token_hash, expires_at, created_at)
          VALUES ($1, $2, $3, NOW())`,
         [user.user_id, tokenHash, expiresAt],
       );
@@ -223,8 +223,7 @@ export class AuthService {
     // Look up token
     const tokenResult = await query(
       `SELECT * FROM password_reset_tokens
-       WHERE token = $1
-         AND expires_at > NOW()
+       WHERE token_hash = $1 AND expires_at > NOW()
          AND used_at IS NULL
        ORDER BY created_at DESC
        LIMIT 1`,
@@ -254,7 +253,7 @@ export class AuthService {
 
     // Mark token as used
     await query(
-      `UPDATE password_reset_tokens SET used_at = NOW() WHERE token = $1`,
+      `UPDATE password_reset_tokens SET used_at = NOW() WHERE token_hash = $1`,
       [tokenHash],
     );
 
@@ -270,3 +269,4 @@ export class AuthService {
     return { message: 'Password reset successfully. You can now log in with your new password.' };
   }
 }
+
