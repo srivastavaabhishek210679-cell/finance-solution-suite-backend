@@ -30,6 +30,7 @@ import { sanitizeInput } from './middleware/sanitize';
 dotenv.config();
 
 const app: Application = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const API_VERSION = process.env.API_VERSION || 'v1';
 
@@ -456,6 +457,7 @@ process.on('SIGINT', () => {
 startServer();
 
 export default app;
+
 
 
 
