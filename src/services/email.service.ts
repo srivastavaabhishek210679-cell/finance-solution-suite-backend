@@ -1,4 +1,4 @@
-import * as nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 import { query } from '../config/database';
 
 interface EmailOptions {
@@ -71,4 +71,5 @@ export class EmailService {
 }
 
 export const emailService = new EmailService();
+
 
