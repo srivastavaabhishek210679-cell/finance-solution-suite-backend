@@ -1,7 +1,5 @@
-import { createRequire } from 'module';
+ï»¿import https from 'https';
 import { query } from '../config/database';
-const _require = createRequire(import.meta.url);
-// nodemailer loaded via require inside method to avoid ESM issues
 
 interface EmailOptions {
   to: string | string[];
@@ -11,73 +9,72 @@ interface EmailOptions {
 }
 
 export class EmailService {
-  private transporter: any = null;
+  private apiKey: string | null = null;
   private fromAddress: string;
 
   constructor() {
-    this.fromAddress = process.env.SMTP_FROM || 'noreply@financesuite.com';
-    this.initTransporter();
-  }
-
-  private initTransporter(): void {
-    const host = process.env.SMTP_HOST;
-    const user = process.env.SMTP_USER;
-    const pass = process.env.SMTP_PASS;
-
-    if (!host || !user || !pass) {
-      console.warn('[EmailService] SMTP not configured — demo mode');
-      return;
+    this.fromAddress = process.env.SMTP_FROM || process.env.RESEND_FROM || 'onboarding@resend.dev';
+    this.apiKey = process.env.RESEND_API_KEY || null;
+    if (this.apiKey) {
+      console.log('[EmailService] Resend API initialised');
+    } else {
+      console.warn('[EmailService] No RESEND_API_KEY â€” demo mode');
     }
-
-    this.transporter = _require('nodemailer').createTransport({
-      host,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true',
-      auth: { user, pass },
-      tls: { rejectUnauthorized: false },
-    });
-
-    console.log('[EmailService] SMTP transporter initialised ?', host);
   }
 
   async send(options: EmailOptions): Promise<{ success: boolean; messageId?: string; error?: string }> {
-    if (!this.transporter) {
-      console.log('[EmailService] Demo mode — would send to:', options.to);
+    if (!this.apiKey) {
+      console.log('[EmailService] Demo mode â€” would send to:', options.to);
       return { success: true, messageId: `demo-${Date.now()}` };
     }
-    try {
-      const info = await this.transporter.sendMail({
+
+    return new Promise((resolve) => {
+      const payload = JSON.stringify({
         from: this.fromAddress,
-        to: Array.isArray(options.to) ? options.to.join(', ') : options.to,
+        to: Array.isArray(options.to) ? options.to : [options.to],
         subject: options.subject,
         html: options.html,
-        text: options.text || options.html.replace(/<[^>]+>/g, ''),
       });
-      console.log('[EmailService] Sent:', info.messageId, '?', options.to);
-      return { success: true, messageId: info.messageId };
-    } catch (err: any) {
-      console.error('[EmailService] Send failed:', err.message);
-      return { success: false, error: err.message };
-    }
+
+      const req = https.request({
+        hostname: 'api.resend.com',
+        port: 443,
+        path: '/emails',
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${this.apiKey}`,
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(payload),
+        },
+      }, (res) => {
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => {
+          if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+            const parsed = JSON.parse(data);
+            console.log('[EmailService] Sent via Resend:', parsed.id, '->', options.to);
+            resolve({ success: true, messageId: parsed.id });
+          } else {
+            console.error('[EmailService] Resend error:', res.statusCode, data);
+            resolve({ success: false, error: `HTTP ${res.statusCode}: ${data}` });
+          }
+        });
+      });
+
+      req.on('error', (err) => {
+        console.error('[EmailService] Request failed:', err.message);
+        resolve({ success: false, error: err.message });
+      });
+
+      req.write(payload);
+      req.end();
+    });
   }
 
   async testConnection(): Promise<{ connected: boolean; message: string }> {
-    if (!this.transporter) return { connected: false, message: 'SMTP not configured' };
-    try {
-      await this.transporter.verify();
-      return { connected: true, message: 'SMTP connection verified' };
-    } catch (err: any) {
-      return { connected: false, message: err.message };
-    }
+    if (!this.apiKey) return { connected: false, message: 'RESEND_API_KEY not configured' };
+    return { connected: true, message: 'Resend API configured' };
   }
 }
 
 export const emailService = new EmailService();
-
-
-
-
-
-
-
-
