@@ -1,4 +1,4 @@
-﻿import nodemailer from 'nodemailer';
+import * as nodemailer from 'nodemailer';
 import { query } from '../config/database';
 
 interface EmailOptions {
@@ -23,7 +23,7 @@ export class EmailService {
     const pass = process.env.SMTP_PASS;
 
     if (!host || !user || !pass) {
-      console.warn('[EmailService] SMTP not configured — demo mode');
+      console.warn('[EmailService] SMTP not configured � demo mode');
       return;
     }
 
@@ -35,12 +35,12 @@ export class EmailService {
       tls: { rejectUnauthorized: false },
     });
 
-    console.log('[EmailService] SMTP transporter initialised →', host);
+    console.log('[EmailService] SMTP transporter initialised ?', host);
   }
 
   async send(options: EmailOptions): Promise<{ success: boolean; messageId?: string; error?: string }> {
     if (!this.transporter) {
-      console.log('[EmailService] Demo mode — would send to:', options.to);
+      console.log('[EmailService] Demo mode � would send to:', options.to);
       return { success: true, messageId: `demo-${Date.now()}` };
     }
     try {
@@ -51,7 +51,7 @@ export class EmailService {
         html: options.html,
         text: options.text || options.html.replace(/<[^>]+>/g, ''),
       });
-      console.log('[EmailService] Sent:', info.messageId, '→', options.to);
+      console.log('[EmailService] Sent:', info.messageId, '?', options.to);
       return { success: true, messageId: info.messageId };
     } catch (err: any) {
       console.error('[EmailService] Send failed:', err.message);
@@ -71,3 +71,4 @@ export class EmailService {
 }
 
 export const emailService = new EmailService();
+
