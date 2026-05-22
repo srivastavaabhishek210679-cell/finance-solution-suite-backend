@@ -192,7 +192,7 @@ export class AuthService {
 </div>
 </body></html>`;
 
-      await emailService.send({
+      emailService.send({
         to:      user.email,
         subject: 'Reset your Finance Suite password',
         html,
@@ -258,7 +258,7 @@ export class AuthService {
     );
 
     // Send confirmation email
-    await emailService.send({
+    emailService.send({
       to:      user.email,
       subject: 'Your Finance Suite password has been changed',
       html: `<p>Hi ${user.first_name || 'there'},</p>
@@ -269,4 +269,5 @@ export class AuthService {
     return { message: 'Password reset successfully. You can now log in with your new password.' };
   }
 }
+
 
