@@ -27,7 +27,7 @@ export class EmailService {
       return;
     }
 
-    this.transporter = nodemailer.createTransporter({
+    const nm = require('nodemailer'); this.transporter = nm.createTransporter({
       host,
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: process.env.SMTP_SECURE === 'true',
@@ -71,6 +71,7 @@ export class EmailService {
 }
 
 export const emailService = new EmailService();
+
 
 
 
