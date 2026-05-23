@@ -75,7 +75,7 @@ function sanitizeValue(value: unknown, path = ''): { value: unknown; blocked: st
     const sanitized: Record<string, unknown> = {};
     for (const [key, val] of Object.entries(value as Record<string, unknown>)) {
       // Skip sanitizing known safe fields (hashed passwords, tokens)
-      if (['password', 'token', 'refresh_token', 'access_token', 'hash'].includes(key)) {
+      if (['password', 'token', 'refresh_token', 'access_token', 'hash', 'company_name', 'tenant_name'].includes(key)) {
         sanitized[key] = val;
         continue;
       }
@@ -159,4 +159,5 @@ export const validateId = (paramName = 'id') => (req: Request, res: Response, ne
 
   next();
 };
+
 
