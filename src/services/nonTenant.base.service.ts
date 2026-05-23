@@ -54,7 +54,9 @@ export class NonTenantBaseService {
 
   async create(data: Record<string, any>) {
     const columns = Object.keys(data);
-    const values = Object.values(data);
+    const values = Object.values(data).map(v => 
+      (Array.isArray(v) || (v !== null && typeof v === 'object')) ? JSON.stringify(v) : v
+    );
     const placeholders = columns.map((_, i) => `$${i + 1}`).join(', ');
 
     const query = `
@@ -70,7 +72,9 @@ export class NonTenantBaseService {
   async update(id: number, data: Record<string, any>) {
     const idColumn = this.getIdColumn();
     const columns = Object.keys(data);
-    const values = Object.values(data);
+    const values = Object.values(data).map(v => 
+      (Array.isArray(v) || (v !== null && typeof v === 'object')) ? JSON.stringify(v) : v
+    );
     const setClause = columns.map((col, i) => `${col} = $${i + 2}`).join(', ');
 
     const query = `
@@ -115,3 +119,4 @@ export class NonTenantBaseService {
     return `${tableSingular}_id`;
   }
 }
+
