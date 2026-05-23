@@ -108,13 +108,10 @@ const apiRouter = express.Router();
 // ============================================================
 apiRouter.use('/auth', authLimiter);
   apiRouter.use('/auth', authRoutes);
-apiRouter.use('/auth', authLimiter);
-  apiRouter.use('/auth', authRoutes);
 // TEST: Add right after auth (which we know works)
 apiRouter.get('/test-after-auth', (req, res) => {
   res.json({ message: 'Test route after auth works!' });
 });
-apiRouter.use('/users', userRoutes);
 apiRouter.use('/users', userRoutes);
 apiRouter.use('/analytics', analyticsRoutes);
 //apiRouter.use('/analytics', analyticsRoutes);
@@ -457,6 +454,7 @@ process.on('SIGINT', () => {
 startServer();
 
 export default app;
+
 
 
 
