@@ -14,6 +14,7 @@ const loginSchema = Joi.object({
 });
 
 const registerSchema = Joi.object({
+  company_name:  Joi.string().min(2).max(255).optional(),
   tenant_id: Joi.number().integer().optional(),
   first_name:   Joi.string().min(2).max(100).required(),
   last_name:    Joi.string().min(2).max(100).required(),
@@ -58,5 +59,6 @@ router.post('/forgot-password', validate(forgotPasswordSchema),  authController.
 router.post('/reset-password',  validate(resetPasswordSchema),   authController.resetPassword);
 
 export default router;
+
 
 
