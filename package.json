@@ -21,6 +21,7 @@
   "author": "Deemona Team",
   "license": "ISC",
   "dependencies": {
+    "@sentry/node": "^10.53.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/nodemailer": "^8.0.0",
     "axios": "^1.16.0",

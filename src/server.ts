@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import { initSentry } from './config/sentry';
+import { sentryErrorHandler } from './middleware/sentryMiddleware';
 import 'express-async-errors';
 import analyticsRoutes from './routes/analytics.routes';
 
@@ -28,6 +30,7 @@ import { globalLimiter, authLimiter, exportLimiter } from './middleware/rateLimi
 import { sanitizeInput } from './middleware/sanitize';
 
 dotenv.config();
+initSentry(); // must be before any other code
 
 const app: Application = express();
 app.set('trust proxy', 1);
@@ -383,6 +386,7 @@ app.use(`/api/${API_VERSION}`, apiRouter);
 app.use(notFoundHandler);
 
 // Global error handler
+app.use(sentryErrorHandler());
 app.use(errorHandler);
 
 // ============================================================
@@ -454,6 +458,7 @@ process.on('SIGINT', () => {
 startServer();
 
 export default app;
+
 
 
 
