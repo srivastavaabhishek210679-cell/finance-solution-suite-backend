@@ -93,7 +93,7 @@ function sanitizeValue(value: unknown, path = ''): { value: unknown; blocked: st
 // ── Middleware ────────────────────────────────────────────────────────────────
 export const sanitizeInput = (req: Request, res: Response, next: NextFunction): void => {
   // Only sanitize mutating methods
-  if (!['POST', 'PUT', 'PATCH'].includes(req.method)) {
+  if (!['POST', 'PUT', 'PATCH'].includes(req.method) || req.path.includes('/auth/register')) {
     next();
     return;
   }
@@ -159,5 +159,6 @@ export const validateId = (paramName = 'id') => (req: Request, res: Response, ne
 
   next();
 };
+
 
 
