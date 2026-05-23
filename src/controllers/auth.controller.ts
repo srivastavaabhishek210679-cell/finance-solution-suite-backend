@@ -11,76 +11,81 @@ export class AuthController {
     this.userService = new UserService();
   }
 
-  // POST /api/v1/auth/login
   login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { email, password } = req.body;
       const result = await this.authService.login({ email, password });
       res.status(200).json({ status: 'success', data: result });
-    } catch (error) {
-      next(error);
-    }
+    } catch (error) { next(error); }
   };
 
-  // POST /api/v1/auth/register
   register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const user = await this.userService.createUser(req.body);
-      res.status(201).json({
-        status:  'success',
-        data:    user,
-        message: 'User registered successfully',
-      });
-    } catch (error) {
-      next(error);
-    }
+      const { company_name, tenant_id, role_id, ...rest } = req.body;
+
+      if (company_name) {
+        const { user, tenant_id: newTenantId, tenant_name } =
+          await this.userService.createUserWithTenant({ company_name, ...rest });
+
+        const fakeUser = { user_id: user.user_id, tenant_id: newTenantId, role_id: 1, email: user.email };
+        const { token, refreshToken, expiresIn } = (this.authService as any).generateTokenPair(fakeUser);
+
+        res.status(201).json({
+          status:  'success',
+          message: 'Account created successfully',
+          data: {
+            user:        { ...user, role: 'admin' },
+            tenant_name,
+            token,
+            refreshToken,
+            expiresIn,
+            onboarding:  true,
+          },
+        });
+      } else {
+        const user = await this.userService.createUser({
+          tenant_id: tenant_id || 1,
+          role_id:   role_id   || 3,
+          ...rest,
+        });
+        res.status(201).json({
+          status:  'success',
+          message: 'User registered successfully',
+          data:    { user, onboarding: false },
+        });
+      }
+    } catch (error) { next(error); }
   };
 
-  // POST /api/v1/auth/refresh
   refreshToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { token } = req.body;
       const result = await this.authService.refreshToken(token);
       res.status(200).json({ status: 'success', data: result });
-    } catch (error) {
-      next(error);
-    }
+    } catch (error) { next(error); }
   };
 
-  // GET /api/v1/auth/me
   getCurrentUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const user = (req as any).user;
-      const userWithPermissions = await this.userService.getUserWithPermissions(
-        user.userId,
-        user.tenantId,
-      );
+      const userWithPermissions = await this.userService.getUserWithPermissions(user.userId, user.tenantId);
       res.status(200).json({ status: 'success', data: userWithPermissions });
-    } catch (error) {
-      next(error);
-    }
+    } catch (error) { next(error); }
   };
 
-  // POST /api/v1/auth/forgot-password
   forgotPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { email } = req.body;
       const result = await this.authService.forgotPassword(email);
-      // Always 200 — prevents email enumeration
       res.status(200).json({ status: 'success', ...result });
-    } catch (error) {
-      next(error);
-    }
+    } catch (error) { next(error); }
   };
 
-  // POST /api/v1/auth/reset-password
   resetPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { token, password } = req.body;
       const result = await this.authService.resetPassword(token, password);
       res.status(200).json({ status: 'success', ...result });
-    } catch (error) {
-      next(error);
-    }
+    } catch (error) { next(error); }
   };
 }
