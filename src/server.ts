@@ -4,8 +4,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import { initSentry } from './config/sentry';
-import { sentryErrorHandler } from './middleware/sentryMiddleware';
+import { initSentry, Sentry } from './config/sentry';
 import 'express-async-errors';
 import analyticsRoutes from './routes/analytics.routes';
 
@@ -386,7 +385,7 @@ app.use(`/api/${API_VERSION}`, apiRouter);
 app.use(notFoundHandler);
 
 // Global error handler
-app.use(sentryErrorHandler());
+Sentry.setupExpressErrorHandler(app);
 app.use(errorHandler);
 
 // ============================================================
@@ -458,6 +457,9 @@ process.on('SIGINT', () => {
 startServer();
 
 export default app;
+
+
+
 
 
 
