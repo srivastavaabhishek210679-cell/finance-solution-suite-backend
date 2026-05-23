@@ -14,13 +14,13 @@ const loginSchema = Joi.object({
 });
 
 const registerSchema = Joi.object({
-  tenant_id:    Joi.number().integer().required(),
+  tenant_id: Joi.number().integer().optional(),
   first_name:   Joi.string().min(2).max(100).required(),
   last_name:    Joi.string().min(2).max(100).required(),
   email:        Joi.string().email().required(),
   phone_number: Joi.string().optional().allow(''),
   password:     Joi.string().min(8).required(),
-  role_id:      Joi.number().integer().required(),
+  role_id: Joi.number().integer().optional(),
 });
 
 const forgotPasswordSchema = Joi.object({
@@ -58,4 +58,5 @@ router.post('/forgot-password', validate(forgotPasswordSchema),  authController.
 router.post('/reset-password',  validate(resetPasswordSchema),   authController.resetPassword);
 
 export default router;
+
 
