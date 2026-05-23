@@ -22,6 +22,7 @@ export class AuthController {
   register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { company_name, tenant_id, role_id, ...rest } = req.body;
+      console.log('[Register] body:', JSON.stringify(req.body));
 
       if (company_name) {
         const { user, tenant_id: newTenantId, tenant_name } =
@@ -89,4 +90,5 @@ export class AuthController {
     } catch (error) { next(error); }
   };
 }
+
 
