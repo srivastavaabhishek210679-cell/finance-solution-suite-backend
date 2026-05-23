@@ -45,7 +45,7 @@ export class AuthController {
       } else {
         const user = await this.userService.createUser({
           tenant_id: tenant_id || 1,
-          role_id:   role_id   || 3,
+          role_id: role_id || 2,
           ...rest,
         });
         res.status(201).json({
@@ -89,3 +89,4 @@ export class AuthController {
     } catch (error) { next(error); }
   };
 }
+
