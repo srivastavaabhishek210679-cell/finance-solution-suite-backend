@@ -55,7 +55,7 @@ function hasSQLInjection(value: string): boolean {
 function sanitizeValue(value: unknown, path = ''): { value: unknown; blocked: string | null } {
   if (typeof value === 'string') {
     // Check for SQL injection in short fields
-    if (hasSQLInjection(value) && !['description', 'message', 'content', 'body', 'notes', 'company_name', 'tenant_name', 'first_name', 'last_name'].includes(path)) {
+    if (hasSQLInjection(value) && !['description', 'message', 'content', 'body', 'notes', 'company_name', 'tenant_name', 'stakeholders', 'first_name', 'last_name'].includes(path)) {
       return { value: '', blocked: `SQL injection pattern detected in field: ${path}` };
     }
     return { value: sanitizeString(value), blocked: null };
@@ -75,7 +75,7 @@ function sanitizeValue(value: unknown, path = ''): { value: unknown; blocked: st
     const sanitized: Record<string, unknown> = {};
     for (const [key, val] of Object.entries(value as Record<string, unknown>)) {
       // Skip sanitizing known safe fields (hashed passwords, tokens)
-      if (['password', 'token', 'refresh_token', 'access_token', 'hash', 'company_name', 'tenant_name'].includes(key)) {
+      if (['password', 'token', 'refresh_token', 'access_token', 'hash', 'company_name', 'tenant_name', 'stakeholders'].includes(key)) {
         sanitized[key] = val;
         continue;
       }
@@ -159,6 +159,7 @@ export const validateId = (paramName = 'id') => (req: Request, res: Response, ne
 
   next();
 };
+
 
 
 
