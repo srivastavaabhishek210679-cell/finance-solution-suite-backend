@@ -16,7 +16,7 @@ export class NonTenantBaseService {
 
   async findAll(options: PaginationOptions = {}) {
     const page = options.page || 1;
-    const limit = options.limit || 20;
+    const limit = options.limit ? Math.min(options.limit, 500) : 20;
     const offset = (page - 1) * limit;
     const sortBy = options.sortBy || 'created_at';
     const sortOrder = options.sortOrder || 'desc';
@@ -121,6 +121,7 @@ export class NonTenantBaseService {
     return `${tableSingular}_id`;
   }
 }
+
 
 
 
