@@ -65,8 +65,7 @@ export class NonTenantBaseService {
       RETURNING *
     `;
 
-    console.log('[CREATE] columns:', columns, 'values:', JSON.stringify(values));
-    const result = await pool.query(query, values);
+        const result = await pool.query(query, values);
     return result.rows[0];
   }
 
@@ -110,8 +109,7 @@ export class NonTenantBaseService {
       LIMIT 20
     `;
 
-    console.log('[CREATE] columns:', columns, 'values:', JSON.stringify(values));
-    const result = await pool.query(query, values);
+        const result = await pool.query(query, values);
     return result.rows;
   }
 
@@ -121,6 +119,7 @@ export class NonTenantBaseService {
     return `${tableSingular}_id`;
   }
 }
+
 
 
 
