@@ -8,7 +8,7 @@ export const preferencesController = {
     const userId = authReq.user?.userId;
     const tenantId = authReq.user?.tenantId;
     const result = await pool.query(
-      'SELECT * FROM user_preferences WHERE user_id = \',
+      'SELECT * FROM user_preferences WHERE user_id = $1',
       [userId]
     );
     if (result.rows.length === 0) {
