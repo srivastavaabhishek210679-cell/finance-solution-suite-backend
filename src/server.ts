@@ -154,7 +154,8 @@ apiRouter.use('/billing-accounts', require('./routes/billingAccounts.routes').de
 apiRouter.use('/reports/export', exportLimiter);
   apiRouter.use('/reports', reportRoutes);
 apiRouter.use('/report', require('./routes/report.routes').default);
-apiRouter.use('/reports/master', require('./routes/reports.master.routes').default);
+apiRouter.use('/schedules', require('./routes/schedules.routes').default);
+  apiRouter.use('/reports/master', require('./routes/reports.master.routes').default);
 apiRouter.use('/reports-master', require('./routes/reportsMaster.routes').default);
 apiRouter.use('/report-data', require('./routes/reportData.routes').default);
 apiRouter.use('/report-fields', require('./routes/reportFields.routes').default);
@@ -457,6 +458,7 @@ process.on('SIGINT', () => {
 startServer();
 
 export default app;
+
 
 
 
