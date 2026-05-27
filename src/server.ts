@@ -134,7 +134,8 @@ apiRouter.use('/user-preferences', require('./routes/user_preferences.routes').d
 apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/collaboration', require('./routes/collaboration.routes').default);
-apiRouter.use('/login-history', require('./routes/login_history.routes').default);
+  apiRouter.use('/collaboration', require('./routes/collaboration.routes').default);
+  apiRouter.use('/integrations/manage', require('./routes/integration.routes').default);
 apiRouter.use('/password-reset-tokens', require('./routes/passwordResetTokens.routes').default);
 apiRouter.use('/mfa-settings', require('./routes/mfaSettings.routes').default);
 apiRouter.use('/oauth-providers', require('./routes/oauthProviders.routes').default);
