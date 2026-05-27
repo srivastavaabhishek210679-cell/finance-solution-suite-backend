@@ -20,7 +20,7 @@ export const collaborationController = {
     const { name, description } = req.body;
     const result = await pool.query(
       'INSERT INTO collaboration_rooms (tenant_id, name, owner_id, description) VALUES ($1,$2,$3,$4) RETURNING *',
-      [tenantId, name, userId, description || '')
+      [tenantId, name, userId, description || '']
     );
     res.status(201).json({ status: 'success', data: result.rows[0] });
   },
