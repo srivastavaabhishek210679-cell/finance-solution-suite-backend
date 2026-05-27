@@ -7,7 +7,7 @@ export const integrationController = {
     const authReq = req as AuthRequest;
     const tenantId = authReq.user?.tenantId;
     const result = await pool.query(
-      'SELECT * FROM data_sources WHERE tenant_id = \ ORDER BY source_id',
+      'SELECT * FROM data_sources WHERE tenant_id = $1 ORDER BY source_id',
       [tenantId]
     );
     res.json({ status: 'success', data: result.rows });
