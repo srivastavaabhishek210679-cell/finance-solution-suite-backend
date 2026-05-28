@@ -55,7 +55,7 @@ export const reportViewerController = {
     const tenantId = authReq.user?.tenantId;
     const { id } = req.params;
     const result = await pool.query(
-      'SELECT * FROM reports_master WHERE report_id = \',
+      'SELECT * FROM reports_master WHERE report_id = $1',
       [id]
     );
     if (!result.rows.length) return res.status(404).json({ status: 'error', message: 'Report not found' });
