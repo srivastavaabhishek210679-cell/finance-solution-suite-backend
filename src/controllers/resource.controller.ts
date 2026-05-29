@@ -27,7 +27,7 @@ export const resourceController = {
 
   getProjects: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query('SELECT p.*, COUNT(ra.allocation_id) as team_size FROM projects p LEFT JOIN resource_allocations ra ON p.project_id = ra.project_id AND ra.status=''Active'' GROUP BY p.project_id ORDER BY p.start_date DESC');
+      const result = await pool.query("SELECT p.*, COUNT(ra.allocation_id) as team_size FROM projects p LEFT JOIN resource_allocations ra ON p.project_id = ra.project_id AND ra.status='Active' GROUP BY p.project_id ORDER BY p.start_date DESC");
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
