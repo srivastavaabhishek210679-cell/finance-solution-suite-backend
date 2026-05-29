@@ -138,7 +138,8 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/integrations/manage', require('./routes/integration.routes').default);
   apiRouter.use('/integrations/manage', require('./routes/integration.routes').default);
   apiRouter.use('/report-viewer', require('./routes/reportViewer.routes').default);
-apiRouter.use('/mfa-settings', require('./routes/mfaSettings.routes').default);
+  apiRouter.use('/report-viewer', require('./routes/reportViewer.routes').default);
+  apiRouter.use('/payroll', require('./routes/payroll.routes').default);
 apiRouter.use('/oauth-providers', require('./routes/oauthProviders.routes').default);
 apiRouter.use('/user-devices', require('./routes/userDevices.routes').default);
 
