@@ -14,7 +14,7 @@ export const payrollController = {
   // Get single employee
   getEmployee: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query('SELECT * FROM employees WHERE employee_id = \', [req.params.id]);
+      const result = await pool.query('SELECT * FROM employees WHERE employee_id = $1', [req.params.id]);
       if (!result.rows.length) return res.status(404).json({ status: 'error', message: 'Not found' });
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
@@ -47,7 +47,7 @@ export const payrollController = {
   // Delete employee
   deleteEmployee: async (req: Request, res: Response) => {
     try {
-      await pool.query('UPDATE employees SET status=\ WHERE employee_id=\', ['Inactive', req.params.id]);
+      await pool.query('UPDATE employees SET status=$1 WHERE employee_id=$2', ['Inactive', req.params.id]);
       res.json({ status: 'success', message: 'Employee deactivated' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -82,7 +82,7 @@ export const payrollController = {
 
       // Update payroll run totals
       await pool.query(
-        'UPDATE payroll_runs SET status=\, total_gross=\, total_deductions=\, total_net=\ WHERE payroll_id=\',
+        'UPDATE payroll_runs SET status=$1, total_gross=$2, total_deductions=$3, total_net=$4 WHERE payroll_id=\',
         ['Completed', totalGross, totalDeductions, totalNet, payrollId]
       );
 
@@ -102,7 +102,7 @@ export const payrollController = {
   getPayslips: async (req: Request, res: Response) => {
     try {
       const result = await pool.query(
-        'SELECT p.*, e.first_name, e.last_name, e.employee_code, e.department, e.designation FROM payslips p JOIN employees e ON p.employee_id = e.employee_id WHERE p.payroll_id = \',
+        'SELECT p.*, e.first_name, e.last_name, e.employee_code, e.department, e.designation FROM payslips p JOIN employees e ON p.employee_id = e.employee_id WHERE p.payroll_id = $1',
         [req.params.payrollId]
       );
       res.json({ status: 'success', data: result.rows });
