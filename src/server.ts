@@ -140,7 +140,8 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/report-viewer', require('./routes/reportViewer.routes').default);
   apiRouter.use('/report-viewer', require('./routes/reportViewer.routes').default);
   apiRouter.use('/payroll', require('./routes/payroll.routes').default);
-apiRouter.use('/oauth-providers', require('./routes/oauthProviders.routes').default);
+  apiRouter.use('/payroll', require('./routes/payroll.routes').default);
+  apiRouter.use('/resources', require('./routes/resource.routes').default);
 apiRouter.use('/user-devices', require('./routes/userDevices.routes').default);
 
 // ============================================================
