@@ -65,7 +65,7 @@ export const resourceController = {
 
   deleteAllocation: async (req: Request, res: Response) => {
     try {
-      await pool.query('UPDATE resource_allocations SET status=''Inactive'' WHERE allocation_id=$1', [req.params.id]);
+      await pool.query("UPDATE resource_allocations SET status='Inactive' WHERE allocation_id=$1", [req.params.id]);
       res.json({ status: 'success', message: 'Allocation removed' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -73,8 +73,8 @@ export const resourceController = {
   getStats: async (req: Request, res: Response) => {
     try {
       const total = await pool.query('SELECT COUNT(*) as total FROM resources');
-      const available = await pool.query('SELECT COUNT(*) as available FROM resources WHERE status='Available'');
-      const projects = await pool.query('SELECT COUNT(*) as total FROM projects WHERE status=''Active''');
+      const available = await pool.query("SELECT COUNT(*) as available FROM resources WHERE status='Available'");
+      const projects = await pool.query("SELECT COUNT(*) as total FROM projects WHERE status='Active'");
       const deptBreakdown = await pool.query('SELECT department, COUNT(*) as count, AVG(availability_percent) as avg_availability FROM resources GROUP BY department ORDER BY count DESC');
       res.json({ status: 'success', data: { totalResources: total.rows[0].total, availableResources: available.rows[0].available, activeProjects: projects.rows[0].total, departmentBreakdown: deptBreakdown.rows } });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
