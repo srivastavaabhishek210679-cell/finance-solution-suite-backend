@@ -13,5 +13,6 @@ router.post('/run', payrollController.runPayroll);
 router.get('/runs', payrollController.getPayrollRuns);
 router.get('/runs/:payrollId/payslips', payrollController.getPayslips);
 router.get('/stats', payrollController.getStats);
-
+router.get('/stats', payrollController.getStats);
+router.get('/reports-data', payrollController.getReportsData);
 export default router;
