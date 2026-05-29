@@ -142,7 +142,8 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/payroll', require('./routes/payroll.routes').default);
   apiRouter.use('/payroll', require('./routes/payroll.routes').default);
   apiRouter.use('/resources', require('./routes/resource.routes').default);
-apiRouter.use('/user-devices', require('./routes/userDevices.routes').default);
+  apiRouter.use('/resources', require('./routes/resource.routes').default);
+  apiRouter.use('/projects-mgmt', require('./routes/project.routes').default);
 
 // ============================================================
 // MODULE 2: TENANTS & SUBSCRIPTIONS
