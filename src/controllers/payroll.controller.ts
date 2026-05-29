@@ -56,7 +56,7 @@ export const payrollController = {
   runPayroll: async (req: Request, res: Response) => {
     try {
       const { month, year } = req.body;
-      const employees = await pool.query('SELECT * FROM employees WHERE status = \', ['Active']);
+      const employees = await pool.query('SELECT * FROM employees WHERE status = $1', ['Active']);
       
       let totalGross = 0, totalDeductions = 0, totalNet = 0;
       
@@ -82,7 +82,7 @@ export const payrollController = {
 
       // Update payroll run totals
       await pool.query(
-        'UPDATE payroll_runs SET status=$1, total_gross=$2, total_deductions=$3, total_net=$4 WHERE payroll_id=\',
+        'UPDATE payroll_runs SET status=$1, total_gross=$2, total_deductions=$3, total_net=$4 WHERE payroll_id=$5',
         ['Completed', totalGross, totalDeductions, totalNet, payrollId]
       );
 
@@ -112,7 +112,7 @@ export const payrollController = {
   // Get payroll summary stats
   getStats: async (req: Request, res: Response) => {
     try {
-      const empCount = await pool.query('SELECT COUNT(*) FROM employees WHERE status = \', ['Active']);
+      const empCount = await pool.query('SELECT COUNT(*) FROM employees WHERE status = $1', ['Active']);
       const lastPayroll = await pool.query('SELECT * FROM payroll_runs ORDER BY created_at DESC LIMIT 1');
       const deptCost = await pool.query('SELECT department, SUM(basic_salary + hra + transport_allowance + medical_allowance + other_allowance) as total_cost FROM employees WHERE status=\ GROUP BY department ORDER BY total_cost DESC', ['Active']);
       res.json({ status: 'success', data: { totalEmployees: empCount.rows[0].count, lastPayroll: lastPayroll.rows[0] || null, departmentCosts: deptCost.rows } });
