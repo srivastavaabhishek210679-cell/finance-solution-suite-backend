@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { complianceController as ctrl } from '../controllers/compliance.controller';
+import { travelController as ctrl } from '../controllers/travel.controller';
 import { authenticate } from '../middleware/auth';
 const router = Router();
 router.use(authenticate);
 router.get('/', ctrl.getAll);
 router.post('/', ctrl.create);
-router.put('/:id', ctrl.update);
+router.put('/:id/status', ctrl.updateStatus);
 router.get('/stats', ctrl.getStats);
 export default router;

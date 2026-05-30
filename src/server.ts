@@ -158,7 +158,14 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/expense-mgmt', require('./routes/expenses.routes').default);
   apiRouter.use('/performance-mgmt', require('./routes/performance.routes').default);
   apiRouter.use('/recruitment-mgmt', require('./routes/recruitment.routes').default);
-// MODULE 2: TENANTS & SUBSCRIPTIONS
+  apiRouter.use('/recruitment-mgmt', require('./routes/recruitment.routes').default);
+  apiRouter.use('/invoices', require('./routes/invoices.routes').default);
+  apiRouter.use('/training', require('./routes/training.routes').default);
+  apiRouter.use('/travel', require('./routes/travel.routes').default);
+  apiRouter.use('/attendance', require('./routes/attendance.routes').default);
+  apiRouter.use('/sales-pipeline', require('./routes/sales-pipeline.routes').default);
+  apiRouter.use('/helpdesk', require('./routes/helpdesk.routes').default);
+  apiRouter.use('/compliance', require('./routes/compliance.routes').default);
 // ============================================================
 apiRouter.use('/tenant-subscriptions', require('./routes/tenantSubscriptions.routes').default);
 apiRouter.use('/tenant-invitations', require('./routes/tenantInvitations.routes').default);

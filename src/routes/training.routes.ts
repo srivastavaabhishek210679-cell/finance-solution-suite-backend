@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import { trainingController as ctrl } from '../controllers/training.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/courses', ctrl.getCourses);
+router.post('/courses', ctrl.createCourse);
+router.get('/enrollments', ctrl.getEnrollments);
+router.post('/enroll', ctrl.enroll);
+router.put('/enrollments/:id', ctrl.updateEnrollment);
+router.get('/stats', ctrl.getStats);
+export default router;

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { complianceController as ctrl } from '../controllers/compliance.controller';
+import { helpdeskController as ctrl } from '../controllers/helpdesk.controller';
 import { authenticate } from '../middleware/auth';
 const router = Router();
 router.use(authenticate);
