@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import { crmController as ctrl } from '../controllers/crm.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', ctrl.getAll);
+router.post('/', ctrl.create);
+router.put('/:id', ctrl.update);
+router.post('/interactions', ctrl.addInteraction);
+router.get('/:id/interactions', ctrl.getInteractions);
+router.get('/stats', ctrl.getStats);
+export default router;

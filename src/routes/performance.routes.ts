@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { performanceController as ctrl } from '../controllers/performance.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/reviews', ctrl.getReviews);
+router.post('/reviews', ctrl.createReview);
+router.put('/reviews/:id', ctrl.updateReview);
+router.get('/goals', ctrl.getGoals);
+router.post('/goals', ctrl.createGoal);
+router.put('/goals/:id/progress', ctrl.updateGoalProgress);
+router.get('/stats', ctrl.getStats);
+export default router;

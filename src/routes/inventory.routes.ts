@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { inventoryController as ctrl } from '../controllers/inventory.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', ctrl.getAll);
+router.post('/', ctrl.create);
+router.put('/:id', ctrl.update);
+router.post('/:id/restock', ctrl.restock);
+router.get('/stats', ctrl.getStats);
+export default router;

@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { documentController as ctrl } from '../controllers/document.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', ctrl.getAll);
+router.post('/', ctrl.create);
+router.put('/:id', ctrl.update);
+router.delete('/:id', ctrl.delete);
+router.get('/stats', ctrl.getStats);
+export default router;

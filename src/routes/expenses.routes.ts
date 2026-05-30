@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { expenseController as ctrl } from '../controllers/expense.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', ctrl.getAll);
+router.post('/', ctrl.create);
+router.put('/:id/status', ctrl.updateStatus);
+router.get('/stats', ctrl.getStats);
+export default router;

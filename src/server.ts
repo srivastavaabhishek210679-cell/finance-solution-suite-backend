@@ -150,7 +150,14 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/vendor-mgmt', require('./routes/vendor.routes').default);
   apiRouter.use('/asset-mgmt', require('./routes/asset.routes').default);
   apiRouter.use('/contract-mgmt', require('./routes/contract.routes').default);
-// ============================================================
+  apiRouter.use('/contract-mgmt', require('./routes/contract.routes').default);
+  apiRouter.use('/inventory-mgmt', require('./routes/inventory.routes').default);
+  apiRouter.use('/crm-mgmt', require('./routes/crm.routes').default);
+  apiRouter.use('/document-mgmt', require('./routes/documents.routes').default);
+  apiRouter.use('/risk-mgmt', require('./routes/risks.routes').default);
+  apiRouter.use('/expense-mgmt', require('./routes/expenses.routes').default);
+  apiRouter.use('/performance-mgmt', require('./routes/performance.routes').default);
+  apiRouter.use('/recruitment-mgmt', require('./routes/recruitment.routes').default);
 // MODULE 2: TENANTS & SUBSCRIPTIONS
 // ============================================================
 apiRouter.use('/tenant-subscriptions', require('./routes/tenantSubscriptions.routes').default);

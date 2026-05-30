@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { recruitmentController as ctrl } from '../controllers/recruitment.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/jobs', ctrl.getJobs);
+router.post('/jobs', ctrl.createJob);
+router.put('/jobs/:id', ctrl.updateJob);
+router.get('/applications', ctrl.getApplications);
+router.post('/applications', ctrl.createApplication);
+router.put('/applications/:id/status', ctrl.updateApplicationStatus);
+router.get('/stats', ctrl.getStats);
+export default router;

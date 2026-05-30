@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { riskController as ctrl } from '../controllers/risk.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', ctrl.getAll);
+router.post('/', ctrl.create);
+router.put('/:id', ctrl.update);
+router.get('/stats', ctrl.getStats);
+export default router;
