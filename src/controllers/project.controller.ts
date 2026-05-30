@@ -95,3 +95,79 @@ export const projectController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+// Additional controllers for new features
+export const projectFeaturesController = {
+  getTeamMembers: async (req: Request, res: Response) => {
+    try {
+      const result = await pool.query('SELECT * FROM pm_team_members WHERE project_id=$1 ORDER BY joined_at', [req.params.projectId]);
+      res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  addTeamMember: async (req: Request, res: Response) => {
+    try {
+      const { project_id, name, role, email, avatar_color } = req.body;
+      const result = await pool.query('INSERT INTO pm_team_members (project_id, name, role, email, avatar_color) VALUES ($1,$2,$3,$4,$5) RETURNING *', [project_id, name, role, email, avatar_color||'#3b82f6']);
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  removeTeamMember: async (req: Request, res: Response) => {
+    try {
+      await pool.query('DELETE FROM pm_team_members WHERE member_id=$1', [req.params.id]);
+      res.json({ status: 'success', message: 'Member removed' });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  getComments: async (req: Request, res: Response) => {
+    try {
+      const result = await pool.query('SELECT * FROM pm_comments WHERE project_id=$1 ORDER BY created_at DESC', [req.params.projectId]);
+      res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  addComment: async (req: Request, res: Response) => {
+    try {
+      const { project_id, author, content } = req.body;
+      const result = await pool.query('INSERT INTO pm_comments (project_id, author, content) VALUES ($1,$2,$3) RETURNING *', [project_id, author, content]);
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  deleteComment: async (req: Request, res: Response) => {
+    try {
+      await pool.query('DELETE FROM pm_comments WHERE comment_id=$1', [req.params.id]);
+      res.json({ status: 'success', message: 'Comment deleted' });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  getAttachments: async (req: Request, res: Response) => {
+    try {
+      const result = await pool.query('SELECT * FROM pm_attachments WHERE project_id=$1 ORDER BY created_at DESC', [req.params.projectId]);
+      res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  addAttachment: async (req: Request, res: Response) => {
+    try {
+      const { project_id, file_name, file_size, file_type, uploaded_by } = req.body;
+      const result = await pool.query('INSERT INTO pm_attachments (project_id, file_name, file_size, file_type, uploaded_by) VALUES ($1,$2,$3,$4,$5) RETURNING *', [project_id, file_name, file_size, file_type, uploaded_by]);
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  deleteAttachment: async (req: Request, res: Response) => {
+    try {
+      await pool.query('DELETE FROM pm_attachments WHERE attachment_id=$1', [req.params.id]);
+      res.json({ status: 'success', message: 'Attachment deleted' });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  updateBudget: async (req: Request, res: Response) => {
+    try {
+      const { spent, progress } = req.body;
+      const result = await pool.query('UPDATE pm_projects SET spent=$1, progress=$2, updated_at=NOW() WHERE project_id=$3 RETURNING *', [spent, progress, req.params.id]);
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  }
+};

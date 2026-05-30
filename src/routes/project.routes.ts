@@ -17,4 +17,15 @@ router.post('/milestones', projectController.createMilestone);
 router.put('/milestones/:id', projectController.updateMilestone);
 router.get('/stats', projectController.getStats);
 
+import { projectFeaturesController } from '../controllers/project.controller';
+router.get('/:projectId/team', projectFeaturesController.getTeamMembers);
+router.post('/team', projectFeaturesController.addTeamMember);
+router.delete('/team/:id', projectFeaturesController.removeTeamMember);
+router.get('/:projectId/comments', projectFeaturesController.getComments);
+router.post('/comments', projectFeaturesController.addComment);
+router.delete('/comments/:id', projectFeaturesController.deleteComment);
+router.get('/:projectId/attachments', projectFeaturesController.getAttachments);
+router.post('/attachments', projectFeaturesController.addAttachment);
+router.delete('/attachments/:id', projectFeaturesController.deleteAttachment);
+router.put('/:id/budget', projectFeaturesController.updateBudget);
 export default router;
