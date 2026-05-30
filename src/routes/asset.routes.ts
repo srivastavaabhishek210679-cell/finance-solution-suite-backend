@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { assetController } from '../controllers/asset.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', assetController.getAll);
+router.post('/', assetController.create);
+router.put('/:id', assetController.update);
+router.get('/stats', assetController.getStats);
+export default router;

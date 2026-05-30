@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { contractController } from '../controllers/contract.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', contractController.getAll);
+router.post('/', contractController.create);
+router.put('/:id', contractController.update);
+router.get('/stats', contractController.getStats);
+export default router;

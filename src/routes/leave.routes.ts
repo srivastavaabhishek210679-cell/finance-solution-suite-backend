@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { leaveController } from '../controllers/leave.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', leaveController.getRequests);
+router.post('/', leaveController.createRequest);
+router.put('/:id/status', leaveController.updateStatus);
+router.get('/types', leaveController.getTypes);
+router.get('/stats', leaveController.getStats);
+export default router;

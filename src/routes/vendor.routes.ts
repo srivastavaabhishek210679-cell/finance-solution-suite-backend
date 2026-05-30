@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { vendorController } from '../controllers/vendor.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', vendorController.getAll);
+router.post('/', vendorController.create);
+router.put('/:id', vendorController.update);
+router.get('/stats', vendorController.getStats);
+export default router;

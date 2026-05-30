@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import { budgetController } from '../controllers/budget.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', budgetController.getAll);
+router.post('/', budgetController.create);
+router.put('/:id', budgetController.update);
+router.get('/stats', budgetController.getStats);
+router.get('/:id/transactions', budgetController.getTransactions);
+router.post('/transactions', budgetController.addTransaction);
+export default router;

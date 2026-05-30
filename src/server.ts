@@ -144,7 +144,12 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/resources', require('./routes/resource.routes').default);
   apiRouter.use('/resources', require('./routes/resource.routes').default);
   apiRouter.use('/projects-mgmt', require('./routes/project.routes').default);
-
+  apiRouter.use('/projects-mgmt', require('./routes/project.routes').default);
+  apiRouter.use('/budget-mgmt', require('./routes/budget.routes').default);
+  apiRouter.use('/leave-mgmt', require('./routes/leave.routes').default);
+  apiRouter.use('/vendor-mgmt', require('./routes/vendor.routes').default);
+  apiRouter.use('/asset-mgmt', require('./routes/asset.routes').default);
+  apiRouter.use('/contract-mgmt', require('./routes/contract.routes').default);
 // ============================================================
 // MODULE 2: TENANTS & SUBSCRIPTIONS
 // ============================================================
