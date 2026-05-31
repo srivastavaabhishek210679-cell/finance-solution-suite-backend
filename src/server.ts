@@ -73,7 +73,20 @@ app.use(
 
 // Body parsing
 app.use(express.json({ limit: '10mb' }));
-
+app.use(express.json({ limit: '10mb' }));
+app.use((req: any, res: any, next: any) => {
+  if (req.body && typeof req.body === 'object') {
+    const sanitize = (obj: any): any => {
+      Object.keys(obj).forEach(key => {
+        if (obj[key] === '' || obj[key] === undefined) obj[key] = null;
+        else if (typeof obj[key] === 'object' && obj[key] !== null) sanitize(obj[key]);
+      });
+      return obj;
+    };
+    sanitize(req.body);
+  }
+  next();
+});
 // Body parsing
 //app.use(express.json({ limit: '10mb' }));
 //app.use(express.urlencoded({ extended: true, limit: '10mb' }));
