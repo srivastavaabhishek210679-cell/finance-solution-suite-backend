@@ -17,7 +17,7 @@ export const mfaController = {
       const otp = generateOTP();
       const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
       await pool.query('UPDATE users SET otp_code = ' + String.fromCharCode(36) + '1, otp_expires_at = ' + String.fromCharCode(36) + '2 WHERE email = ' + String.fromCharCode(36) + '3', [otp, expiresAt, email]);
-      await emailService.sendEmail({ to: email, subject: 'Your Finance Suite OTP Code', html: otpEmailTemplate(otp) });
+      await emailService.send({ to: email, subject: 'Your Finance Suite OTP Code', html: otpEmailTemplate(otp) });
       res.json({ status: 'success', message: 'OTP sent to your email' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
