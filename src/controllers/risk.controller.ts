@@ -12,7 +12,7 @@ export const riskController = {
     try {
       const { risk_name, category, department, description, likelihood, impact, owner, mitigation, due_date } = req.body;
       const score = (likelihood||3) * (impact||3);
-      const result = await pool.query('INSERT INTO risks (risk_name, category, department, description, likelihood, impact, risk_score, owner, mitigation, due_date) VALUES (,,,,,,,,,) RETURNING *', [risk_name, category, department, description, likelihood||3, impact||3, score, owner, mitigation, due_date]);
+      const result = await pool.query('INSERT INTO risks (risk_name, category, department, description, likelihood, impact, risk_score, owner, mitigation, due_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *', [risk_name, category, department, description, likelihood||3, impact||3, score, owner, mitigation, due_date]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

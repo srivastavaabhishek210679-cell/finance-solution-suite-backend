@@ -11,7 +11,7 @@ export const performanceController = {
   createReview: async (req: Request, res: Response) => {
     try {
       const { employee_name, department, reviewer, review_period, overall_rating, goals_score, skills_score, attitude_score, leadership_score, status, comments } = req.body;
-      const result = await pool.query('INSERT INTO performance_reviews (employee_name, department, reviewer, review_period, overall_rating, goals_score, skills_score, attitude_score, leadership_score, status, comments) VALUES (,,,,,,,,,,) RETURNING *', [employee_name, department, reviewer, review_period, overall_rating||0, goals_score||0, skills_score||0, attitude_score||0, leadership_score||0, status||'Draft', comments]);
+      const result = await pool.query('INSERT INTO performance_reviews (employee_name, department, reviewer, review_period, overall_rating, goals_score, skills_score, attitude_score, leadership_score, status, comments) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *', [employee_name, department, reviewer, review_period, overall_rating||0, goals_score||0, skills_score||0, attitude_score||0, leadership_score||0, status||'Draft', comments]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -31,7 +31,7 @@ export const performanceController = {
   createGoal: async (req: Request, res: Response) => {
     try {
       const { employee_name, department, goal_title, description, target_date } = req.body;
-      const result = await pool.query('INSERT INTO performance_goals (employee_name, department, goal_title, description, target_date) VALUES (,,,,) RETURNING *', [employee_name, department, goal_title, description, target_date]);
+      const result = await pool.query('INSERT INTO performance_goals (employee_name, department, goal_title, description, target_date) VALUES ($1,$2,$3,$4,$5) RETURNING *', [employee_name, department, goal_title, description, target_date]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

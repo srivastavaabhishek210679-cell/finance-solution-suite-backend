@@ -11,7 +11,7 @@ export const documentController = {
   create: async (req: Request, res: Response) => {
     try {
       const { title, category, department, file_type, file_size, version, author, tags, description } = req.body;
-      const result = await pool.query('INSERT INTO documents (title, category, department, file_type, file_size, version, author, tags, description) VALUES (,,,,,,,,) RETURNING *', [title, category, department, file_type, file_size, version||'v1.0', author, JSON.stringify(tags||[]), description]);
+      const result = await pool.query('INSERT INTO documents (title, category, department, file_type, file_size, version, author, tags, description) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *', [title, category, department, file_type, file_size, version||'v1.0', author, JSON.stringify(tags||[]), description]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

@@ -12,7 +12,7 @@ export const salesController = {
     try {
       const { deal_name, company_name, contact_name, deal_value, stage, probability, expected_close, assigned_to, source, notes } = req.body;
       const safeClose = expected_close || null;
-      const result = await pool.query('INSERT INTO sales_deals (deal_name, company_name, contact_name, deal_value, stage, probability, expected_close, assigned_to, source, notes) VALUES (,,,,,,,,,) RETURNING *', [deal_name, company_name, contact_name, deal_value||0, stage||'Prospecting', probability||0, safeClose, assigned_to, source, notes]);
+      const result = await pool.query('INSERT INTO sales_deals (deal_name, company_name, contact_name, deal_value, stage, probability, expected_close, assigned_to, source, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *', [deal_name, company_name, contact_name, deal_value||0, stage||'Prospecting', probability||0, safeClose, assigned_to, source, notes]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -34,4 +34,5 @@ export const salesController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+
 

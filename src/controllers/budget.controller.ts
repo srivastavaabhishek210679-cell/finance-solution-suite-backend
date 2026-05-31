@@ -11,7 +11,7 @@ export const budgetController = {
   create: async (req: Request, res: Response) => {
     try {
       const { department, fiscal_year, fiscal_quarter, category, allocated_amount } = req.body;
-      const result = await pool.query('INSERT INTO budgets (department, fiscal_year, fiscal_quarter, category, allocated_amount) VALUES (,,,,) RETURNING *', [department, fiscal_year, fiscal_quarter, category, allocated_amount]);
+      const result = await pool.query('INSERT INTO budgets (department, fiscal_year, fiscal_quarter, category, allocated_amount) VALUES ($1,$2,$3,$4,$5) RETURNING *', [department, fiscal_year, fiscal_quarter, category, allocated_amount]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -25,7 +25,7 @@ export const budgetController = {
   addTransaction: async (req: Request, res: Response) => {
     try {
       const { budget_id, description, amount, transaction_type, created_by } = req.body;
-      const result = await pool.query('INSERT INTO budget_transactions (budget_id, description, amount, transaction_type, created_by) VALUES (,,,,) RETURNING *', [budget_id, description, amount, transaction_type, created_by]);
+      const result = await pool.query('INSERT INTO budget_transactions (budget_id, description, amount, transaction_type, created_by) VALUES ($1,$2,$3,$4,$5) RETURNING *', [budget_id, description, amount, transaction_type, created_by]);
       await pool.query('UPDATE budgets SET spent_amount = spent_amount +  WHERE budget_id = ', [amount, budget_id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }

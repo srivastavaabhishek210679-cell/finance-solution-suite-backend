@@ -11,8 +11,8 @@ export const expenseController = {
   create: async (req: Request, res: Response) => {
     try {
       const { title, category, department, amount, expense_date, submitted_by, payment_method, notes } = req.body;
-      const result = await pool.query('INSERT INTO expenses (title, category, department, amount, expense_date, submitted_by, payment_method, notes) VALUES (,,,,,,,) RETURNING *', [title, category, department, amount, expense_date, submitted_by, payment_method, notes]);
-      res.json({ status: 'success', data: result.rows[0] });
+      const safeDate = expense_date || null;
+      const result = await pool.query('INSERT INTO expenses (title, category, department, amount, expense_date, submitted_by, payment_method, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *', [title, category, department, amount, safeDate, submitted_by, payment_method, notes]);
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   updateStatus: async (req: Request, res: Response) => {
@@ -32,3 +32,4 @@ export const expenseController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+

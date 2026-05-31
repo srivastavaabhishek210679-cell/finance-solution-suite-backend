@@ -11,7 +11,7 @@ export const inventoryController = {
   create: async (req: Request, res: Response) => {
     try {
       const { item_name, item_code, category, unit, current_stock, minimum_stock, maximum_stock, unit_price, supplier, location } = req.body;
-      const result = await pool.query('INSERT INTO inventory_items (item_name, item_code, category, unit, current_stock, minimum_stock, maximum_stock, unit_price, supplier, location) VALUES (,,,,,,,,,) RETURNING *', [item_name, item_code, category, unit, current_stock||0, minimum_stock||0, maximum_stock||0, unit_price||0, supplier, location]);
+      const result = await pool.query('INSERT INTO inventory_items (item_name, item_code, category, unit, current_stock, minimum_stock, maximum_stock, unit_price, supplier, location) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *', [item_name, item_code, category, unit, current_stock||0, minimum_stock||0, maximum_stock||0, unit_price||0, supplier, location]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -25,7 +25,7 @@ export const inventoryController = {
   restock: async (req: Request, res: Response) => {
     try {
       const { quantity, reference, notes, created_by } = req.body;
-      await pool.query('INSERT INTO inventory_transactions (item_id, txn_type, quantity, reference, notes, created_by) VALUES (,,,,,)', [req.params.id, 'Restock', quantity, reference, notes, created_by||'Admin']);
+      await pool.query('INSERT INTO inventory_transactions (item_id, txn_type, quantity, reference, notes, created_by) VALUES ($1,$2,$3,$4,$5,$6)', [req.params.id, 'Restock', quantity, reference, notes, created_by||'Admin']);
       await pool.query('UPDATE inventory_items SET current_stock=current_stock+, last_restocked=CURRENT_DATE WHERE item_id=', [quantity, req.params.id]);
       res.json({ status: 'success', message: 'Restocked successfully' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }

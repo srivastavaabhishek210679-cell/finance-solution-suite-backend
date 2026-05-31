@@ -14,7 +14,7 @@ export const travelController = {
       const safeDeparture = departure_date || null;
       const safeReturn = return_date || null;
       const safeHotel = hotel_required === true || hotel_required === 'true' ? true : false;
-      const result = await pool.query('INSERT INTO travel_requests (employee_name, department, destination, purpose, departure_date, return_date, travel_mode, estimated_cost, hotel_required, advance_required, notes) VALUES (,,,,,,,,,,) RETURNING *', [employee_name, department, destination, purpose, safeDeparture, safeReturn, travel_mode, estimated_cost||0, safeHotel, advance_required||0, notes]);
+      const result = await pool.query('INSERT INTO travel_requests (employee_name, department, destination, purpose, departure_date, return_date, travel_mode, estimated_cost, hotel_required, advance_required, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *', [employee_name, department, destination, purpose, safeDeparture, safeReturn, travel_mode, estimated_cost||0, safeHotel, advance_required||0, notes]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -35,3 +35,4 @@ export const travelController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+

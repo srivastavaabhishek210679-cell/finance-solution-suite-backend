@@ -102,3 +102,4 @@ export const scheduleController = {
     res.json({ status: 'success', message: `Report sent to ${recipients.length} recipient(s)` });
   }
 };
+

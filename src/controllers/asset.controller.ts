@@ -11,7 +11,7 @@ export const assetController = {
   create: async (req: Request, res: Response) => {
     try {
       const { asset_name, asset_code, category, department, assigned_to, purchase_date, purchase_price, current_value, depreciation_rate, status, location, warranty_expiry } = req.body;
-      const result = await pool.query('INSERT INTO assets (asset_name, asset_code, category, department, assigned_to, purchase_date, purchase_price, current_value, depreciation_rate, status, location, warranty_expiry) VALUES (,,,,,,,,,,,) RETURNING *', [asset_name, asset_code, category, department, assigned_to, purchase_date, purchase_price, current_value, depreciation_rate, status||'Active', location, warranty_expiry]);
+      const result = await pool.query('INSERT INTO assets (asset_name, asset_code, category, department, assigned_to, purchase_date, purchase_price, current_value, depreciation_rate, status, location, warranty_expiry) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *', [asset_name, asset_code, category, department, assigned_to, purchase_date, purchase_price, current_value, depreciation_rate, status||'Active', location, warranty_expiry]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

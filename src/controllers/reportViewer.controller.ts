@@ -63,3 +63,4 @@ export const reportViewerController = {
     res.json({ status: 'success', data });
   }
 };
+

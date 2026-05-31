@@ -61,3 +61,4 @@ export const integrationController = {
     res.json({ status: 'success', data: result.rows[0] });
   }
 };
+

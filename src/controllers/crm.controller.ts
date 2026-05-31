@@ -11,7 +11,7 @@ export const crmController = {
   create: async (req: Request, res: Response) => {
     try {
       const { company_name, contact_name, email, phone, industry, country, status, customer_type, assigned_to, notes } = req.body;
-      const result = await pool.query('INSERT INTO crm_customers (company_name, contact_name, email, phone, industry, country, status, customer_type, assigned_to, notes) VALUES (,,,,,,,,,) RETURNING *', [company_name, contact_name, email, phone, industry, country, status||'Active', customer_type||'B2B', assigned_to, notes]);
+      const result = await pool.query('INSERT INTO crm_customers (company_name, contact_name, email, phone, industry, country, status, customer_type, assigned_to, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *', [company_name, contact_name, email, phone, industry, country, status||'Active', customer_type||'B2B', assigned_to, notes]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -25,7 +25,7 @@ export const crmController = {
   addInteraction: async (req: Request, res: Response) => {
     try {
       const { customer_id, type, subject, notes, created_by } = req.body;
-      const result = await pool.query('INSERT INTO crm_interactions (customer_id, type, subject, notes, created_by) VALUES (,,,,) RETURNING *', [customer_id, type, subject, notes, created_by||'Admin']);
+      const result = await pool.query('INSERT INTO crm_interactions (customer_id, type, subject, notes, created_by) VALUES ($1,$2,$3,$4,$5) RETURNING *', [customer_id, type, subject, notes, created_by||'Admin']);
       await pool.query('UPDATE crm_customers SET last_contact=CURRENT_DATE WHERE customer_id=', [customer_id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }

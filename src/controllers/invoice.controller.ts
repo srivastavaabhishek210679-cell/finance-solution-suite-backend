@@ -13,7 +13,7 @@ export const invoiceController = {
       const { invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount, total_amount, issue_date, due_date, notes } = req.body;
       const safeIssueDate = issue_date || null;
       const safeDueDate = due_date || null;
-      const result = await pool.query('INSERT INTO invoices (invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount, total_amount, issue_date, due_date, notes) VALUES (,,,,,,,,,,) RETURNING *', [invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount||0, total_amount, safeIssueDate, safeDueDate, notes]);
+      const result = await pool.query('INSERT INTO invoices (invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount, total_amount, issue_date, due_date, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *', [invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount||0, total_amount, safeIssueDate, safeDueDate, notes]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -34,3 +34,4 @@ export const invoiceController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+

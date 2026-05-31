@@ -11,7 +11,7 @@ export const leaveController = {
   createRequest: async (req: Request, res: Response) => {
     try {
       const { employee_name, leave_type, start_date, end_date, days, reason } = req.body;
-      const result = await pool.query('INSERT INTO leave_requests (employee_name, leave_type, start_date, end_date, days, reason) VALUES (,,,,,) RETURNING *', [employee_name, leave_type, start_date, end_date, days, reason]);
+      const result = await pool.query('INSERT INTO leave_requests (employee_name, leave_type, start_date, end_date, days, reason) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *', [employee_name, leave_type, start_date, end_date, days, reason]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

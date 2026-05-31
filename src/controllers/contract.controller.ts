@@ -11,7 +11,7 @@ export const contractController = {
   create: async (req: Request, res: Response) => {
     try {
       const { contract_name, contract_number, vendor_id, contract_type, department, start_date, end_date, value, status, auto_renewal, signed_by, description } = req.body;
-      const result = await pool.query('INSERT INTO contracts (contract_name, contract_number, vendor_id, contract_type, department, start_date, end_date, value, status, auto_renewal, signed_by, description) VALUES (,,,,,,,,,,,) RETURNING *', [contract_name, contract_number, vendor_id, contract_type, department, start_date, end_date, value, status||'Active', auto_renewal||false, signed_by, description]);
+      const result = await pool.query('INSERT INTO contracts (contract_name, contract_number, vendor_id, contract_type, department, start_date, end_date, value, status, auto_renewal, signed_by, description) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *', [contract_name, contract_number, vendor_id, contract_type, department, start_date, end_date, value, status||'Active', auto_renewal||false, signed_by, description]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

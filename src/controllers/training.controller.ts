@@ -13,7 +13,7 @@ export const trainingController = {
       const { course_name, category, instructor, duration_hours, mode, max_participants, start_date, end_date, description } = req.body;
       const safeStartDate = start_date || null;
       const safeEndDate = end_date || null;
-      const result = await pool.query('INSERT INTO training_courses (course_name, category, instructor, duration_hours, mode, max_participants, start_date, end_date, description) VALUES (,,,,,,,,) RETURNING *', [course_name, category, instructor, duration_hours||0, mode||'Online', max_participants||30, safeStartDate, safeEndDate, description]);
+      const result = await pool.query('INSERT INTO training_courses (course_name, category, instructor, duration_hours, mode, max_participants, start_date, end_date, description) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *', [course_name, category, instructor, duration_hours||0, mode||'Online', max_participants||30, safeStartDate, safeEndDate, description]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -26,7 +26,7 @@ export const trainingController = {
   enroll: async (req: Request, res: Response) => {
     try {
       const { course_id, employee_name, department } = req.body;
-      const result = await pool.query('INSERT INTO training_enrollments (course_id, employee_name, department) VALUES (,,) RETURNING *', [course_id, employee_name, department]);
+      const result = await pool.query('INSERT INTO training_enrollments (course_id, employee_name, department) VALUES ($1,$2,$3) RETURNING *', [course_id, employee_name, department]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -47,3 +47,4 @@ export const trainingController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+

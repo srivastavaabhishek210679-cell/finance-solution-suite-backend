@@ -14,7 +14,7 @@ export const attendanceController = {
       const { employee_name, department, date, check_in, check_out, working_hours, status, overtime_hours, notes } = req.body;
       const safeCheckIn = check_in || null;
       const safeCheckOut = check_out || null;
-      const result = await pool.query('INSERT INTO attendance_records (employee_name, department, date, check_in, check_out, working_hours, status, overtime_hours, notes) VALUES (,,,,,,,,) RETURNING *', [employee_name, department, date, safeCheckIn, safeCheckOut, working_hours||0, status||'Present', overtime_hours||0, notes]);
+      const result = await pool.query('INSERT INTO attendance_records (employee_name, department, date, check_in, check_out, working_hours, status, overtime_hours, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *', [employee_name, department, date, safeCheckIn, safeCheckOut, working_hours||0, status||'Present', overtime_hours||0, notes]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -38,3 +38,4 @@ export const attendanceController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+

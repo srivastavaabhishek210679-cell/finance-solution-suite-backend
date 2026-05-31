@@ -12,7 +12,7 @@ export const helpdeskController = {
     try {
       const { title, description, category, priority, raised_by, department } = req.body;
       const ticketNumber = 'TKT-' + Date.now().toString().slice(-6);
-      const result = await pool.query('INSERT INTO helpdesk_tickets (ticket_number, title, description, category, priority, raised_by, department) VALUES (,,,,,,) RETURNING *', [ticketNumber, title, description, category, priority||'Medium', raised_by, department]);
+      const result = await pool.query('INSERT INTO helpdesk_tickets (ticket_number, title, description, category, priority, raised_by, department) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *', [ticketNumber, title, description, category, priority||'Medium', raised_by, department]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

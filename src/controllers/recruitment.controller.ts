@@ -12,7 +12,7 @@ export const recruitmentController = {
     try {
       const { job_title, department, location, job_type, experience, salary_range, status, openings, closing_date, description } = req.body;
       const safeClosingDate = closing_date || null;
-      const result = await pool.query('INSERT INTO job_postings (job_title, department, location, job_type, experience, salary_range, status, openings, closing_date, description) VALUES (,,,,,,,,,) RETURNING *', [job_title, department, location, job_type||'Full-Time', experience, salary_range, status||'Open', openings||1, safeClosingDate, description]);
+      const result = await pool.query('INSERT INTO job_postings (job_title, department, location, job_type, experience, salary_range, status, openings, closing_date, description) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *', [job_title, department, location, job_type||'Full-Time', experience, salary_range, status||'Open', openings||1, safeClosingDate, description]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -32,7 +32,7 @@ export const recruitmentController = {
   createApplication: async (req: Request, res: Response) => {
     try {
       const { job_id, candidate_name, email, phone, experience_years, current_company, notes } = req.body;
-      const result = await pool.query('INSERT INTO job_applications (job_id, candidate_name, email, phone, experience_years, current_company, notes) VALUES (,,,,,,) RETURNING *', [job_id, candidate_name, email, phone, experience_years||0, current_company, notes]);
+      const result = await pool.query('INSERT INTO job_applications (job_id, candidate_name, email, phone, experience_years, current_company, notes) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *', [job_id, candidate_name, email, phone, experience_years||0, current_company, notes]);
       await pool.query('UPDATE job_postings SET applications=applications+1 WHERE job_id=', [job_id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
@@ -55,4 +55,5 @@ export const recruitmentController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+
 

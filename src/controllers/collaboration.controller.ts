@@ -57,3 +57,4 @@ export const collaborationController = {
     res.json({ status: 'success', message: 'Room deleted' });
   }
 };
+

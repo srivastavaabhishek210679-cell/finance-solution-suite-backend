@@ -12,7 +12,7 @@ export const complianceController = {
     try {
       const { title, category, department, description, due_date, owner, priority, regulatory_body, penalty } = req.body;
       const safeDueDate = due_date || null;
-      const result = await pool.query('INSERT INTO compliance_items (title, category, department, description, due_date, owner, priority, regulatory_body, penalty) VALUES (,,,,,,,,) RETURNING *', [title, category, department, description, safeDueDate, owner, priority||'Medium', regulatory_body, penalty]);
+      const result = await pool.query('INSERT INTO compliance_items (title, category, department, description, due_date, owner, priority, regulatory_body, penalty) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *', [title, category, department, description, safeDueDate, owner, priority||'Medium', regulatory_body, penalty]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -35,4 +35,5 @@ export const complianceController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+
 

@@ -11,7 +11,7 @@ export const vendorController = {
   create: async (req: Request, res: Response) => {
     try {
       const { vendor_name, vendor_code, category, contact_person, email, phone, address, payment_terms } = req.body;
-      const result = await pool.query('INSERT INTO vendors (vendor_name, vendor_code, category, contact_person, email, phone, address, payment_terms) VALUES (,,,,,,,) RETURNING *', [vendor_name, vendor_code, category, contact_person, email, phone, address, payment_terms]);
+      const result = await pool.query('INSERT INTO vendors (vendor_name, vendor_code, category, contact_person, email, phone, address, payment_terms) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *', [vendor_name, vendor_code, category, contact_person, email, phone, address, payment_terms]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
