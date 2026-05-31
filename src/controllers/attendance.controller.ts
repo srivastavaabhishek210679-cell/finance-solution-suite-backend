@@ -12,13 +12,17 @@ export const attendanceController = {
   create: async (req: Request, res: Response) => {
     try {
       const { employee_name, department, date, check_in, check_out, working_hours, status, overtime_hours, notes } = req.body;
-      const result = await pool.query('INSERT INTO attendance_records (employee_name, department, date, check_in, check_out, working_hours, status, overtime_hours, notes) VALUES (,,,,,,,,) RETURNING *', [employee_name, department, date, check_in, check_out, working_hours||0, status||'Present', overtime_hours||0, notes]);
+      const safeCheckIn = check_in || null;
+      const safeCheckOut = check_out || null;
+      const result = await pool.query('INSERT INTO attendance_records (employee_name, department, date, check_in, check_out, working_hours, status, overtime_hours, notes) VALUES (,,,,,,,,) RETURNING *', [employee_name, department, date, safeCheckIn, safeCheckOut, working_hours||0, status||'Present', overtime_hours||0, notes]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   update: async (req: Request, res: Response) => {
     try {
       const { check_in, check_out, working_hours, status, overtime_hours } = req.body;
+      const safeCheckIn = check_in || null;
+      const safeCheckOut = check_out || null;
       const result = await pool.query('UPDATE attendance_records SET check_in=, check_out=, working_hours=, status=, overtime_hours= WHERE attendance_id= RETURNING *', [check_in, check_out, working_hours, status, overtime_hours||0, req.params.id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }

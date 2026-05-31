@@ -11,7 +11,9 @@ export const invoiceController = {
   create: async (req: Request, res: Response) => {
     try {
       const { invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount, total_amount, issue_date, due_date, notes } = req.body;
-      const result = await pool.query('INSERT INTO invoices (invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount, total_amount, issue_date, due_date, notes) VALUES (,,,,,,,,,,) RETURNING *', [invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount||0, total_amount, issue_date, due_date, notes]);
+      const safeIssueDate = issue_date || null;
+      const safeDueDate = due_date || null;
+      const result = await pool.query('INSERT INTO invoices (invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount, total_amount, issue_date, due_date, notes) VALUES (,,,,,,,,,,) RETURNING *', [invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount||0, total_amount, safeIssueDate, safeDueDate, notes]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

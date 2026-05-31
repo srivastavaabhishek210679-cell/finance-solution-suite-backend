@@ -11,14 +11,16 @@ export const complianceController = {
   create: async (req: Request, res: Response) => {
     try {
       const { title, category, department, description, due_date, owner, priority, regulatory_body, penalty } = req.body;
-      const result = await pool.query('INSERT INTO compliance_items (title, category, department, description, due_date, owner, priority, regulatory_body, penalty) VALUES (,,,,,,,,) RETURNING *', [title, category, department, description, due_date, owner, priority||'Medium', regulatory_body, penalty]);
+      const safeDueDate = due_date || null;
+      const result = await pool.query('INSERT INTO compliance_items (title, category, department, description, due_date, owner, priority, regulatory_body, penalty) VALUES (,,,,,,,,) RETURNING *', [title, category, department, description, safeDueDate, owner, priority||'Medium', regulatory_body, penalty]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   update: async (req: Request, res: Response) => {
     try {
       const { title, status, due_date, owner, priority, description } = req.body;
-      const result = await pool.query('UPDATE compliance_items SET title=, status=, due_date=, owner=, priority=, description= WHERE compliance_id= RETURNING *', [title, status, due_date, owner, priority, description, req.params.id]);
+      const safeDueDate = due_date || null;
+      const result = await pool.query('UPDATE compliance_items SET title=, status=, due_date=, owner=, priority=, description= WHERE compliance_id= RETURNING *', [title, status, safeDueDate, owner, priority, description, req.params.id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -33,3 +35,4 @@ export const complianceController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+

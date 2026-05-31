@@ -11,14 +11,16 @@ export const salesController = {
   create: async (req: Request, res: Response) => {
     try {
       const { deal_name, company_name, contact_name, deal_value, stage, probability, expected_close, assigned_to, source, notes } = req.body;
-      const result = await pool.query('INSERT INTO sales_deals (deal_name, company_name, contact_name, deal_value, stage, probability, expected_close, assigned_to, source, notes) VALUES (,,,,,,,,,) RETURNING *', [deal_name, company_name, contact_name, deal_value||0, stage||'Prospecting', probability||0, expected_close, assigned_to, source, notes]);
+      const safeClose = expected_close || null;
+      const result = await pool.query('INSERT INTO sales_deals (deal_name, company_name, contact_name, deal_value, stage, probability, expected_close, assigned_to, source, notes) VALUES (,,,,,,,,,) RETURNING *', [deal_name, company_name, contact_name, deal_value||0, stage||'Prospecting', probability||0, safeClose, assigned_to, source, notes]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   update: async (req: Request, res: Response) => {
     try {
       const { deal_name, deal_value, stage, probability, expected_close, assigned_to, notes } = req.body;
-      const result = await pool.query('UPDATE sales_deals SET deal_name=, deal_value=, stage=, probability=, expected_close=, assigned_to=, notes=, updated_at=NOW() WHERE deal_id= RETURNING *', [deal_name, deal_value, stage, probability, expected_close, assigned_to, notes, req.params.id]);
+      const safeClose = expected_close || null;
+      const result = await pool.query('UPDATE sales_deals SET deal_name=, deal_value=, stage=, probability=, expected_close=, assigned_to=, notes=, updated_at=NOW() WHERE deal_id= RETURNING *', [deal_name, deal_value, stage, probability, safeClose, assigned_to, notes, req.params.id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -32,3 +34,4 @@ export const salesController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+

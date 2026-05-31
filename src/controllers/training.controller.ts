@@ -11,7 +11,9 @@ export const trainingController = {
   createCourse: async (req: Request, res: Response) => {
     try {
       const { course_name, category, instructor, duration_hours, mode, max_participants, start_date, end_date, description } = req.body;
-      const result = await pool.query('INSERT INTO training_courses (course_name, category, instructor, duration_hours, mode, max_participants, start_date, end_date, description) VALUES (,,,,,,,,) RETURNING *', [course_name, category, instructor, duration_hours||0, mode||'Online', max_participants||30, start_date, end_date, description]);
+      const safeStartDate = start_date || null;
+      const safeEndDate = end_date || null;
+      const result = await pool.query('INSERT INTO training_courses (course_name, category, instructor, duration_hours, mode, max_participants, start_date, end_date, description) VALUES (,,,,,,,,) RETURNING *', [course_name, category, instructor, duration_hours||0, mode||'Online', max_participants||30, safeStartDate, safeEndDate, description]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

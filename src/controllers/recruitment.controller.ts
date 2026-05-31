@@ -11,7 +11,8 @@ export const recruitmentController = {
   createJob: async (req: Request, res: Response) => {
     try {
       const { job_title, department, location, job_type, experience, salary_range, status, openings, closing_date, description } = req.body;
-      const result = await pool.query('INSERT INTO job_postings (job_title, department, location, job_type, experience, salary_range, status, openings, closing_date, description) VALUES (,,,,,,,,,) RETURNING *', [job_title, department, location, job_type||'Full-Time', experience, salary_range, status||'Open', openings||1, closing_date, description]);
+      const safeClosingDate = closing_date || null;
+      const result = await pool.query('INSERT INTO job_postings (job_title, department, location, job_type, experience, salary_range, status, openings, closing_date, description) VALUES (,,,,,,,,,) RETURNING *', [job_title, department, location, job_type||'Full-Time', experience, salary_range, status||'Open', openings||1, safeClosingDate, description]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -39,7 +40,8 @@ export const recruitmentController = {
   updateApplicationStatus: async (req: Request, res: Response) => {
     try {
       const { status, interview_date, notes } = req.body;
-      const result = await pool.query('UPDATE job_applications SET status=, interview_date=, notes= WHERE application_id= RETURNING *', [status, interview_date, notes, req.params.id]);
+      const safeInterviewDate = interview_date || null;
+      const result = await pool.query('UPDATE job_applications SET status=, interview_date=, notes= WHERE application_id= RETURNING *', [status, safeInterviewDate, notes, req.params.id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -53,3 +55,4 @@ export const recruitmentController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+
