@@ -179,7 +179,8 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/sales-pipeline', require('./routes/sales-pipeline.routes').default);
   apiRouter.use('/helpdesk', require('./routes/helpdesk.routes').default);
   apiRouter.use('/compliance', require('./routes/compliance.routes').default);
-// ============================================================
+  apiRouter.use('/compliance', require('./routes/compliance.routes').default);
+  apiRouter.use('/mfa', require('./routes/mfa.routes').default);
 apiRouter.use('/tenant-subscriptions', require('./routes/tenantSubscriptions.routes').default);
 apiRouter.use('/tenant-invitations', require('./routes/tenantInvitations.routes').default);
 apiRouter.use('/subscription-plans', require('./routes/subscriptionPlans.routes').default);
