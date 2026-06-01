@@ -1,0 +1,14 @@
+import { Router } from 'express';
+import { workspaceController } from '../controllers/workspace.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', workspaceController.getWorkspace);
+router.post('/save', workspaceController.saveWorkspace);
+router.get('/modules', workspaceController.getModules);
+router.get('/reports', workspaceController.getFilteredReports);
+router.get('/reports-by-domains', workspaceController.getReportsByDomains);
+router.post('/report-history', workspaceController.saveReportHistory);
+router.get('/report-history', workspaceController.getReportHistory);
+router.get('/domains', workspaceController.getDomains);
+export default router;
