@@ -90,4 +90,31 @@ export const workspaceController = {
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
+,
+
+  // Save full report with data
+  saveFullReport: async (req: Request, res: Response) => {
+    try {
+      const userId = (req as any).user?.userId;
+      const { report_name, domain_name, domain_id, template_id, total_records, file_name, report_data, notes } = req.body;
+      const result = await pool.query(
+        'INSERT INTO user_report_history (user_id, report_name, domain_name, domain_id, template_id, total_records, file_name, report_data, notes) VALUES (' + String.fromCharCode(36) + '1,' + String.fromCharCode(36) + '2,' + String.fromCharCode(36) + '3,' + String.fromCharCode(36) + '4,' + String.fromCharCode(36) + '5,' + String.fromCharCode(36) + '6,' + String.fromCharCode(36) + '7,' + String.fromCharCode(36) + '8,' + String.fromCharCode(36) + '9) RETURNING *',
+        [userId, report_name, domain_name, domain_id||null, template_id, total_records||0, file_name, JSON.stringify(report_data||{}), notes]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  // Get single report with full data
+  getReportById: async (req: Request, res: Response) => {
+    try {
+      const userId = (req as any).user?.userId;
+      const result = await pool.query(
+        'SELECT * FROM user_report_history WHERE history_id=' + String.fromCharCode(36) + '1 AND user_id=' + String.fromCharCode(36) + '2',
+        [req.params.id, userId]
+      );
+      if (!result.rows.length) return res.status(404).json({ status: 'error', message: 'Report not found' });
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  }
 };

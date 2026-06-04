@@ -10,5 +10,7 @@ router.get('/reports', workspaceController.getFilteredReports);
 router.get('/reports-by-domains', workspaceController.getReportsByDomains);
 router.post('/report-history', workspaceController.saveReportHistory);
 router.get('/report-history', workspaceController.getReportHistory);
+router.post('/save-report', workspaceController.saveFullReport);
+router.get('/report/:id', workspaceController.getReportById);
 router.get('/domains', workspaceController.getDomains);
 export default router;
