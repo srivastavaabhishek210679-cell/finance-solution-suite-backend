@@ -190,7 +190,7 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/compliance', require('./routes/compliance.routes').default);
   apiRouter.use('/compliance', require('./routes/compliance.routes').default);
   apiRouter.use('/mfa', require('./routes/mfa.routes').default);
-  apiRouter.use('/mfa', require('./routes/mfa.routes').default);
+  apiRouter.use('/email-verify', require('./routes/emailVerify.routes').default);
   apiRouter.use('/workspace', require('./routes/workspace.routes').default);
 apiRouter.use('/tenant-invitations', require('./routes/tenantInvitations.routes').default);
 apiRouter.use('/subscription-plans', require('./routes/subscriptionPlans.routes').default);
