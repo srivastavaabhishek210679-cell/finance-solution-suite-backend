@@ -73,7 +73,16 @@ app.use(
 
 // Body parsing
 app.use(express.json({ limit: '10mb' }));
-app.use(express.json({ limit: '10mb' }));
+
+// Rate limiting
+import rateLimit from 'express-rate-limit';
+const generalLimiter = rateLimit({ windowMs: 15*60*1000, max: 200, message: { status: 'error', message: 'Too many requests, please try again later.' } });
+const authLimiter = rateLimit({ windowMs: 15*60*1000, max: 20, message: { status: 'error', message: 'Too many login attempts, please try again in 15 minutes.' } });
+const otpLimiter = rateLimit({ windowMs: 60*1000, max: 3, message: { status: 'error', message: 'Too many OTP requests, please wait 1 minute.' } });
+app.use('/api/v1/auth/login', authLimiter);
+app.use('/api/v1/auth/register', authLimiter);
+app.use('/api/v1/mfa/send-otp', otpLimiter);
+app.use('/api/', generalLimiter);
 app.use((req: any, res: any, next: any) => {
   if (req.body && typeof req.body === 'object') {
     const sanitize = (obj: any): any => {
