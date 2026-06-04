@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { gdprController } from '../controllers/gdpr.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/my-data', gdprController.getUserData);
+router.get('/export', gdprController.exportUserData);
+router.post('/delete-request', gdprController.requestDeletion);
+router.post('/consent', gdprController.updateConsent);
+router.get('/consents', gdprController.getConsents);
+router.get('/requests', gdprController.getRequests);
+router.post('/cookie-consent', gdprController.saveCookieConsent);
+export default router;
