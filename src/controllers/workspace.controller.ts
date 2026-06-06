@@ -58,7 +58,12 @@ export const workspaceController = {
       const params: any[] = [domainIds];
       if (modulePaths.length > 0) {
         params.push(modulePaths);
+        const hasUploadData = modulePaths.includes('/upload-data');
+      if (hasUploadData) {
+        query += ' AND (r.module_path=ANY(' + String.fromCharCode(36) + '2) OR r.module_path IS NULL)';
+      } else {
         query += ' AND r.module_path=ANY(' + String.fromCharCode(36) + '2)';
+      };
       }
       query += ' ORDER BY d.domain_name, r.name';
       const result = await pool.query(query, params);
@@ -126,5 +131,6 @@ export const workspaceController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+
 
 
