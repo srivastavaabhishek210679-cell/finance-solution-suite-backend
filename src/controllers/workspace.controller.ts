@@ -52,8 +52,16 @@ export const workspaceController = {
   getReportsByDomains: async (req: Request, res: Response) => {
     try {
       const domainIds = req.query.domains ? String(req.query.domains).split(',').map(Number) : [];
+      const modulePaths = req.query.modules ? String(req.query.modules).split(',') : [];
       if (!domainIds.length) return res.json({ status: 'success', data: [] });
-      const result = await pool.query('SELECT r.report_id, r.name, r.description, r.frequency, r.report_category, d.domain_name, d.domain_id FROM reports_master r JOIN domains d ON r.domain_id=d.domain_id WHERE r.domain_id=ANY(' + String.fromCharCode(36) + '1) AND r.is_active=true ORDER BY d.domain_name, r.name', [domainIds]);
+      let query = 'SELECT r.report_id, r.name, r.description, r.frequency, r.report_category, d.domain_name, d.domain_id, r.module_path FROM reports_master r JOIN domains d ON r.domain_id=d.domain_id WHERE r.domain_id=ANY(' + String.fromCharCode(36) + '1) AND r.is_active=true';
+      const params: any[] = [domainIds];
+      if (modulePaths.length > 0) {
+        params.push(modulePaths);
+        query += ' AND (r.module_path=ANY(' + String.fromCharCode(36) + '2) OR r.module_path IS NULL)';
+      }
+      query += ' ORDER BY d.domain_name, r.name';
+      const result = await pool.query(query, params);
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -118,3 +126,4 @@ export const workspaceController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
+
