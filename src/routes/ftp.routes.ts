@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import { ftpController } from '../controllers/ftp.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', ftpController.getConfigs);
+router.post('/', ftpController.createConfig);
+router.put('/:id', ftpController.updateConfig);
+router.delete('/:id', ftpController.deleteConfig);
+router.get('/processed-files', ftpController.getProcessedFiles);
+router.post('/trigger', ftpController.triggerManual);
+export default router;

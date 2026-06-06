@@ -194,6 +194,7 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/email-verify', require('./routes/emailVerify.routes').default);
   apiRouter.use('/gdpr', require('./routes/gdpr.routes').default);
   apiRouter.use('/gdpr', require('./routes/gdpr.routes').default);
+  apiRouter.use('/ftp', require('./routes/ftp.routes').default);
   apiRouter.use('/workspace', require('./routes/workspace.routes').default);
 apiRouter.use('/subscription-plans', require('./routes/subscriptionPlans.routes').default);
 apiRouter.use('/plan-features', require('./routes/planFeatures.routes').default);
@@ -509,6 +510,8 @@ process.on('SIGINT', () => {
 
 // Start the server
 startServer();
+// Start FTP Watcher
+import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e => console.error('[FTPWatcher] Failed to start:', e));
 
 export default app;
 
