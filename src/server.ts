@@ -133,7 +133,8 @@ const apiRouter = express.Router();
 // ============================================================
 apiRouter.use('/auth', authLimiter);
   apiRouter.use('/auth', authRoutes);
-// TEST: Add right after auth (which we know works)
+  apiRouter.use('/auth', authRoutes);
+  apiRouter.use('/workspace', require('./routes/workspace.routes').default);
 apiRouter.get('/test-after-auth', (req, res) => {
   res.json({ message: 'Test route after auth works!' });
 });
@@ -195,7 +196,6 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/gdpr', require('./routes/gdpr.routes').default);
   apiRouter.use('/gdpr', require('./routes/gdpr.routes').default);
   apiRouter.use('/ftp', require('./routes/ftp.routes').default);
-  apiRouter.use('/workspace', require('./routes/workspace.routes').default);
   apiRouter.use('/orders', require('./routes/order.routes').default);
   apiRouter.use('/supply', require('./routes/supply.routes').default);
   apiRouter.use('/orders', require('./routes/order.routes').default);
