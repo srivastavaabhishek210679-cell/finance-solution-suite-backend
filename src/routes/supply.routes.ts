@@ -1,0 +1,15 @@
+import { Router } from 'express';
+import { supplyController } from '../controllers/supply.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/suppliers', supplyController.getSuppliers);
+router.get('/suppliers/stats', supplyController.getSupplierStats);
+router.post('/suppliers', supplyController.createSupplier);
+router.put('/suppliers/:id', supplyController.updateSupplier);
+router.delete('/suppliers/:id', supplyController.deleteSupplier);
+router.get('/purchase-orders', supplyController.getPOs);
+router.get('/purchase-orders/stats', supplyController.getPOStats);
+router.post('/purchase-orders', supplyController.createPO);
+router.put('/purchase-orders/:id/status', supplyController.updatePOStatus);
+export default router;
