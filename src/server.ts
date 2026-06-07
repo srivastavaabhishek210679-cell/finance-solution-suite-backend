@@ -105,7 +105,6 @@ app.use((req: any, res: any, next: any) => {
 // Compression
 app.use(compression());
 app.use(globalLimiter);
-app.use(sanitizeInput);
 
 // Logging
 app.use(morgan('combined'));
