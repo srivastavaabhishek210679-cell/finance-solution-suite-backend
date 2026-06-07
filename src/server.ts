@@ -27,7 +27,6 @@ import chatbotRoutes from './routes/chatbot.routes';
 import billingRoutes from './routes/billing.routes';
 import setupRoutes from './routes/setup.routes';
 import { globalLimiter, authLimiter, exportLimiter } from './middleware/rateLimiter';
-import { globalLimiter, authLimiter, exportLimiter } from './middleware/rateLimiter';
 import { tenantMiddleware } from './middleware/tenant.middleware';
 
 dotenv.config();
