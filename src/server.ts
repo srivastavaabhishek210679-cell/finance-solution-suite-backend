@@ -27,7 +27,8 @@ import chatbotRoutes from './routes/chatbot.routes';
 import billingRoutes from './routes/billing.routes';
 import setupRoutes from './routes/setup.routes';
 import { globalLimiter, authLimiter, exportLimiter } from './middleware/rateLimiter';
-import { sanitizeInput } from './middleware/sanitize';
+import { globalLimiter, authLimiter, exportLimiter } from './middleware/rateLimiter';
+import { tenantMiddleware } from './middleware/tenant.middleware';
 
 dotenv.config();
 initSentry(); // must be before any other code
@@ -83,7 +84,8 @@ app.use('/api/v1/auth/login', authLimiter);
 app.use('/api/v1/auth/register', authLimiter);
 app.use('/api/v1/mfa/send-otp', otpLimiter);
 app.use('/api/', generalLimiter);
-app.use((req: any, res: any, next: any) => {
+app.use('/api/', generalLimiter);
+app.use('/api/v1', tenantMiddleware);
   if (req.body && typeof req.body === 'object') {
     const sanitize = (obj: any): any => {
       Object.keys(obj).forEach(key => {
@@ -516,7 +518,9 @@ process.on('SIGINT', () => {
 startServer();
 // Start FTP Watcher
 import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e => console.error('[FTPWatcher] Failed to start:', e));
-
+import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e => console.error('[FTPWatcher] Failed to start:', e));
+// Start DB Backup Service
+import('./services/dbBackup.service').then(m => m.startDBBackup()).catch(e => console.error('[DBBackup] Failed to start:', e));
 export default app;
 
 
