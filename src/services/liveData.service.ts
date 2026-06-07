@@ -49,7 +49,7 @@ export const runDataRefresh = async () => {
     await saveKPI('supply', 'Active Suppliers', parseFloat(suppRes.rows[0].active));
 
     // HR
-    const hrRes = await pool.query('SELECT COUNT(*) as total, COUNT(CASE WHEN is_active=true THEN 1 END) as active FROM users');
+    const hrRes = await pool.query('SELECT COUNT(*) as total, COUNT(CASE WHEN status='active' THEN 1 END) as active FROM users');
     await saveKPI('hr', 'Total Users', parseFloat(hrRes.rows[0].total));
     await saveKPI('hr', 'Active Users', parseFloat(hrRes.rows[0].active));
 
