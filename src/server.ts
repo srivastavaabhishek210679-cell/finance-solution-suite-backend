@@ -198,6 +198,7 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/gdpr', require('./routes/gdpr.routes').default);
   apiRouter.use('/ftp', require('./routes/ftp.routes').default);
   apiRouter.use('/orders', require('./routes/order.routes').default);
+  apiRouter.use('/live-data', require('./routes/liveData.routes').default);
   apiRouter.use('/supply', require('./routes/supply.routes').default);
   apiRouter.use('/orders', require('./routes/order.routes').default);
   apiRouter.use('/supply', require('./routes/supply.routes').default);
@@ -521,6 +522,15 @@ import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e =
 // Start DB Backup Service
 import('./services/dbBackup.service').then(m => m.startDBBackup()).catch(e => console.error('[DBBackup] Failed to start:', e));
 export default app;
+
+// Start Live Data Service
+import('./services/liveData.service').then(m => m.startLiveDataService()).catch(e => console.error('[LiveData] Failed:', e));
+
+// Start DB Backup Service  
+import('./services/dbBackup.service').then(m => m.startDBBackup()).catch(e => console.error('[DBBackup] Failed:', e));
+
+// Start FTP Watcher
+import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e => console.error('[FTPWatcher] Failed:', e));
 
 
 

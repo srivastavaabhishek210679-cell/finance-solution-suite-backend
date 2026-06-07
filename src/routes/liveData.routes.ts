@@ -1,0 +1,14 @@
+import { Router } from 'express';
+import { liveDataController } from '../controllers/liveData.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/kpis', liveDataController.getKPIs);
+router.get('/charts', liveDataController.getCharts);
+router.get('/sources', liveDataController.getSources);
+router.post('/sources', liveDataController.createSource);
+router.put('/sources/:id/toggle', liveDataController.toggleSource);
+router.post('/refresh', liveDataController.triggerRefresh);
+router.get('/refresh-log', liveDataController.getRefreshLog);
+router.get('/snapshots', liveDataController.getSnapshots);
+export default router;
