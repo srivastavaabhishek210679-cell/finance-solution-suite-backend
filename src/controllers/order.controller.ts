@@ -9,16 +9,12 @@ export const orderController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   getStats: async (req: Request, res: Response) => {
-  getStats: async (req: Request, res: Response) => {
     try {
       const q = 'SELECT COUNT(*) as total_orders, SUM(total_amount) as total_revenue, COUNT(CASE WHEN status=' + String.fromCharCode(39) + 'Pending' + String.fromCharCode(39) + ' THEN 1 END) as pending, COUNT(CASE WHEN status=' + String.fromCharCode(39) + 'Processing' + String.fromCharCode(39) + ' THEN 1 END) as processing, COUNT(CASE WHEN status=' + String.fromCharCode(39) + 'Delivered' + String.fromCharCode(39) + ' THEN 1 END) as delivered, COUNT(CASE WHEN status=' + String.fromCharCode(39) + 'Cancelled' + String.fromCharCode(39) + ' THEN 1 END) as cancelled FROM orders';
       const result = await pool.query(q);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
-        COUNT(CASE WHEN status='Cancelled' THEN 1 END) as cancelled,
-        COUNT(CASE WHEN payment_status='Unpaid' THEN 1 END) as unpaid
-        FROM orders);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
