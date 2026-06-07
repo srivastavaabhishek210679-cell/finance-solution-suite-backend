@@ -85,6 +85,7 @@ app.use('/api/v1/mfa/send-otp', otpLimiter);
 app.use('/api/', generalLimiter);
 app.use('/api/', generalLimiter);
 app.use('/api/v1', tenantMiddleware);
+app.use((req: any, res: any, next: any) => {
   if (req.body && typeof req.body === 'object') {
     const sanitize = (obj: any): any => {
       Object.keys(obj).forEach(key => {
