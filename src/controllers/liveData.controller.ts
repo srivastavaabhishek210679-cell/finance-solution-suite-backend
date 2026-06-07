@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import pool from '../config/database';
-import { runDataRefresh } from '../services/liveData.service';
+
 
 export const liveDataController = {
   getKPIs: async (req: Request, res: Response) => {
@@ -56,7 +56,7 @@ export const liveDataController = {
   },
   triggerRefresh: async (req: Request, res: Response) => {
     try {
-      runDataRefresh().catch(console.error);
+      const { runDataRefresh } = await import('../services/liveData.service'); runDataRefresh().catch(console.error);
       res.json({ status: 'success', message: 'Data refresh triggered' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
