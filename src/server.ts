@@ -517,10 +517,7 @@ process.on('SIGINT', () => {
 // Start the server
 startServer();
 // Start FTP Watcher
-import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e => console.error('[FTPWatcher] Failed to start:', e));
-import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e => console.error('[FTPWatcher] Failed to start:', e));
 // Start DB Backup Service
-import('./services/dbBackup.service').then(m => m.startDBBackup()).catch(e => console.error('[DBBackup] Failed to start:', e));
 export default app;
 
 // Start background services after 30s delay to let DB stabilize
