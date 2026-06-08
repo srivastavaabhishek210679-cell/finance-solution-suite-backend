@@ -61,7 +61,8 @@ export const runDataRefresh = async () => {
     ];
     await saveChart('finance', 'Order Status Distribution', 'pie', pieData, pieData.map((p: any) => p.name));
 
-    // HR charts
+    // HR charts - wrapped in try-catch for debugging
+    try {
     const hrTrendRes = await pool.query('SELECT DATE_TRUNC(' + s + 'month' + s + ', created_at) as month, COUNT(*) as cnt FROM users WHERE created_at >= NOW() - INTERVAL ' + s + '6 months' + s + ' GROUP BY month ORDER BY month');
     const hrLabels = hrTrendRes.rows.length > 0 ? hrTrendRes.rows.map((r) => new Date(r.month).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })) : ['No Data'];
     const hrSeries = [{ name: 'New Users', data: hrTrendRes.rows.length > 0 ? hrTrendRes.rows.map((r) => parseInt(r.cnt)) : [0] }];
@@ -90,6 +91,7 @@ export const runDataRefresh = async () => {
     const payStatusRes = await pool.query('SELECT payment_status, COUNT(*) as cnt FROM orders GROUP BY payment_status');
     const payPieData = payStatusRes.rows.length > 0 ? payStatusRes.rows.map((r) => ({ name: r.payment_status, value: parseInt(r.cnt) })) : [{ name: 'No Data', value: 1 }];
     await saveChart('sales', 'Payment Status', 'pie', payPieData, payPieData.map((r) => r.name));
+    } catch (chartErr) { console.error('[LiveData] Chart generation error:', chartErr); }
     // Log
     await pool.query('INSERT INTO data_refresh_log (source_name, completed_at, status, records_processed) VALUES (' + s + 'Full Refresh' + s + ',NOW(),' + s + 'success' + s + ',20)').catch(() => {});
     console.log('[LiveData] Refresh done in ' + (Date.now() - startTime) + 'ms');

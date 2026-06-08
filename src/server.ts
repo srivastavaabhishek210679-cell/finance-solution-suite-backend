@@ -523,7 +523,7 @@ import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e =
 import('./services/dbBackup.service').then(m => m.startDBBackup()).catch(e => console.error('[DBBackup] Failed to start:', e));
 export default app;
 
-// Start Live Data Service
+// Start Live Data Service v2
 import('./services/liveData.service').then(m => m.startLiveDataService()).catch(e => console.error('[LiveData] Failed:', e));
 
 // Start DB Backup Service  
