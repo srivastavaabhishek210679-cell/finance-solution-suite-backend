@@ -523,14 +523,12 @@ import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e =
 import('./services/dbBackup.service').then(m => m.startDBBackup()).catch(e => console.error('[DBBackup] Failed to start:', e));
 export default app;
 
-// Start Live Data Service v2
-import('./services/liveData.service').then(m => m.startLiveDataService()).catch(e => console.error('[LiveData] Failed:', e));
-
-// Start DB Backup Service  
-import('./services/dbBackup.service').then(m => m.startDBBackup()).catch(e => console.error('[DBBackup] Failed:', e));
-
-// Start FTP Watcher
-import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e => console.error('[FTPWatcher] Failed:', e));
+// Start background services after 30s delay to let DB stabilize
+setTimeout(() => {
+  import('./services/liveData.service').then(m => m.startLiveDataService()).catch(e => console.error('[LiveData] Failed:', e));
+  import('./services/dbBackup.service').then(m => m.startDBBackup()).catch(e => console.error('[DBBackup] Failed:', e));
+  import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e => console.error('[FTPWatcher] Failed:', e));
+}, 30000);
 
 
 
