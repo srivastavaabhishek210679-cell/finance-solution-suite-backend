@@ -61,6 +61,45 @@ export const runDataRefresh = async () => {
     ];
     await saveChart('finance', 'Order Status Distribution', 'pie', pieData, pieData.map((p: any) => p.name));
 
+    // HR charts
+    const hrTrendRes = await pool.query('SELECT DATE_TRUNC(' + s + 'month' + s + ', created_at) as month, COUNT(*) as cnt FROM users WHERE created_at >= NOW() - INTERVAL ' + s + '6 months' + s + ' GROUP BY month ORDER BY month');
+    if (hrTrendRes.rows.length > 0) {
+      const hrLabels = hrTrendRes.rows.map((r) => new Date(r.month).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }));
+      const hrSeries = [{ name: 'New Users', data: hrTrendRes.rows.map((r) => parseInt(r.cnt)) }];
+      await saveChart('hr', 'User Growth Trend', 'line', hrSeries, hrLabels);
+    }
+
+    // Supply charts
+    const poTrendRes = await pool.query('SELECT DATE_TRUNC(' + s + 'month' + s + ', order_date) as month, COUNT(*) as cnt, COALESCE(SUM(total_amount),0) as spend FROM purchase_orders WHERE order_date >= NOW() - INTERVAL ' + s + '6 months' + s + ' GROUP BY month ORDER BY month');
+    if (poTrendRes.rows.length > 0) {
+      const poLabels = poTrendRes.rows.map((r) => new Date(r.month).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }));
+      const poSeries = [
+        { name: 'PO Count', data: poTrendRes.rows.map((r) => parseInt(r.cnt)) },
+        { name: 'Spend', data: poTrendRes.rows.map((r) => parseFloat(r.spend)) }
+      ];
+      await saveChart('supply', 'Purchase Order Trends', 'line', poSeries, poLabels);
+    }
+
+    // Supplier category breakdown
+    const suppCatRes = await pool.query('SELECT category, COUNT(*) as cnt FROM suppliers WHERE category IS NOT NULL GROUP BY category ORDER BY cnt DESC');
+    if (suppCatRes.rows.length > 0) {
+      const suppPieData = suppCatRes.rows.map((r) => ({ name: r.category, value: parseInt(r.cnt) }));
+      await saveChart('supply', 'Supplier Categories', 'pie', suppPieData, suppPieData.map((r) => r.name));
+    }
+
+    // Sales order status chart
+    const salesStatusRes = await pool.query('SELECT status, COUNT(*) as cnt FROM orders GROUP BY status');
+    if (salesStatusRes.rows.length > 0) {
+      const salesPieData = salesStatusRes.rows.map((r) => ({ name: r.status, value: parseInt(r.cnt) }));
+      await saveChart('sales', 'Sales Order Status', 'pie', salesPieData, salesPieData.map((r) => r.name));
+    }
+
+    // Sales payment status
+    const payStatusRes = await pool.query('SELECT payment_status, COUNT(*) as cnt FROM orders GROUP BY payment_status');
+    if (payStatusRes.rows.length > 0) {
+      const payPieData = payStatusRes.rows.map((r) => ({ name: r.payment_status, value: parseInt(r.cnt) }));
+      await saveChart('sales', 'Payment Status', 'pie', payPieData, payPieData.map((r) => r.name));
+    }
     // Log
     await pool.query('INSERT INTO data_refresh_log (source_name, completed_at, status, records_processed) VALUES (' + s + 'Full Refresh' + s + ',NOW(),' + s + 'success' + s + ',20)').catch(() => {});
     console.log('[LiveData] Refresh done in ' + (Date.now() - startTime) + 'ms');
