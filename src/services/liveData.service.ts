@@ -94,7 +94,7 @@ export const runDataRefresh = async () => {
     } catch (chartErr) { console.error('[LiveData] Chart generation error:', chartErr); }
     // ── PAYROLL ─────────────────────────────────────────────────────────────
     try {
-      const prRes = await pool.query("SELECT COUNT(*) as total_runs, COALESCE(SUM(net_pay),0) as payout, COALESCE(SUM(gross_pay),0) as gross FROM payroll_runs");
+      const prRes = await pool.query("SELECT COUNT(*) as total_runs, COALESCE(SUM(total_net),0) as payout, COALESCE(SUM(total_gross),0) as gross FROM payroll_runs");
       await saveKPI("payroll", "Total Payroll Runs", parseFloat(prRes.rows[0].total_runs));
       await saveKPI("payroll", "Total Payout", parseFloat(prRes.rows[0].payout), "Rs." + Number(prRes.rows[0].payout).toLocaleString());
       await saveKPI("payroll", "Gross Pay", parseFloat(prRes.rows[0].gross), "Rs." + Number(prRes.rows[0].gross).toLocaleString());
@@ -122,12 +122,12 @@ export const runDataRefresh = async () => {
 
     // ── INVENTORY ────────────────────────────────────────────────────────────
     try {
-      const invRes = await pool.query("SELECT COUNT(*) as total, COALESCE(SUM(quantity_in_stock),0) as stock, COALESCE(SUM(quantity_in_stock*unit_cost),0) as value, COUNT(CASE WHEN quantity_in_stock<=reorder_level THEN 1 END) as low FROM inventory_items");
+      const invRes = await pool.query("SELECT COUNT(*) as total, COALESCE(SUM(current_stock),0) as stock, COALESCE(SUM(current_stock*unit_price),0) as value, COUNT(CASE WHEN current_stock<=minimum_stock THEN 1 END) as low FROM inventory_items");
       await saveKPI("inventory", "Total Items", parseFloat(invRes.rows[0].total));
       await saveKPI("inventory", "Total Stock", parseFloat(invRes.rows[0].stock));
       await saveKPI("inventory", "Stock Value", parseFloat(invRes.rows[0].value), "Rs."+Number(invRes.rows[0].value).toLocaleString());
       await saveKPI("inventory", "Low Stock", parseFloat(invRes.rows[0].low));
-      const invCat = await pool.query("SELECT COALESCE(category,'Other') as cat, COUNT(*) as cnt FROM inventory_items GROUP BY cat ORDER BY cnt DESC LIMIT 6");
+      const invCat = await pool.query("SELECT COALESCE(category,'Other') as cat, COUNT(*) as cnt FROM inventory_items GROUP BY category ORDER BY cnt DESC LIMIT 6");
       const invPie = invCat.rows.map(r=>({ name:r.cat, value:parseInt(r.cnt) }));
       if(invPie.length>0) await saveChart("inventory", "Stock by Category", "pie", invPie, invPie.map(r=>r.name));
     } catch(e) { console.error("[LiveData] Inventory error:", e); }
@@ -155,7 +155,7 @@ export const runDataRefresh = async () => {
 
     // ── BUDGET ───────────────────────────────────────────────────────────────
     try {
-      const budRes = await pool.query("SELECT COUNT(*) as total, COALESCE(SUM(total_amount),0) as budget, COALESCE(SUM(spent_amount),0) as spent FROM budgets");
+      const budRes = await pool.query("SELECT COUNT(*) as total, COALESCE(SUM(allocated_amount),0) as budget, COALESCE(SUM(spent_amount),0) as spent FROM budgets");
       await saveKPI("budget", "Total Budgets", parseFloat(budRes.rows[0].total));
       await saveKPI("budget", "Total Budget", parseFloat(budRes.rows[0].budget), "Rs."+Number(budRes.rows[0].budget).toLocaleString());
       await saveKPI("budget", "Total Spent", parseFloat(budRes.rows[0].spent), "Rs."+Number(budRes.rows[0].spent).toLocaleString());
@@ -194,7 +194,7 @@ export const runDataRefresh = async () => {
 
     // ── RISKS ────────────────────────────────────────────────────────────────
     try {
-      const riskRes = await pool.query("SELECT COUNT(*) as total, COUNT(CASE WHEN severity='High' THEN 1 END) as high, COUNT(CASE WHEN severity='Medium' THEN 1 END) as medium, COUNT(CASE WHEN severity='Low' THEN 1 END) as low FROM risks");
+      const riskRes = await pool.query("SELECT COUNT(*) as total, COUNT(CASE WHEN impact='High' THEN 1 END) as high, COUNT(CASE WHEN impact='Medium' THEN 1 END) as medium, COUNT(CASE WHEN impact='Low' THEN 1 END) as low FROM risks");
       await saveKPI("risk", "Total Risks", parseFloat(riskRes.rows[0].total));
       await saveKPI("risk", "High", parseFloat(riskRes.rows[0].high));
       await saveKPI("risk", "Medium", parseFloat(riskRes.rows[0].medium));
@@ -229,9 +229,9 @@ export const runDataRefresh = async () => {
 
     // ── TRAINING ─────────────────────────────────────────────────────────────
     try {
-      const trainRes = await pool.query("SELECT COUNT(*) as total, COUNT(DISTINCT employee_id) as employees FROM training_enrollments");
+      const trainRes = await pool.query("SELECT COUNT(*) as total, COUNT(DISTINCT department) as departments FROM training_enrollments");
       await saveKPI("training", "Total Enrollments", parseFloat(trainRes.rows[0].total));
-      await saveKPI("training", "Enrolled Employees", parseFloat(trainRes.rows[0].employees));
+      await saveKPI("training", "Departments Enrolled", parseFloat(trainRes.rows[0].departments));
     } catch(e) { console.error("[LiveData] Training error:", e); }
 
     // ── TRAVEL ───────────────────────────────────────────────────────────────
@@ -244,7 +244,7 @@ export const runDataRefresh = async () => {
 
     // ── CONTRACTS ────────────────────────────────────────────────────────────
     try {
-      const conRes = await pool.query("SELECT COUNT(*) as total, COALESCE(SUM(contract_value),0) as val, COUNT(CASE WHEN status='Active' THEN 1 END) as active FROM contracts");
+      const conRes = await pool.query("SELECT COUNT(*) as total, COALESCE(SUM(value),0) as val, COUNT(CASE WHEN status='Active' THEN 1 END) as active FROM contracts");
       await saveKPI("contract", "Total Contracts", parseFloat(conRes.rows[0].total));
       await saveKPI("contract", "Contract Value", parseFloat(conRes.rows[0].val), "Rs."+Number(conRes.rows[0].val).toLocaleString());
       await saveKPI("contract", "Active", parseFloat(conRes.rows[0].active));
