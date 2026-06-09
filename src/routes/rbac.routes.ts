@@ -1,0 +1,13 @@
+﻿import { Router } from 'express';
+import { rbacController } from '../controllers/rbac.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/roles', rbacController.getRoles);
+router.post('/roles', rbacController.createRole);
+router.put('/roles/:id', rbacController.updateRole);
+router.delete('/roles/:id', rbacController.deleteRole);
+router.get('/users', rbacController.getUserRoles);
+router.post('/assign', rbacController.assignRole);
+router.delete('/roles/:id/user', rbacController.removeRole);
+export default router;

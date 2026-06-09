@@ -1,0 +1,11 @@
+﻿import { Router } from 'express';
+import { poGenController } from '../controllers/poGen.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', poGenController.getAll);
+router.get('/:id', poGenController.getById);
+router.post('/', poGenController.create);
+router.put('/:id/status', poGenController.updateStatus);
+router.delete('/:id', poGenController.delete);
+export default router;

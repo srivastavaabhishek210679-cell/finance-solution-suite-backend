@@ -1,0 +1,12 @@
+﻿import { Router } from 'express';
+import { webhookController } from '../controllers/webhook.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', webhookController.getAll);
+router.get('/logs', webhookController.getLogs);
+router.post('/', webhookController.create);
+router.put('/:id/toggle', webhookController.toggle);
+router.post('/:id/test', webhookController.test);
+router.delete('/:id', webhookController.delete);
+export default router;

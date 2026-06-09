@@ -1,0 +1,12 @@
+﻿import { Router } from 'express';
+import { approvalController } from '../controllers/approval.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', approvalController.getAll);
+router.get('/stats', approvalController.getStats);
+router.get('/:id', approvalController.getById);
+router.post('/', approvalController.create);
+router.put('/:id/approve', approvalController.approve);
+router.put('/:id/reject', approvalController.reject);
+export default router;
