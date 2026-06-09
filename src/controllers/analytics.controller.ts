@@ -103,7 +103,9 @@ export const analyticsController = {
   createCampaign: async (req: Request, res: Response) => {
     try {
       const { campaign_name, campaign_type, target_segment, discount_percent, message, start_date, end_date } = req.body;
-      const result = await pool.query('INSERT INTO customer_campaigns (campaign_name, campaign_type, target_segment, discount_percent, message, start_date, end_date) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *'success', data: result.rows[0] });
+      const result = await pool.query('INSERT INTO customer_campaigns (campaign_name, campaign_type, target_segment, discount_percent, message, start_date, end_date) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
+        [campaign_name, campaign_type, target_segment, discount_percent, message, start_date, end_date]);
+      res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
