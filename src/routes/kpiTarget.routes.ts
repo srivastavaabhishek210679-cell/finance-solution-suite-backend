@@ -1,0 +1,11 @@
+﻿import { Router } from 'express';
+import { kpiTargetController } from '../controllers/kpiTarget.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', kpiTargetController.getAll);
+router.post('/', kpiTargetController.create);
+router.put('/sync', kpiTargetController.syncFromLiveData);
+router.put('/:id', kpiTargetController.update);
+router.delete('/:id', kpiTargetController.delete);
+export default router;

@@ -1,0 +1,10 @@
+﻿import { Router } from 'express';
+import { bulkImportController } from '../controllers/bulkImport.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/jobs', bulkImportController.getJobs);
+router.get('/modules', bulkImportController.getModules);
+router.post('/import', bulkImportController.importData);
+router.get('/export/:module', bulkImportController.exportData);
+export default router;

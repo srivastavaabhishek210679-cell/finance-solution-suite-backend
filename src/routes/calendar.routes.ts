@@ -1,0 +1,11 @@
+﻿import { Router } from 'express';
+import { calendarController } from '../controllers/calendar.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', calendarController.getEvents);
+router.post('/', calendarController.create);
+router.put('/:id', calendarController.update);
+router.delete('/:id', calendarController.delete);
+router.post('/sync', calendarController.syncLeaves);
+export default router;

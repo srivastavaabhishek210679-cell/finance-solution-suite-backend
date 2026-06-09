@@ -1,0 +1,11 @@
+﻿import { Router } from 'express';
+import { scheduledReportController } from '../controllers/scheduledReport.controller';
+import { authenticate } from '../middleware/auth';
+const router = Router();
+router.use(authenticate);
+router.get('/', scheduledReportController.getAll);
+router.post('/', scheduledReportController.create);
+router.put('/:id/toggle', scheduledReportController.toggle);
+router.post('/:id/send-now', scheduledReportController.sendNow);
+router.delete('/:id', scheduledReportController.delete);
+export default router;
