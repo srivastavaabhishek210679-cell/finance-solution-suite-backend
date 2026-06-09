@@ -129,7 +129,7 @@ export const adminController = {
       const result = await pool.query('SELECT t.*, COUNT(u.user_id) as user_count, s.status as sub_status, p.plan_name FROM tenants t LEFT JOIN users u ON t.tenant_id=u.tenant_id LEFT JOIN tenant_subscriptions s ON t.tenant_id=s.tenant_id LEFT JOIN subscription_plans p ON s.plan_id=p.plan_id GROUP BY t.tenant_id, s.status, p.plan_name ORDER BY t.created_at DESC');
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  }
+  },
 
   // Broadcast notification to all users
   broadcastNotification: async (req: Request, res: Response) => {
