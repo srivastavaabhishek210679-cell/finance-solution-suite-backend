@@ -130,4 +130,129 @@ export const adminController = {
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
+
+  // Broadcast notification to all users
+  broadcastNotification: async (req: Request, res: Response) => {
+    try {
+      const userId = (req as any).user?.userId;
+      const { title, message, type, link } = req.body;
+      const users = await pool.query('SELECT user_id FROM users WHERE status=' + "'active'");
+      for (const u of users.rows) {
+        await pool.query('INSERT INTO app_notifications (user_id, title, message, type, link) VALUES ($1,$2,$3,$4,$5)',
+          [u.user_id, title, message, type||'info', link||'/dashboard']);
+      }
+      res.json({ status: 'success', message: 'Broadcast sent to ' + users.rows.length + ' users' });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  // Get database table stats
+  getDBStats: async (req: Request, res: Response) => {
+    try {
+      const result = await pool.query(`
+        SELECT t.table_name, s.n_live_tup as row_count,
+        pg_size_pretty(pg_total_relation_size(quote_ident(t.table_name))) as total_size
+        FROM information_schema.tables t
+        LEFT JOIN pg_stat_user_tables s ON t.table_name = s.relname
+        WHERE t.table_schema = 'public'
+        ORDER BY s.n_live_tup DESC NULLS LAST
+      `);
+      res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  // Get user activity - recent logins
+  getUserActivity: async (req: Request, res: Response) => {
+    try {
+      const result = await pool.query(`
+        SELECT u.user_id, u.email, u.first_name, u.last_name, u.last_login, u.status,
+        COUNT(a.log_id) as action_count
+        FROM users u
+        LEFT JOIN audit_logs a ON u.user_id=a.user_id AND a.created_at >= NOW() - INTERVAL '7 days'
+        GROUP BY u.user_id
+        ORDER BY u.last_login DESC NULLS LAST LIMIT 20
+      `);
+      res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  // Impersonate user - generate token for any user
+  impersonateUser: async (req: Request, res: Response) => {
+    try {
+      const adminId = (req as any).user?.userId;
+      const admin = await pool.query('SELECT role FROM users WHERE user_id=$1', [adminId]);
+      if (admin.rows[0]?.role !== 'admin') return res.status(403).json({ status: 'error', message: 'Admin only' });
+      const target = await pool.query('SELECT * FROM users WHERE user_id=$1', [req.params.id]);
+      if (!target.rows.length) return res.status(404).json({ status: 'error', message: 'User not found' });
+      const jwt = require('jsonwebtoken');
+      const token = jwt.sign(
+        { userId: target.rows[0].user_id, email: target.rows[0].email, role: target.rows[0].role, tenantId: target.rows[0].tenant_id, impersonatedBy: adminId },
+        process.env.JWT_SECRET || 'secret',
+        { expiresIn: '1h' }
+      );
+      res.json({ status: 'success', data: { token, user: { email: target.rows[0].email, role: target.rows[0].role } } });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  // Get system stats - storage, connections
+  getSystemStats: async (req: Request, res: Response) => {
+    try {
+      const [dbSize, connections, tableCount, indexCount] = await Promise.all([
+        pool.query('SELECT pg_size_pretty(pg_database_size(current_database())) as size, pg_database_size(current_database()) as bytes'),
+        pool.query('SELECT count(*) as total, count(CASE WHEN state=' + "'active'" + ' THEN 1 END) as active FROM pg_stat_activity'),
+        pool.query('SELECT COUNT(*) as count FROM information_schema.tables WHERE table_schema=' + "'public'"),
+        pool.query('SELECT COUNT(*) as count FROM pg_indexes WHERE schemaname=' + "'public'")
+      ]);
+      res.json({ status: 'success', data: {
+        db_size: dbSize.rows[0].size,
+        db_bytes: dbSize.rows[0].bytes,
+        connections: connections.rows[0],
+        table_count: tableCount.rows[0].count,
+        index_count: indexCount.rows[0].count,
+        node_version: process.version,
+        uptime_seconds: process.uptime(),
+        memory: process.memoryUsage()
+      }});
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  // Create new user
+  createUser: async (req: Request, res: Response) => {
+    try {
+      const bcrypt = require('bcrypt');
+      const { email, first_name, last_name, role, tenant_id, password } = req.body;
+      const existing = await pool.query('SELECT user_id FROM users WHERE email=$1', [email]);
+      if (existing.rows.length) return res.status(400).json({ status: 'error', message: 'Email already exists' });
+      const hashed = await bcrypt.hash(password || 'Welcome@2026', 10);
+      const result = await pool.query(
+        'INSERT INTO users (email, first_name, last_name, role, tenant_id, password_hash, status) VALUES ($1,$2,$3,$4,$5,$6,' + "'active'" + ') RETURNING user_id, email, first_name, last_name, role, status',
+        [email, first_name, last_name, role||'user', tenant_id||1, hashed]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  // Update user
+  updateUser: async (req: Request, res: Response) => {
+    try {
+      const { first_name, last_name, role, status } = req.body;
+      const result = await pool.query(
+        'UPDATE users SET first_name=COALESCE($1,first_name), last_name=COALESCE($2,last_name), role=COALESCE($3,role), status=COALESCE($4,status), updated_at=NOW() WHERE user_id=$5 RETURNING *',
+        [first_name, last_name, role, status, req.params.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  // Cleanup old data
+  runCleanup: async (req: Request, res: Response) => {
+    try {
+      const { days } = req.body;
+      const retainDays = parseInt(days) || 90;
+      const [notifs, logs] = await Promise.all([
+        pool.query('DELETE FROM app_notifications WHERE created_at < NOW() - INTERVAL ' + "'" + retainDays + " days" + "' AND is_read=true"),
+        pool.query('DELETE FROM webhook_logs WHERE triggered_at < NOW() - INTERVAL ' + "'" + retainDays + " days" + "'")
+      ]);
+      res.json({ status: 'success', message: 'Cleaned ' + notifs.rowCount + ' notifications and ' + logs.rowCount + ' webhook logs' });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  }
 };
