@@ -1,4 +1,4 @@
-﻿import { Router } from 'express';
+import { Router } from 'express';
 import { analyticsController } from '../controllers/analytics.controller';
 import { authenticate } from '../middleware/auth';
 const router = Router();
@@ -9,5 +9,5 @@ router.get('/tiers', analyticsController.getTiers);
 router.get('/tier/:email', analyticsController.getCustomerTier);
 router.get('/campaigns', analyticsController.getCampaigns);
 router.post('/campaigns', analyticsController.createCampaign);
-router.post('/track-visit', analyticsController.trackVisit);
+
 export default router;
