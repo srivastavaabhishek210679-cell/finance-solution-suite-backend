@@ -26,7 +26,7 @@ export const adminController = {
 
   getAllUsers: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query('SELECT u.user_id, u.email, u.first_name, u.last_name, u.status, u.created_at, u.last_login, t.company_name as tenant_name, array_agg(r.role_name) as roles FROM users u LEFT JOIN tenants t ON u.tenant_id=t.tenant_id LEFT JOIN user_app_roles ur ON u.user_id=ur.user_id LEFT JOIN app_roles r ON ur.role_id=r.role_id GROUP BY u.user_id, t.company_name ORDER BY u.created_at DESC');
+      const result = await pool.query('SELECT u.user_id, u.email, u.first_name, u.last_name, u.status, u.created_at, u.last_login, t.tenant_name, array_agg(r.role_name) as roles FROM users u LEFT JOIN tenants t ON u.tenant_id=t.tenant_id LEFT JOIN user_app_roles ur ON u.user_id=ur.user_id LEFT JOIN app_roles r ON ur.role_id=r.role_id GROUP BY u.user_id, t.tenant_name ORDER BY u.created_at DESC');
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
