@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+﻿import express, { Application, Request, Response, NextFunction } from 'express';
 import { startScheduler } from './services/scheduler.service';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -198,6 +198,7 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/gdpr', require('./routes/gdpr.routes').default);
   apiRouter.use('/ftp', require('./routes/ftp.routes').default);
   apiRouter.use('/orders', require('./routes/order.routes').default);
+  apiRouter.use('/business-analytics', require('./routes/analytics.routes').default);
   apiRouter.use('/live-data', require('./routes/liveData.routes').default);
   apiRouter.use('/supply', require('./routes/supply.routes').default);
   apiRouter.use('/orders', require('./routes/order.routes').default);

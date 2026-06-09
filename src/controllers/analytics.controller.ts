@@ -1,328 +1,253 @@
-import { Request, Response } from 'express';
+﻿import { Request, Response } from 'express';
 import pool from '../config/database';
 
-export class AnalyticsController {
+export const analyticsController = {
 
-  /**
-   * GET /api/v1/analytics/dashboard-stats
-   * Uses reports_master (461 rows) + domains (12 rows) + workflow_definitions (8 rows)
-   */
-  async getDashboardStats(req: Request, res: Response): Promise<void> {
+  // Customer analytics by period
+  getCustomerAnalytics: async (req: Request, res: Response) => {
     try {
-      // ── Total reports ──────────────────────────────────────
-      const totalResult = await pool.query(
-        'SELECT COUNT(*) AS total FROM reports_master WHERE is_active = true'
-      );
-      const totalReports = parseInt(totalResult.rows[0].total);
+      const period = req.query.period as string || 'month';
+      let interval = '30 days';
+      if (period === 'day') interval = '1 day';
+      else if (period === 'week') interval = '7 days';
+      else if (period === 'month') interval = '30 days';
+      else if (period === 'quarter') interval = '90 days';
+      else if (period === 'annual') interval = '365 days';
 
-      // ── Compliance breakdown ───────────────────────────────
-      const complianceResult = await pool.query(`
-        SELECT compliance_status, COUNT(*) AS count
-        FROM reports_master WHERE is_active = true
-        GROUP BY compliance_status
-      `);
-      let requiredReports = 0;
-      let optionalReports = 0;
-      complianceResult.rows.forEach((row: any) => {
-        if (row.compliance_status === 'Required') requiredReports = parseInt(row.count);
-        else optionalReports += parseInt(row.count);
+      // Top customers
+      const topCustomers = await pool.query(
+        SELECT customer_name, customer_email,
+          COUNT(*) as order_count,
+          COALESCE(SUM(total_amount),0) as total_revenue,
+          COALESCE(AVG(total_amount),0) as avg_order_value,
+          MAX(order_date) as last_order
+        FROM orders
+        WHERE order_date >= NOW() - INTERVAL ''
+        AND status != 'Cancelled'
+        GROUP BY customer_name, customer_email
+        ORDER BY total_revenue DESC
+        LIMIT 10
+      );
+
+      // Bottom customers
+      const bottomCustomers = await pool.query(
+        SELECT customer_name, customer_email,
+          COUNT(*) as order_count,
+          COALESCE(SUM(total_amount),0) as total_revenue,
+          COALESCE(AVG(total_amount),0) as avg_order_value,
+          MAX(order_date) as last_order
+        FROM orders
+        WHERE order_date >= NOW() - INTERVAL ''
+        AND status != 'Cancelled'
+        GROUP BY customer_name, customer_email
+        ORDER BY total_revenue ASC
+        LIMIT 10
+      );
+
+      // Average customers
+      const avgRevenue = await pool.query(
+        SELECT AVG(total) as avg FROM (
+          SELECT SUM(total_amount) as total FROM orders
+          WHERE order_date >= NOW() - INTERVAL '' AND status != 'Cancelled'
+          GROUP BY customer_email
+        ) t
+      );
+      const avg = parseFloat(avgRevenue.rows[0].avg) || 0;
+
+      const avgCustomers = await pool.query(
+        SELECT customer_name, customer_email,
+          COUNT(*) as order_count,
+          COALESCE(SUM(total_amount),0) as total_revenue
+        FROM orders
+        WHERE order_date >= NOW() - INTERVAL ''
+        AND status != 'Cancelled'
+        GROUP BY customer_name, customer_email
+        HAVING SUM(total_amount) BETWEEN \ * 0.7 AND \ * 1.3
+        ORDER BY total_revenue DESC
+        LIMIT 10
+      , [avg, avg]);
+
+      // Least active (ordered before but not recently)
+      const leastActive = await pool.query(
+        SELECT customer_name, customer_email,
+          COUNT(*) as total_orders,
+          MAX(order_date) as last_order,
+          COALESCE(SUM(total_amount),0) as total_revenue
+        FROM orders
+        WHERE status != 'Cancelled'
+        GROUP BY customer_name, customer_email
+        HAVING MAX(order_date) < NOW() - INTERVAL '60 days'
+        ORDER BY last_order ASC
+        LIMIT 10
+      );
+
+      // Frequent visitors (ordered 2+ times in period)
+      const frequentCustomers = await pool.query(
+        SELECT customer_name, customer_email,
+          COUNT(*) as order_count,
+          COALESCE(SUM(total_amount),0) as total_revenue,
+          MAX(order_date) as last_order
+        FROM orders
+        WHERE order_date >= NOW() - INTERVAL ''
+        AND status != 'Cancelled'
+        GROUP BY customer_name, customer_email
+        HAVING COUNT(*) >= 2
+        ORDER BY order_count DESC
+        LIMIT 10
+      );
+
+      res.json({
+        status: 'success',
+        period,
+        data: {
+          topCustomers: topCustomers.rows,
+          bottomCustomers: bottomCustomers.rows,
+          avgCustomers: avgCustomers.rows,
+          leastActive: leastActive.rows,
+          frequentCustomers: frequentCustomers.rows,
+          avgOrderValue: avg
+        }
       });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
 
-      // ── Active domains ─────────────────────────────────────
-      const domainsResult = await pool.query(
-        'SELECT COUNT(DISTINCT domain_id) AS count FROM reports_master WHERE is_active = true'
+  // Order analytics by period
+  getOrderAnalytics: async (req: Request, res: Response) => {
+    try {
+      const period = req.query.period as string || 'month';
+      let interval = '30 days';
+      let groupBy = 'day';
+      if (period === 'day') { interval = '1 day'; groupBy = 'hour'; }
+      else if (period === 'week') { interval = '7 days'; groupBy = 'day'; }
+      else if (period === 'month') { interval = '30 days'; groupBy = 'day'; }
+      else if (period === 'quarter') { interval = '90 days'; groupBy = 'week'; }
+      else if (period === 'biannual') { interval = '180 days'; groupBy = 'month'; }
+      else if (period === 'annual') { interval = '365 days'; groupBy = 'month'; }
+
+      // Orders trend
+      const ordersTrend = await pool.query(
+        SELECT DATE_TRUNC('', order_date) as period,
+          COUNT(*) as order_count,
+          COALESCE(SUM(total_amount),0) as revenue,
+          COALESCE(AVG(total_amount),0) as avg_order
+        FROM orders
+        WHERE order_date >= NOW() - INTERVAL ''
+        GROUP BY period ORDER BY period
       );
-      const activeDomains = parseInt(domainsResult.rows[0].count);
 
-      // ── Domain breakdown ───────────────────────────────────
-      const domainBreakdown = await pool.query(`
-        SELECT d.domain_name AS domain, COUNT(r.report_id) AS count, d.color
-        FROM reports_master r
-        JOIN domains d ON r.domain_id = d.domain_id
-        WHERE r.is_active = true
-        GROUP BY d.domain_id, d.domain_name, d.color
-        ORDER BY count DESC
-      `);
+      // Top orders
+      const topOrders = await pool.query(
+        SELECT order_id, order_number, customer_name, total_amount, status, payment_status, order_date
+        FROM orders
+        WHERE order_date >= NOW() - INTERVAL ''
+        ORDER BY total_amount DESC LIMIT 10
+      );
 
-      // ── Frequency breakdown ────────────────────────────────
-      const frequencyResult = await pool.query(`
-        SELECT frequency, COUNT(*) AS count
-        FROM reports_master WHERE is_active = true
-        GROUP BY frequency ORDER BY count DESC
-      `);
+      // Low orders
+      const lowOrders = await pool.query(
+        SELECT order_id, order_number, customer_name, total_amount, status, payment_status, order_date
+        FROM orders
+        WHERE order_date >= NOW() - INTERVAL ''
+        ORDER BY total_amount ASC LIMIT 10
+      );
 
-      // ── Recent reports (last 30 days) ──────────────────────
-      const recentResult = await pool.query(`
-        SELECT COUNT(*) AS count FROM reports_master
-        WHERE created_at >= NOW() - INTERVAL '30 days' AND is_active = true
-      `);
-
-      // ── Workflows ─────────────────────────────────────────
-      const workflowResult = await pool.query(`
+      // Stats summary
+      const stats = await pool.query(
         SELECT
-          COUNT(*)                                     AS total,
-          COUNT(*) FILTER (WHERE status = 'active')   AS active,
-          COUNT(*) FILTER (WHERE status = 'paused')   AS paused,
-          COALESCE(SUM(run_count), 0)                 AS total_runs,
-          COALESCE(SUM(success_count), 0)             AS success_runs
-        FROM workflow_definitions
-      `).catch(() => ({ rows: [{ total:0, active:0, paused:0, total_runs:0, success_runs:0 }] }));
-      const wf = workflowResult.rows[0];
-
-      // ── Derived metrics ────────────────────────────────────
-      const complianceRate = totalReports > 0
-        ? parseFloat(((requiredReports / totalReports) * 100).toFixed(1)) : 0;
-      const riskScore    = parseFloat((25 - (complianceRate * 0.05)).toFixed(1));
-      const healthScore  = parseFloat((complianceRate * 0.92).toFixed(1));
-      const automationRate = parseInt(wf.total) > 0
-        ? parseFloat(((parseInt(wf.active) / parseInt(wf.total)) * 100).toFixed(1)) : 0;
-
-      res.json({
-        // Core KPIs
-        totalReports,
-        activeReports:   totalReports,
-        requiredReports,
-        optionalReports,
-        activeDomains,
-        recentReports:   parseInt(recentResult.rows[0].count),
-
-        // Calculated metrics
-        complianceRate,
-        riskScore,
-        healthScore,
-        automationRate,
-
-        // Workflows
-        totalWorkflows:  parseInt(wf.total),
-        activeWorkflows: parseInt(wf.active),
-        pausedWorkflows: parseInt(wf.paused),
-        totalRuns:       parseInt(wf.total_runs),
-        successRuns:     parseInt(wf.success_runs),
-
-        // Breakdowns
-        domainBreakdown: domainBreakdown.rows.map((r: any) => ({
-          domain: r.domain, count: parseInt(r.count), color: r.color,
-        })),
-        frequencyBreakdown: frequencyResult.rows.map((r: any) => ({
-          frequency: r.frequency, count: parseInt(r.count),
-        })),
-        complianceBreakdown: complianceResult.rows.map((r: any) => ({
-          status: r.compliance_status, count: parseInt(r.count),
-        })),
-      });
-    } catch (error: any) {
-      console.error('dashboard-stats error:', error.message);
-      res.status(500).json({ error: 'Failed to fetch dashboard stats', detail: error.message });
-    }
-  }
-
-  /**
-   * GET /api/v1/analytics/test
-   */
-  async test(req: Request, res: Response): Promise<void> {
-    res.json({ success: true, message: 'Analytics routes are working!', timestamp: new Date().toISOString() });
-  }
-
-  /**
-   * GET /api/v1/analytics/summary
-   */
-  async getSummary(req: Request, res: Response): Promise<void> {
-    try {
-      const totalResult = await pool.query(
-        'SELECT COUNT(*) as total FROM reports_master WHERE is_active = true'
+          COUNT(*) as total_orders,
+          COALESCE(SUM(total_amount),0) as total_revenue,
+          COALESCE(AVG(total_amount),0) as avg_order,
+          MAX(total_amount) as max_order,
+          MIN(total_amount) as min_order,
+          COUNT(CASE WHEN status='Delivered' THEN 1 END) as delivered,
+          COUNT(CASE WHEN status='Cancelled' THEN 1 END) as cancelled,
+          COUNT(CASE WHEN status='Pending' THEN 1 END) as pending
+        FROM orders
+        WHERE order_date >= NOW() - INTERVAL ''
       );
-      const total = parseInt(totalResult.rows[0].total);
-
-      const domainResult = await pool.query(`
-        SELECT d.domain_name, COUNT(r.report_id) as count
-        FROM reports_master r
-        JOIN domains d ON r.domain_id = d.domain_id
-        WHERE r.is_active = true
-        GROUP BY d.domain_name ORDER BY count DESC LIMIT 5
-      `);
-
-      const complianceResult = await pool.query(`
-        SELECT compliance_status as name, COUNT(report_id) as count
-        FROM reports_master WHERE is_active = true GROUP BY compliance_status
-      `);
-
-      const recentResult = await pool.query(`
-        SELECT COUNT(*) as count FROM reports_master
-        WHERE created_at >= NOW() - INTERVAL '30 days' AND is_active = true
-      `);
 
       res.json({
-        totalReports:        total,
-        topDomains:          domainResult.rows,
-        complianceBreakdown: complianceResult.rows,
-        recentReports:       parseInt(recentResult.rows[0].count),
+        status: 'success',
+        period,
+        data: {
+          ordersTrend: ordersTrend.rows,
+          topOrders: topOrders.rows,
+          lowOrders: lowOrders.rows,
+          stats: stats.rows[0]
+        }
       });
-    } catch (error) {
-      console.error('Error fetching analytics summary:', error);
-      res.status(500).json({ error: 'Failed to fetch analytics summary' });
-    }
-  }
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
 
-  /**
-   * GET /api/v1/analytics/reports-by-domain
-   */
-  async getReportsByDomain(req: Request, res: Response): Promise<void> {
+  // Get customer tier based on spend
+  getCustomerTier: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query(`
-        SELECT d.domain_name as domain, COUNT(r.report_id) as count, d.color
-        FROM reports_master r
-        JOIN domains d ON r.domain_id = d.domain_id
-        WHERE r.is_active = true
-        GROUP BY d.domain_id, d.domain_name, d.color ORDER BY count DESC
-      `);
-      res.json({
-        labels: result.rows.map((r: any) => r.domain),
-        values: result.rows.map((r: any) => parseInt(r.count)),
-        colors: result.rows.map((r: any) => r.color || '#3B82F6'),
-      });
-    } catch (error) {
-      console.error('Error fetching reports by domain:', error);
-      res.status(500).json({ error: 'Failed to fetch domain statistics' });
-    }
-  }
+      const { email } = req.params;
+      const customerData = await pool.query(
+        SELECT customer_email,
+          COUNT(*) as order_count,
+          COALESCE(SUM(total_amount),0) as total_spend
+        FROM orders WHERE customer_email=\ AND status != 'Cancelled'
+        GROUP BY customer_email
+      , [email]);
 
-  /**
-   * GET /api/v1/analytics/reports-by-frequency
-   */
-  async getReportsByFrequency(req: Request, res: Response): Promise<void> {
+      if (!customerData.rows.length) return res.json({ status: 'success', data: null });
+
+      const { order_count, total_spend } = customerData.rows[0];
+      const tiers = await pool.query('SELECT * FROM customer_tiers ORDER BY min_order_value DESC');
+
+      let tier = tiers.rows[tiers.rows.length - 1]; // default bronze
+      for (const t of tiers.rows) {
+        if (parseFloat(total_spend) >= t.min_order_value && parseInt(order_count) >= t.min_order_count) {
+          tier = t;
+          break;
+        }
+      }
+
+      res.json({ status: 'success', data: { ...tier, total_spend, order_count } });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  // Get all tiers
+  getTiers: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query(`
-        SELECT frequency, COUNT(report_id) as count
-        FROM reports_master WHERE is_active = true
-        GROUP BY frequency
-        ORDER BY CASE frequency
-          WHEN 'Daily' THEN 1 WHEN 'Weekly' THEN 2 WHEN 'Monthly' THEN 3
-          WHEN 'Quarterly' THEN 4 WHEN 'Annually' THEN 5 ELSE 6 END
-      `);
-      res.json({
-        labels: result.rows.map((r: any) => r.frequency),
-        values: result.rows.map((r: any) => parseInt(r.count)),
-      });
-    } catch (error) {
-      console.error('Error fetching reports by frequency:', error);
-      res.status(500).json({ error: 'Failed to fetch frequency statistics' });
-    }
-  }
+      const result = await pool.query('SELECT * FROM customer_tiers ORDER BY min_order_value ASC');
+      res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
 
-  /**
-   * GET /api/v1/analytics/reports-by-compliance
-   */
-  async getReportsByCompliance(req: Request, res: Response): Promise<void> {
+  // Get campaigns
+  getCampaigns: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query(`
-        SELECT compliance_status, COUNT(report_id) as count,
-          CASE compliance_status
-            WHEN 'Required'    THEN '#EF4444'
-            WHEN 'Optional'    THEN '#10B981'
-            WHEN 'Recommended' THEN '#F59E0B'
-            ELSE '#6B7280'
-          END as color
-        FROM reports_master WHERE is_active = true
-        GROUP BY compliance_status ORDER BY compliance_status
-      `);
-      res.json({
-        labels: result.rows.map((r: any) => r.compliance_status),
-        values: result.rows.map((r: any) => parseInt(r.count)),
-        colors: result.rows.map((r: any) => r.color),
-      });
-    } catch (error) {
-      console.error('Error fetching reports by compliance:', error);
-      res.status(500).json({ error: 'Failed to fetch compliance statistics' });
-    }
-  }
+      const result = await pool.query('SELECT * FROM customer_campaigns WHERE is_active=true ORDER BY created_at DESC');
+      res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
 
-  /**
-   * GET /api/v1/analytics/submission-trends
-   */
-  async getSubmissionTrends(req: Request, res: Response): Promise<void> {
+  // Create campaign
+  createCampaign: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query(`
-        SELECT TO_CHAR(created_at, 'YYYY-MM') as month, COUNT(*) as count
-        FROM reports_master
-        WHERE created_at >= NOW() - INTERVAL '12 months' AND is_active = true
-        GROUP BY TO_CHAR(created_at, 'YYYY-MM') ORDER BY month
-      `);
-      res.json({
-        labels: result.rows.map((r: any) => r.month),
-        values: result.rows.map((r: any) => parseInt(r.count)),
-      });
-    } catch (error) {
-      console.error('Error fetching submission trends:', error);
-      res.status(500).json({ error: 'Failed to fetch submission trends' });
-    }
-  }
+      const { campaign_name, campaign_type, target_segment, discount_percent, message, start_date, end_date } = req.body;
+      const result = await pool.query(
+        'INSERT INTO customer_campaigns (campaign_name, campaign_type, target_segment, discount_percent, message, start_date, end_date) VALUES (\,\,\,\,\,\,\) RETURNING *',
+        [campaign_name, campaign_type, target_segment, discount_percent, message, start_date, end_date]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
 
-  /**
-   * GET /api/v1/analytics/reports-by-stakeholder
-   */
-  async getReportsByStakeholder(req: Request, res: Response): Promise<void> {
+  // Track visit
+  trackVisit: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query(`
-        SELECT jsonb_array_elements_text(stakeholders) as stakeholder, COUNT(*) as count
-        FROM reports_master WHERE is_active = true AND jsonb_array_length(stakeholders) > 0
-        GROUP BY stakeholder ORDER BY count DESC LIMIT 10
-      `);
-      res.json({
-        labels: result.rows.map((r: any) => r.stakeholder),
-        values: result.rows.map((r: any) => parseInt(r.count)),
-      });
-    } catch (error) {
-      console.error('Error fetching reports by stakeholder:', error);
-      res.status(500).json({ error: 'Failed to fetch stakeholder statistics' });
-    }
+      const userId = (req as any).user?.userId;
+      const { customer_email } = req.body;
+      await pool.query(
+        INSERT INTO customer_visits (user_id, customer_email, visit_date, visit_count, last_visited)
+        VALUES (\, \, CURRENT_DATE, 1, NOW())
+        ON CONFLICT (user_id, visit_date)
+        DO UPDATE SET visit_count = customer_visits.visit_count + 1, last_visited = NOW()
+      , [userId, customer_email]);
+      res.json({ status: 'success' });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
-
-  /**
-   * GET /api/v1/analytics/frequency-distribution
-   */
-  async getFrequencyDistribution(req: Request, res: Response): Promise<void> {
-    try {
-      const result = await pool.query(`
-        SELECT frequency, COUNT(report_id) as count,
-          ROUND(COUNT(report_id) * 100.0 / SUM(COUNT(report_id)) OVER(), 2) as percentage
-        FROM reports_master WHERE is_active = true
-        GROUP BY frequency ORDER BY count DESC
-      `);
-      res.json(result.rows);
-    } catch (error) {
-      console.error('Error fetching frequency distribution:', error);
-      res.status(500).json({ error: 'Failed to fetch frequency distribution' });
-    }
-  }
-
-  /**
-   * GET /api/v1/analytics/compliance-metrics
-   */
-  async getComplianceMetrics(req: Request, res: Response): Promise<void> {
-    try {
-      const current = await pool.query(`
-        SELECT compliance_status as name, COUNT(report_id) as count,
-          CASE compliance_status
-            WHEN 'Required'    THEN '#EF4444'
-            WHEN 'Optional'    THEN '#10B981'
-            WHEN 'Recommended' THEN '#F59E0B'
-            ELSE '#6B7280'
-          END as color
-        FROM reports_master WHERE is_active = true GROUP BY compliance_status
-      `);
-      const trends = await pool.query(`
-        SELECT TO_CHAR(created_at, 'YYYY-MM') as month,
-               compliance_status as status, COUNT(*) as count
-        FROM reports_master
-        WHERE created_at >= NOW() - INTERVAL '6 months' AND is_active = true
-        GROUP BY TO_CHAR(created_at, 'YYYY-MM'), compliance_status
-        ORDER BY month, compliance_status
-      `);
-      res.json({ current: current.rows, trends: trends.rows });
-    } catch (error) {
-      console.error('Error fetching compliance metrics:', error);
-      res.status(500).json({ error: 'Failed to fetch compliance metrics' });
-    }
-  }
-}
-
+};

@@ -1,18 +1,13 @@
-import { Router } from 'express';
-import { AnalyticsController } from '../controllers/analytics.controller';
-
+﻿import { Router } from 'express';
+import { analyticsController } from '../controllers/analytics.controller';
+import { authenticate } from '../middleware/auth';
 const router = Router();
-const analyticsController = new AnalyticsController();
-
-router.get('/test', analyticsController.test.bind(analyticsController));
-router.get('/dashboard-stats', analyticsController.getDashboardStats.bind(analyticsController));
-router.get('/summary', analyticsController.getSummary.bind(analyticsController));
-router.get('/reports-by-domain', analyticsController.getReportsByDomain.bind(analyticsController));
-router.get('/reports-by-frequency', analyticsController.getReportsByFrequency.bind(analyticsController));
-router.get('/reports-by-compliance', analyticsController.getReportsByCompliance.bind(analyticsController));
-router.get('/submission-trends', analyticsController.getSubmissionTrends.bind(analyticsController));
-router.get('/reports-by-stakeholder', analyticsController.getReportsByStakeholder.bind(analyticsController));
-router.get('/frequency-distribution', analyticsController.getFrequencyDistribution.bind(analyticsController));
-router.get('/compliance-metrics', analyticsController.getComplianceMetrics.bind(analyticsController));
-
+router.use(authenticate);
+router.get('/customers', analyticsController.getCustomerAnalytics);
+router.get('/orders', analyticsController.getOrderAnalytics);
+router.get('/tiers', analyticsController.getTiers);
+router.get('/tier/:email', analyticsController.getCustomerTier);
+router.get('/campaigns', analyticsController.getCampaigns);
+router.post('/campaigns', analyticsController.createCampaign);
+router.post('/track-visit', analyticsController.trackVisit);
 export default router;
