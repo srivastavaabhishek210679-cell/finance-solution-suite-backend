@@ -436,6 +436,12 @@ export const startAutomation = () => {
   cron.schedule('0 8 * * 1', checkWarrantyExpiry);
   cron.schedule('0 9 * * 1', checkOverdueRisks);
   cron.schedule('0 6 1 * *', sendMonthlyEmailReport);
+  // PDF report — 2nd of month at 7 AM
+  cron.schedule('0 7 2 * *', async () => {
+    const { sendScheduledReports } = await import('./pdfReport.service');
+    const tenants = await pool.query('SELECT tenant_id FROM tenants WHERE is_active=true');
+    for (const t of tenants.rows) { await sendScheduledReports(t.tenant_id); }
+  });
   console.log('[Automation] All cron jobs registered:');
   console.log('  ✅ Payroll auto-run (last day of month, 9 AM)');
   console.log('  ✅ Contract expiry alerts (daily, 8 AM)');
