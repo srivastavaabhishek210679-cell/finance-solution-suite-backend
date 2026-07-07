@@ -81,6 +81,65 @@ tr:nth-child(even) td { background:#f8fafc; }
 }
 
 export async function generatePDF(html: string): Promise<Buffer | null> {
+  // Try PDFShift API first (free tier: 250/month)
+  const pdfShiftKey = process.env.PDFSHIFT_API_KEY || '';
+  if (pdfShiftKey) {
+    try {
+      console.log('[PDF] Using PDFShift API...');
+      const credentials = Buffer.from('api:' + pdfShiftKey).toString('base64');
+      const response = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Basic ' + credentials,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          source: html,
+          format: 'A4',
+          margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
+          print_background: true,
+          use_print: false
+        })
+      });
+      if (response.ok) {
+        const buffer = await response.arrayBuffer();
+        console.log('[PDF] PDFShift success, size:', buffer.byteLength);
+        return Buffer.from(buffer);
+      } else {
+        const err = await response.text();
+        console.error('[PDF] PDFShift error:', err);
+      }
+    } catch (e: any) {
+      console.error('[PDF] PDFShift exception:', e.message);
+    }
+  }
+
+  // Try html2pdf.app as fallback (free: 100/month)
+  const html2pdfKey = process.env.HTML2PDF_API_KEY || '';
+  if (html2pdfKey) {
+    try {
+      console.log('[PDF] Using html2pdf.app API...');
+      const response = await fetch('https://api.html2pdf.app/v1/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          html,
+          apiKey: html2pdfKey,
+          format: 'A4',
+          printBackground: true
+        })
+      });
+      if (response.ok) {
+        const buffer = await response.arrayBuffer();
+        console.log('[PDF] html2pdf.app success');
+        return Buffer.from(buffer);
+      }
+    } catch (e: any) {
+      console.error('[PDF] html2pdf.app error:', e.message);
+    }
+  }
+
+  // Try local Puppeteer as last resort
   try {
     const chromium = require('@sparticuz/chromium');
     const puppeteer = require('puppeteer-core');
@@ -92,11 +151,12 @@ export async function generatePDF(html: string): Promise<Buffer | null> {
     });
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: 'networkidle0' });
-    const pdf = await page.pdf({ format: 'A4', printBackground: true, margin: { top: '0', right: '0', bottom: '0', left: '0' } });
+    const pdf = await page.pdf({ format: 'A4', printBackground: true });
     await browser.close();
+    console.log('[PDF] Puppeteer success');
     return Buffer.from(pdf);
   } catch (e: any) {
-    console.log('[PDF] Chromium unavailable, returning null:', e.message);
+    console.log('[PDF] All PDF methods failed, using HTML fallback');
     return null;
   }
 }
