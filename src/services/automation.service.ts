@@ -471,3 +471,67 @@ export const startAutomation = () => {
   console.log('  ✅ Monthly email reports (1st of month, 6 AM)');
   console.log('  ✅ WhatsApp notifications (WATI — on-demand)');
 };
+
+// ══════════════════════════════════════════════════════════════════════════════
+// WHATSAPP via TWILIO REST API
+// ══════════════════════════════════════════════════════════════════════════════
+export async function sendWhatsApp(phone: string, message: string): Promise<boolean> {
+  const sid   = process.env.TWILIO_ACCOUNT_SID  || '';
+  const token = process.env.TWILIO_AUTH_TOKEN   || '';
+  const from  = process.env.TWILIO_WHATSAPP_FROM || 'whatsapp:+14155238886';
+
+  if (!sid || !token) {
+    console.log('[WhatsApp] TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN not set');
+    return false;
+  }
+
+  const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+  const toPhone = cleanPhone.startsWith('+') ? cleanPhone : `+${cleanPhone}`;
+
+  try {
+    const formData = [
+      `From=${encodeURIComponent(from)}`,
+      `To=${encodeURIComponent('whatsapp:' + toPhone)}`,
+      `Body=${encodeURIComponent(message)}`
+    ].join('&');
+
+    const credentials = Buffer.from(`${sid}:${token}`).toString('base64');
+    const url = `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`;
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${credentials}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: formData
+    });
+
+    const data = await res.json() as any;
+    if (data.sid) {
+      console.log(`[WhatsApp/Twilio] Sent to ${toPhone} - SID: ${data.sid}`);
+      return true;
+    } else {
+      console.error('[WhatsApp/Twilio] Failed:', data.message || data.code || JSON.stringify(data));
+      return false;
+    }
+  } catch (e: any) {
+    console.error('[WhatsApp/Twilio] Exception:', e.message);
+    return false;
+  }
+}
+
+export async function sendLeaveApprovalWhatsApp(managerPhone: string, employeeName: string, leaveType: string, days: number, leaveId: number): Promise<boolean> {
+  const message = `*Deemona ERP - Leave Approval Required*\n\nEmployee: *${employeeName}*\nLeave Type: ${leaveType}\nDuration: ${days} day(s)\n\nApprove/Reject: https://finance-frontend-2l6b.onrender.com/leave-mgmt\nLeave ID: ${leaveId}`;
+  return sendWhatsApp(managerPhone, message);
+}
+
+export async function sendPOApprovalWhatsApp(managerPhone: string, supplierName: string, amount: number, poId: number): Promise<boolean> {
+  const message = `*Deemona ERP - PO Approval Required*\n\nSupplier: *${supplierName}*\nAmount: *Rs.${amount.toLocaleString('en-IN')}*\n\nReview: https://finance-frontend-2l6b.onrender.com/supply-mgmt\nPO ID: ${poId}`;
+  return sendWhatsApp(managerPhone, message);
+}
+
+export async function sendBudgetAlertWhatsApp(managerPhone: string, department: string, pct: number): Promise<boolean> {
+  const message = `*Deemona ERP - Budget Alert*\n\nDepartment: *${department}*\nUtilisation: *${pct}%*\n\nImmediate action required.\nhttps://finance-frontend-2l6b.onrender.com/budget-mgmt`;
+  return sendWhatsApp(managerPhone, message);
+}
