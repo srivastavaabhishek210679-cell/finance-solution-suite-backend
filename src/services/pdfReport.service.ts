@@ -97,7 +97,7 @@ export async function generatePDF(html: string): Promise<Buffer | null> {
           source: html,
           format: 'A4',
           margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
-          print_background: true,
+          background: true,
           use_print: false
         })
       });
