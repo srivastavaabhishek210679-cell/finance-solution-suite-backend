@@ -1,5 +1,6 @@
 ﻿import express, { Application, Request, Response, NextFunction } from 'express';
 import { startScheduler } from './services/scheduler.service';
+import { startAutomation } from './services/automation.service';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -474,6 +475,7 @@ const startServer = async () => {
     // Start server
     app.listen(PORT, () => {
       startScheduler();
+      startAutomation();
       console.log('🚀 Deemona Dashboard API Server Started');
       console.log('='.repeat(60));
       console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
