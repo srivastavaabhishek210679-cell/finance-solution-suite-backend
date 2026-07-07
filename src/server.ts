@@ -344,6 +344,7 @@ apiRouter.use('/blockchain-audit', require('./routes/blockchainAudit.routes').de
 apiRouter.use('/automation', require('./routes/automation.routes').default);
   apiRouter.use('/automation', require('./routes/automationTrigger.routes').default);
   apiRouter.use('/tally', require('./routes/tallyImport.routes').default);
+  apiRouter.use('/datacapture', require('./routes/dataCapture.routes').default);
 apiRouter.use('/automations', require('./routes/automations.routes').default);
 apiRouter.use('/workflows', require('./routes/workflowDefinitions.routes').default);
 apiRouter.use('/workflow', require('./routes/workflow.routes').default);

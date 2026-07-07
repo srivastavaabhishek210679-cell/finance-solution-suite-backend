@@ -25,7 +25,7 @@
     "@sentry/node": "^10.53.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/nodemailer": "^8.0.0",
-    "axios": "^1.16.0",
+    "axios": "^1.18.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.3",
     "compression": "^1.7.4",
@@ -51,6 +51,7 @@
     "twilio": "^6.0.2",
     "winston": "^3.11.0",
     "xlsx": "^0.18.5",
+    "xlsx-js-style": "^1.2.0",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
