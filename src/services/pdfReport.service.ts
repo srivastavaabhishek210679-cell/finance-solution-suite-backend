@@ -81,36 +81,33 @@ tr:nth-child(even) td { background:#f8fafc; }
 }
 
 export async function generatePDF(html: string): Promise<Buffer | null> {
-  // Try PDFShift API first (free tier: 250/month)
   const pdfShiftKey = process.env.PDFSHIFT_API_KEY || '';
   if (pdfShiftKey) {
     try {
       console.log('[PDF] Using PDFShift API...');
       const credentials = Buffer.from('api:' + pdfShiftKey).toString('base64');
-      const response = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
+      const res = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
         method: 'POST',
         headers: {
           'Authorization': 'Basic ' + credentials,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          source: html,
-          format: 'A4',
-          landscape: false
-          landscape: false
-        })
+        body: JSON.stringify({ source: html })
       });
-        const buffer = await response.arrayBuffer();
-        console.log('[PDF] PDFShift success, size:', buffer.byteLength);
-        return Buffer.from(buffer);
-      } else {
-        const err = await response.text();
-        console.error('[PDF] PDFShift error:', err);
+      if (res.ok) {
+        const buf = await res.arrayBuffer();
+        console.log('[PDF] PDFShift success, size:', buf.byteLength);
+        return Buffer.from(buf);
       }
+      const err = await res.text();
+      console.error('[PDF] PDFShift error:', err);
     } catch (e: any) {
       console.error('[PDF] PDFShift exception:', e.message);
     }
   }
+  console.log('[PDF] No PDF provider available, returning null');
+  return null;
+}
 
   // Try html2pdf.app as fallback (free: 100/month)
   const html2pdfKey = process.env.HTML2PDF_API_KEY || '';
