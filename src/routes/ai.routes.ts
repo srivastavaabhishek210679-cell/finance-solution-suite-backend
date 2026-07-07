@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import { aiController } from '../controllers/ai.controller';
 import { authenticate } from '../middleware/auth';
-
 const router = Router();
 router.use(authenticate);
 router.post('/narrative', aiController.generateNarrative);
-
+router.post('/chat', aiController.chat);
+router.post('/insights', aiController.insights);
+router.post('/report', aiController.generateReport);
+router.get('/conversations', aiController.getConversations);
+router.get('/conversations/:id', aiController.getConversation);
 export default router;
