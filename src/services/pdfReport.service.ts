@@ -96,10 +96,6 @@ export async function generatePDF(html: string): Promise<Buffer | null> {
         body: JSON.stringify({
           source: html,
           format: 'A4',
-          margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
-          background: true,
-          use_print: false
-        })
       });
       if (response.ok) {
         const buffer = await response.arrayBuffer();
