@@ -418,3 +418,33 @@ export async function sendBudgetAlertWhatsApp(managerPhone: string, department: 
   const message = `*Deemona ERP - Budget Alert*\n\nDepartment: *${department}*\nUtilisation: *${pct}%*\n\nImmediate action required.\nhttps://finance-frontend-2l6b.onrender.com/budget-mgmt`;
   return sendWhatsApp(managerPhone, message);
 }
+// ══════════════════════════════════════════════════════════════════════════════
+// MAIN SCHEDULER — register all cron jobs
+// ══════════════════════════════════════════════════════════════════════════════
+export const startAutomation = () => {
+  console.log('[Automation] Starting automation engine...');
+  cron.schedule('0 9 28-31 * *', async () => {
+    const today = new Date();
+    const lastDay = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
+    if (today.getDate() === lastDay) await autoRunPayroll();
+  });
+  cron.schedule('0 8 * * *', checkContractExpiry);
+  cron.schedule('0 7 * * *', checkBudgetOverruns);
+  cron.schedule('30 7 * * *', checkLowStock);
+  cron.schedule('0 9 * * 1-5', checkPendingLeaves);
+  cron.schedule('0 10 * * *', checkOverdueTickets);
+  cron.schedule('0 8 * * 1', checkWarrantyExpiry);
+  cron.schedule('0 9 * * 1', checkOverdueRisks);
+  cron.schedule('0 6 1 * *', sendMonthlyEmailReport);
+  console.log('[Automation] All cron jobs registered:');
+  console.log('  ✅ Payroll auto-run (last day of month, 9 AM)');
+  console.log('  ✅ Contract expiry alerts (daily, 8 AM)');
+  console.log('  ✅ Budget overrun alerts (daily, 7 AM)');
+  console.log('  ✅ Low stock alerts (daily, 7:30 AM)');
+  console.log('  ✅ Pending leave reminders (weekdays, 9 AM)');
+  console.log('  ✅ Overdue ticket alerts (daily, 10 AM)');
+  console.log('  ✅ Warranty expiry alerts (Mondays, 8 AM)');
+  console.log('  ✅ Overdue risk actions (Mondays, 9 AM)');
+  console.log('  ✅ Monthly email reports (1st of month, 6 AM)');
+  console.log('  ✅ WhatsApp notifications (Twilio REST API)');
+};
