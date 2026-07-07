@@ -1,3 +1,4 @@
+﻿import { onEmployeeCreated, generateEmployeeCode } from '../services/events.service';
 import { Request, Response } from 'express';
 import pool from '../config/database';
 
@@ -21,6 +22,9 @@ export const payrollController = {
     try {
       const { employee_code, first_name, last_name, email, phone, department, designation, employment_type, date_of_joining, date_of_birth, gender, basic_salary, hra, transport_allowance, medical_allowance, other_allowance, pf_deduction, tax_deduction, other_deduction, bank_account, bank_name, pan_number } = req.body;
       const result = await pool.query('INSERT INTO employees (employee_code, first_name, last_name, email, phone, department, designation, employment_type, date_of_joining, date_of_birth, gender, basic_salary, hra, transport_allowance, medical_allowance, other_allowance, pf_deduction, tax_deduction, other_deduction, bank_account, bank_name, pan_number) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22) RETURNING *', [employee_code, first_name, last_name, email, phone, department, designation, employment_type, date_of_joining, date_of_birth, gender, basic_salary, hra, transport_allowance, medical_allowance, other_allowance, pf_deduction, tax_deduction, other_deduction, bank_account, bank_name, pan_number]);
+      const tenantId = (req as any).user?.tenantId || 1;
+      const emp = result.rows[0];
+      onEmployeeCreated({ name: ${first_name} , department, designation }, tenantId).catch(console.error);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

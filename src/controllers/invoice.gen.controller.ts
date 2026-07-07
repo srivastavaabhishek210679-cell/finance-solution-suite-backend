@@ -1,4 +1,5 @@
-﻿import { Request, Response } from 'express';
+﻿import { generateInvoiceNumber } from '../services/events.service';
+import { Request, Response } from 'express';
 import pool from '../config/database';
 
 const q = (n: number) => '$' + n;

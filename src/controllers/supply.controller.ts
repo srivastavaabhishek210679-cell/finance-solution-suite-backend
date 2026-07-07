@@ -1,3 +1,4 @@
+﻿import { onPOCreated, generatePONumber } from '../services/events.service';
 import { Request, Response } from 'express';
 import pool from '../config/database';
 
@@ -59,6 +60,8 @@ export const supplyController = {
       const { supplier_id, expected_delivery, notes, items } = req.body;
       const poNum = 'PO-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000);
       const totalAmount = (items||[]).reduce((sum: number, i: any) => sum + (i.quantity * i.unit_price), 0);
+      const tenantId = (req as any).user?.tenantId || 1;
+      const autoPONum = await generatePONumber(tenantId);
       const result = await pool.query('INSERT INTO purchase_orders (po_number, supplier_id, expected_delivery, total_amount, notes) VALUES (,,,,) RETURNING *',
         [poNum, supplier_id, expected_delivery, totalAmount, notes]);
       const po = result.rows[0];

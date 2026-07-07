@@ -1,3 +1,4 @@
+﻿import { onOrderCreated, onOrderDelivered, generateOrderNumber } from '../services/events.service';
 import { Request, Response } from 'express';
 import pool from '../config/database';
 
@@ -41,6 +42,9 @@ export const orderController = {
         await pool.query('INSERT INTO order_items (order_id, product_name, sku, quantity, unit_price, total_price) VALUES (,,,,,)',
           [ord.order_id, item.product_name, item.sku, item.quantity, item.unit_price, item.quantity * item.unit_price]);
       }
+      // Fire event
+      const tenantId = (req as any).user?.tenantId || 1;
+      onOrderCreated(ord.order_id, tenantId, items||[]).catch(console.error);
       res.json({ status: 'success', data: ord });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },

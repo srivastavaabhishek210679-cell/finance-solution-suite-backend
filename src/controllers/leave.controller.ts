@@ -1,3 +1,4 @@
+﻿import { onLeaveSubmitted, onLeaveStatusChanged } from '../services/events.service';
 import { Request, Response } from 'express';
 import pool from '../config/database';
 
@@ -12,6 +13,8 @@ export const leaveController = {
     try {
       const { employee_name, leave_type, start_date, end_date, days, reason } = req.body;
       const result = await pool.query('INSERT INTO leave_requests (employee_name, leave_type, start_date, end_date, days, reason) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *', [employee_name, leave_type, start_date, end_date, days, reason]);
+      const tenantId = (req as any).user?.tenantId || 1;
+      onLeaveSubmitted({...result.rows[0], reason}, tenantId).catch(console.error);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -19,6 +22,8 @@ export const leaveController = {
     try {
       const { status, approved_by } = req.body;
       const result = await pool.query('UPDATE leave_requests SET status=, approved_by= WHERE leave_id= RETURNING *', [status, approved_by, req.params.id]);
+      const tenantId = (req as any).user?.tenantId || 1;
+      onLeaveStatusChanged(result.rows[0], tenantId, status).catch(console.error);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
