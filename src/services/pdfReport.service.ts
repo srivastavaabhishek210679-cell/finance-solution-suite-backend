@@ -96,7 +96,8 @@ export async function generatePDF(html: string): Promise<Buffer | null> {
         body: JSON.stringify({
           source: html,
           format: 'A4',
-      });
+          landscape: false
+        })
       if (response.ok) {
         const buffer = await response.arrayBuffer();
         console.log('[PDF] PDFShift success, size:', buffer.byteLength);
