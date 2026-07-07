@@ -354,7 +354,6 @@ async function sendMonthlyEmailReport() {
   } catch (e: any) { console.error('[MonthlyReport] Error:', e.message); }
 }
 
-};
 
 // ══════════════════════════════════════════════════════════════════════════════
 // WHATSAPP via TWILIO REST API
