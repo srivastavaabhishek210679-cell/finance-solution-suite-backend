@@ -52,6 +52,19 @@ export const notificationController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
 
+  create: async (req: Request, res: Response) => {
+    try {
+      const userId = (req as any).user?.userId;
+      const tenantId = (req as any).user?.tenantId || 1;
+      const { title, message, type, link } = req.body;
+      const result = await pool.query(
+        'INSERT INTO app_notifications (user_id,tenant_id,title,message,type,link) VALUES (' + String.fromCharCode(36) + '1,' + String.fromCharCode(36) + '2,' + String.fromCharCode(36) + '3,' + String.fromCharCode(36) + '4,' + String.fromCharCode(36) + '5,' + String.fromCharCode(36) + '6) RETURNING *',
+        [userId, tenantId, title, message, type||'info', link||'']
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
   getUnreadCount: async (req: Request, res: Response) => {
     try {
       const userId = (req as any).user?.userId;
