@@ -1,45 +1,55 @@
-﻿import { onLeaveSubmitted, onLeaveStatusChanged } from '../services/events.service';
 import { Request, Response } from 'express';
+import { getTenantDB } from '../config/tenantDb';
 import pool from '../config/database';
+import { onLeaveSubmitted, onLeaveStatusChanged } from '../services/events.service';
 
 export const leaveController = {
   getRequests: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query('SELECT * FROM leave_requests ORDER BY created_at DESC');
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM leave_requests WHERE tenant_id=$1 ORDER BY created_at DESC', [db.id]);
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
+
   createRequest: async (req: Request, res: Response) => {
     try {
+      const db = getTenantDB(req);
       const { employee_name, leave_type, start_date, end_date, days, reason } = req.body;
-      const result = await pool.query('INSERT INTO leave_requests (employee_name, leave_type, start_date, end_date, days, reason) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *', [employee_name, leave_type, start_date, end_date, days, reason]);
-      const tenantId = (req as any).user?.tenantId || 1;
-      onLeaveSubmitted({...result.rows[0], reason}, tenantId).catch(console.error);
+      const result = await pool.query(
+        'INSERT INTO leave_requests (tenant_id,employee_name,leave_type,start_date,end_date,total_days,reason) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
+        [db.id, employee_name, leave_type, start_date, end_date, days, reason]
+      );
+      onLeaveSubmitted({...result.rows[0], reason}, db.id).catch(console.error);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
+
   updateStatus: async (req: Request, res: Response) => {
     try {
+      const db = getTenantDB(req);
       const { status, approved_by } = req.body;
-      const result = await pool.query('UPDATE leave_requests SET status=, approved_by= WHERE leave_id= RETURNING *', [status, approved_by, req.params.id]);
-      const tenantId = (req as any).user?.tenantId || 1;
-      onLeaveStatusChanged(result.rows[0], tenantId, status).catch(console.error);
+      const result = await pool.query(
+        'UPDATE leave_requests SET status=$1,approved_by=$2,updated_at=NOW() WHERE leave_id=$3 AND tenant_id=$4 RETURNING *',
+        [status, approved_by, req.params.id, db.id]
+      );
+      onLeaveStatusChanged(result.rows[0], db.id, status).catch(console.error);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
+
   getTypes: async (req: Request, res: Response) => {
     try {
       const result = await pool.query('SELECT * FROM leave_types ORDER BY type_name');
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
-  getStats: async (req: Request, res: Response) => {
+
+  getBalance: async (req: Request, res: Response) => {
     try {
-      const total = await pool.query('SELECT COUNT(*) as total FROM leave_requests');
-      const pending = await pool.query("SELECT COUNT(*) as pending FROM leave_requests WHERE status='Pending'");
-      const approved = await pool.query("SELECT COUNT(*) as approved FROM leave_requests WHERE status='Approved'");
-      const byType = await pool.query('SELECT leave_type, COUNT(*) as count, SUM(days) as total_days FROM leave_requests GROUP BY leave_type ORDER BY count DESC');
-      res.json({ status: 'success', data: { total: total.rows[0].total, pending: pending.rows[0].pending, approved: approved.rows[0].approved, byType: byType.rows } });
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM leave_balances WHERE tenant_id=$1', [db.id]);
+      res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };

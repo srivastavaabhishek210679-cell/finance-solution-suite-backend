@@ -1,42 +1,67 @@
-﻿import { onTicketCreated, generateTicketNumber } from '../services/events.service';
 import { Request, Response } from 'express';
+import { getTenantDB } from '../config/tenantDb';
 import pool from '../config/database';
+import { onTicketCreated, generateTicketNumber } from '../services/events.service';
 
 export const helpdeskController = {
   getAll: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query('SELECT * FROM helpdesk_tickets ORDER BY created_at DESC');
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM helpdesk_tickets WHERE tenant_id=$1 ORDER BY created_at DESC', [db.id]);
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
-  create: async (req: Request, res: Response) => {
-    try {
-      const { title, description, category, priority, raised_by, department } = req.body;
-      const ticketNumber = 'TKT-' + Date.now().toString().slice(-6);
-      const tenantId = (req as any).user?.tenantId || 1;
-      const autoTicketNum = await generateTicketNumber(tenantId);
-      const result = await pool.query('INSERT INTO helpdesk_tickets (ticket_number, title, description, category, priority, raised_by, department) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *', [autoTicketNum || ticketNumber, title, description, category, priority||'Medium', raised_by, department]);
-      onTicketCreated({...result.rows[0], requester_name: raised_by}, tenantId).catch(console.error);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-  update: async (req: Request, res: Response) => {
-    try {
-      const { status, assigned_to, resolution } = req.body;
-      const resolved_at = status === 'Resolved' ? 'NOW()' : 'NULL';
-      const result = await pool.query('UPDATE helpdesk_tickets SET status=, assigned_to=, resolution=, resolved_at=' + resolved_at + ' WHERE ticket_id= RETURNING *', [status, assigned_to, resolution, req.params.id]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
+
   getStats: async (req: Request, res: Response) => {
     try {
-      const total = await pool.query('SELECT COUNT(*) as total FROM helpdesk_tickets');
-      const open = await pool.query("SELECT COUNT(*) as open FROM helpdesk_tickets WHERE status='Open'");
-      const inProgress = await pool.query("SELECT COUNT(*) as in_progress FROM helpdesk_tickets WHERE status='In Progress'");
-      const resolved = await pool.query("SELECT COUNT(*) as resolved FROM helpdesk_tickets WHERE status='Resolved'");
-      const byCategory = await pool.query('SELECT category, COUNT(*) as count FROM helpdesk_tickets GROUP BY category ORDER BY count DESC');
-      const byPriority = await pool.query('SELECT priority, COUNT(*) as count FROM helpdesk_tickets GROUP BY priority ORDER BY count DESC');
-      res.json({ status: 'success', data: { total: total.rows[0].total, open: open.rows[0].open, inProgress: inProgress.rows[0].in_progress, resolved: resolved.rows[0].resolved, byCategory: byCategory.rows, byPriority: byPriority.rows } });
+      const db = getTenantDB(req);
+      const result = await pool.query(
+        `SELECT COUNT(*) as total,
+         COUNT(CASE WHEN status='Open' THEN 1 END) as open,
+         COUNT(CASE WHEN status='In Progress' THEN 1 END) as in_progress,
+         COUNT(CASE WHEN status='Resolved' THEN 1 END) as resolved,
+         COUNT(CASE WHEN priority='Critical' THEN 1 END) as critical
+         FROM helpdesk_tickets WHERE tenant_id=$1`,
+        [db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  create: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const { title, description, category, priority, raised_by, department } = req.body;
+      const ticketNumber = await generateTicketNumber(db.id);
+      const result = await pool.query(
+        `INSERT INTO helpdesk_tickets (tenant_id,ticket_number,title,description,category,priority,requester_name,department)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
+        [db.id, ticketNumber, title, description, category, priority||'Medium', raised_by, department]
+      );
+      onTicketCreated({...result.rows[0], requester_name: raised_by}, db.id).catch(console.error);
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  updateStatus: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const { status, assigned_to, resolution } = req.body;
+      const resolved_at = status === 'Resolved' ? 'NOW()' : 'NULL';
+      const result = await pool.query(
+        `UPDATE helpdesk_tickets SET status=$1,assigned_to=$2,resolution=$3,resolved_at=${resolved_at},updated_at=NOW()
+         WHERE ticket_id=$4 AND tenant_id=$5 RETURNING *`,
+        [status, assigned_to, resolution, req.params.id, db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
+  delete: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      await pool.query('DELETE FROM helpdesk_tickets WHERE ticket_id=$1 AND tenant_id=$2', [req.params.id, db.id]);
+      res.json({ status: 'success', message: 'Deleted' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };

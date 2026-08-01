@@ -1,19 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import pool from '../config/database';
+import { AuthRequest } from './auth';
 
-export const tenantMiddleware = async (req: any, res: Response, next: NextFunction) => {
-  try {
-    if (!req.user) return next();
-    const userId = req.user.userId;
-    const result = await pool.query('SELECT tenant_id FROM users WHERE user_id=$1', [userId]);
-    if (result.rows.length) {
-      req.tenantId = result.rows[0].tenant_id || 1;
-    } else {
-      req.tenantId = 1;
-    }
-    next();
-  } catch (e) {
-    req.tenantId = 1;
-    next();
-  }
+// Adds getTenantId helper to all requests
+export const tenantMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const authReq = req as AuthRequest;
+  (req as any).getTenantId = () => authReq.user?.tenantId || 1;
+  (req as any).getUserId = () => authReq.user?.userId || 1;
+  (req as any).getRoleId = () => authReq.user?.roleId || 3;
+  next();
 };
