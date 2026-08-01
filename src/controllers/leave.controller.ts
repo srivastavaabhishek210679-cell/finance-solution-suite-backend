@@ -12,6 +12,17 @@ export const leaveController = {
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
 
+  getStats: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const result = await pool.query(
+        'SELECT COUNT(*) as total, COUNT(CASE WHEN status=$1 THEN 1 END) as pending, COUNT(CASE WHEN status=$2 THEN 1 END) as approved, COUNT(CASE WHEN status=$3 THEN 1 END) as rejected FROM leave_requests WHERE tenant_id=$4',
+        ['Pending', 'Approved', 'Rejected', db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+
   createRequest: async (req: Request, res: Response) => {
     try {
       const db = getTenantDB(req);
