@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { invoiceController as ctrl } from '../controllers/invoice.controller';
 import { authenticate } from '../middleware/auth';
+import { authorize } from '../middleware/authorize';
 const router = Router();
 router.use(authenticate);
-router.get('/', ctrl.getAll);
-router.post('/', ctrl.create);
-router.put('/:id/status', ctrl.updateStatus);
-router.get('/stats', ctrl.getStats);
+router.get('/', authorize('invoices:read'), ctrl.getAll);
+router.get('/stats', authorize('invoices:read'), ctrl.getStats);
+router.post('/', authorize('invoices:create'), ctrl.create);
+router.put('/:id/status', authorize('invoices:update'), ctrl.updateStatus);
+router.delete('/:id', authorize('invoices:delete'), ctrl.delete);
 export default router;

@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { leaveController } from '../controllers/leave.controller';
 import { authenticate } from '../middleware/auth';
+import { authorize } from '../middleware/authorize';
 const router = Router();
 router.use(authenticate);
-router.get('/', leaveController.getRequests);
-router.post('/', leaveController.createRequest);
-router.put('/:id/status', leaveController.updateStatus);
+router.get('/', authorize('leave:read'), leaveController.getRequests);
+router.get('/stats', authorize('leave:read'), leaveController.getStats);
 router.get('/types', leaveController.getTypes);
-router.get('/stats', leaveController.getStats);
+router.post('/', authorize('leave:create'), leaveController.createRequest);
+router.put('/:id/status', authorize('leave:approve'), leaveController.updateStatus);
 export default router;

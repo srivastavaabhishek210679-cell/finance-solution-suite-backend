@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { expenseController as ctrl } from '../controllers/expense.controller';
 import { authenticate } from '../middleware/auth';
+import { authorize } from '../middleware/authorize';
 const router = Router();
 router.use(authenticate);
-router.get('/', ctrl.getAll);
-router.post('/', ctrl.create);
-router.put('/:id/status', ctrl.updateStatus);
-router.get('/stats', ctrl.getStats);
+router.get('/', authorize('expenses:read'), ctrl.getAll);
+router.get('/stats', authorize('expenses:read'), ctrl.getStats);
+router.post('/', authorize('expenses:create'), ctrl.create);
+router.put('/:id/status', authorize('expenses:approve'), ctrl.updateStatus);
+router.delete('/:id', authorize('expenses:delete'), ctrl.delete);
 export default router;

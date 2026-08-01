@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { helpdeskController as ctrl } from '../controllers/helpdesk.controller';
 import { authenticate } from '../middleware/auth';
+import { authorize } from '../middleware/authorize';
 const router = Router();
 router.use(authenticate);
-router.get('/', ctrl.getAll);
-router.post('/', ctrl.create);
-router.put('/:id', ctrl.update);
-router.get('/stats', ctrl.getStats);
+router.get('/', authorize('helpdesk:read'), ctrl.getAll);
+router.get('/stats', authorize('helpdesk:read'), ctrl.getStats);
+router.post('/', authorize('helpdesk:create'), ctrl.create);
+router.put('/:id', authorize('helpdesk:update'), ctrl.update);
+router.delete('/:id', authorize('helpdesk:delete'), ctrl.delete);
 export default router;

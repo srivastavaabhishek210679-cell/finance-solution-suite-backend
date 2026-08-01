@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { riskController as ctrl } from '../controllers/risk.controller';
 import { authenticate } from '../middleware/auth';
+import { authorize } from '../middleware/authorize';
 const router = Router();
 router.use(authenticate);
-router.get('/', ctrl.getAll);
-router.post('/', ctrl.create);
-router.put('/:id', ctrl.update);
-router.get('/stats', ctrl.getStats);
+router.get('/', authorize('risks:read'), ctrl.getAll);
+router.get('/stats', authorize('risks:read'), ctrl.getStats);
+router.post('/', authorize('risks:create'), ctrl.create);
+router.put('/:id', authorize('risks:update'), ctrl.update);
+router.delete('/:id', authorize('risks:delete'), ctrl.delete);
 export default router;
