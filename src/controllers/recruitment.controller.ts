@@ -1,59 +1,52 @@
 import { Request, Response } from 'express';
+import { getTenantDB } from '../config/tenantDb';
 import pool from '../config/database';
 
 export const recruitmentController = {
-  getJobs: async (req: Request, res: Response) => {
+  getAll: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query('SELECT * FROM job_postings ORDER BY posted_date DESC');
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM recruitment_applications WHERE tenant_id=$1 ORDER BY created_at DESC', [db.id]);
       res.json({ status: 'success', data: result.rows });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-  createJob: async (req: Request, res: Response) => {
-    try {
-      const { job_title, department, location, job_type, experience, salary_range, status, openings, closing_date, description } = req.body;
-      const safeClosingDate = closing_date || null;
-      const result = await pool.query('INSERT INTO job_postings (job_title, department, location, job_type, experience, salary_range, status, openings, closing_date, description) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *', [job_title, department, location, job_type||'Full-Time', experience, salary_range, status||'Open', openings||1, safeClosingDate, description]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-  updateJob: async (req: Request, res: Response) => {
-    try {
-      const { job_title, status, openings, closing_date, description } = req.body;
-      const result = await pool.query('UPDATE job_postings SET job_title=, status=, openings=, closing_date=, description= WHERE job_id= RETURNING *', [job_title, status, openings, closing_date, description, req.params.id]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-  getApplications: async (req: Request, res: Response) => {
-    try {
-      const result = await pool.query('SELECT a.*, j.job_title, j.department FROM job_applications a JOIN job_postings j ON a.job_id=j.job_id ORDER BY a.created_at DESC');
-      res.json({ status: 'success', data: result.rows });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-  createApplication: async (req: Request, res: Response) => {
-    try {
-      const { job_id, candidate_name, email, phone, experience_years, current_company, notes } = req.body;
-      const result = await pool.query('INSERT INTO job_applications (job_id, candidate_name, email, phone, experience_years, current_company, notes) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *', [job_id, candidate_name, email, phone, experience_years||0, current_company, notes]);
-      await pool.query('UPDATE job_postings SET applications=applications+1 WHERE job_id=', [job_id]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-  updateApplicationStatus: async (req: Request, res: Response) => {
-    try {
-      const { status, interview_date, notes } = req.body;
-      const safeInterviewDate = interview_date || null;
-      const result = await pool.query('UPDATE job_applications SET status=, interview_date=, notes= WHERE application_id= RETURNING *', [status, safeInterviewDate, notes, req.params.id]);
-      res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   getStats: async (req: Request, res: Response) => {
     try {
-      const jobs = await pool.query('SELECT COUNT(*) as total FROM job_postings');
-      const open = await pool.query("SELECT COUNT(*) as open FROM job_postings WHERE status='Open'");
-      const apps = await pool.query('SELECT COUNT(*) as total FROM job_applications');
-      const byStatus = await pool.query('SELECT status, COUNT(*) as count FROM job_applications GROUP BY status ORDER BY count DESC');
-      res.json({ status: 'success', data: { totalJobs: jobs.rows[0].total, openJobs: open.rows[0].open, totalApplications: apps.rows[0].total, byStatus: byStatus.rows } });
+      const db = getTenantDB(req);
+      const result = await pool.query(
+        'SELECT COUNT(*) as total, COUNT(CASE WHEN status=$1 THEN 1 END) as shortlisted, COUNT(CASE WHEN status=$2 THEN 1 END) as hired FROM recruitment_applications WHERE tenant_id=$3',
+        ['Shortlisted', 'Hired', db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  create: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const { candidate_name, position, department, email, phone, status } = req.body;
+      const result = await pool.query(
+        'INSERT INTO recruitment_applications (tenant_id,candidate_name,position,department,email,phone,status) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
+        [db.id, candidate_name, position, department, email, phone, status||'Applied']
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  update: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const { status, notes, interview_date } = req.body;
+      const result = await pool.query(
+        'UPDATE recruitment_applications SET status=$1,notes=$2,interview_date=$3,updated_at=NOW() WHERE application_id=$4 AND tenant_id=$5 RETURNING *',
+        [status, notes, interview_date, req.params.id, db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  delete: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      await pool.query('DELETE FROM recruitment_applications WHERE application_id=$1 AND tenant_id=$2', [req.params.id, db.id]);
+      res.json({ status: 'success', message: 'Deleted' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
-
-

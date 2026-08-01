@@ -1,41 +1,52 @@
 import { Request, Response } from 'express';
+import { getTenantDB } from '../config/tenantDb';
 import pool from '../config/database';
 
 export const attendanceController = {
   getAll: async (req: Request, res: Response) => {
     try {
-      const date = req.query.date || new Date().toISOString().slice(0,10);
-      const result = await pool.query('SELECT * FROM attendance_records WHERE date= ORDER BY department, employee_name', [date]);
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM attendance_records WHERE tenant_id=$1 ORDER BY date DESC', [db.id]);
       res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  getStats: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const result = await pool.query(
+        'SELECT COUNT(*) as total, COUNT(CASE WHEN status=$1 THEN 1 END) as present, COUNT(CASE WHEN status=$2 THEN 1 END) as absent, COUNT(CASE WHEN status=$3 THEN 1 END) as late FROM attendance_records WHERE tenant_id=$4',
+        ['Present', 'Absent', 'Late', db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   create: async (req: Request, res: Response) => {
     try {
-      const { employee_name, department, date, check_in, check_out, working_hours, status, overtime_hours, notes } = req.body;
-      const safeCheckIn = check_in || null;
-      const safeCheckOut = check_out || null;
-      const result = await pool.query('INSERT INTO attendance_records (employee_name, department, date, check_in, check_out, working_hours, status, overtime_hours, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *', [employee_name, department, date, safeCheckIn, safeCheckOut, working_hours||0, status||'Present', overtime_hours||0, notes]);
+      const db = getTenantDB(req);
+      const { employee_name, date, status, check_in, check_out, working_hours, department } = req.body;
+      const result = await pool.query(
+        'INSERT INTO attendance_records (tenant_id,employee_name,date,status,check_in,check_out,working_hours,department) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
+        [db.id, employee_name, date, status||'Present', check_in, check_out, working_hours||8, department]
+      );
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   update: async (req: Request, res: Response) => {
     try {
-      const { check_in, check_out, working_hours, status, overtime_hours } = req.body;
-      const safeCheckIn = check_in || null;
-      const safeCheckOut = check_out || null;
-      const result = await pool.query('UPDATE attendance_records SET check_in=, check_out=, working_hours=, status=, overtime_hours= WHERE attendance_id= RETURNING *', [check_in, check_out, working_hours, status, overtime_hours||0, req.params.id]);
+      const db = getTenantDB(req);
+      const { status, check_in, check_out, working_hours } = req.body;
+      const result = await pool.query(
+        'UPDATE attendance_records SET status=$1,check_in=$2,check_out=$3,working_hours=$4 WHERE id=$5 AND tenant_id=$6 RETURNING *',
+        [status, check_in, check_out, working_hours, req.params.id, db.id]
+      );
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
-  getStats: async (req: Request, res: Response) => {
+  delete: async (req: Request, res: Response) => {
     try {
-      const today = new Date().toISOString().slice(0,10);
-      const present = await pool.query("SELECT COUNT(*) as present FROM attendance_records WHERE date= AND status='Present'", [today]);
-      const absent = await pool.query("SELECT COUNT(*) as absent FROM attendance_records WHERE date= AND status='Absent'", [today]);
-      const late = await pool.query("SELECT COUNT(*) as late FROM attendance_records WHERE date= AND status='Late'", [today]);
-      const avgHours = await pool.query('SELECT AVG(working_hours) as avg_hours FROM attendance_records WHERE date=', [today]);
-      res.json({ status: 'success', data: { present: present.rows[0].present, absent: absent.rows[0].absent, late: late.rows[0].late, avgHours: avgHours.rows[0].avg_hours } });
+      const db = getTenantDB(req);
+      await pool.query('DELETE FROM attendance_records WHERE id=$1 AND tenant_id=$2', [req.params.id, db.id]);
+      res.json({ status: 'success', message: 'Deleted' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
-

@@ -1,37 +1,45 @@
 import { Request, Response } from 'express';
+import { getTenantDB } from '../config/tenantDb';
 import pool from '../config/database';
 
 export const invoiceController = {
   getAll: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query('SELECT * FROM invoices ORDER BY created_at DESC');
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM generated_invoices WHERE tenant_id=$1 ORDER BY created_at DESC', [db.id]);
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
-  create: async (req: Request, res: Response) => {
+  getStats: async (req: Request, res: Response) => {
     try {
-      const { invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount, total_amount, issue_date, due_date, notes } = req.body;
-      const safeIssueDate = issue_date || null;
-      const safeDueDate = due_date || null;
-      const result = await pool.query('INSERT INTO invoices (invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount, total_amount, issue_date, due_date, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *', [invoice_number, invoice_type, party_name, party_email, department, amount, tax_amount||0, total_amount, safeIssueDate, safeDueDate, notes]);
+      const db = getTenantDB(req);
+      const result = await pool.query(
+        'SELECT COUNT(*) as total, COALESCE(SUM(total_amount),0) as total_amount, COUNT(CASE WHEN status=$1 THEN 1 END) as paid, COUNT(CASE WHEN status=$2 THEN 1 END) as overdue FROM generated_invoices WHERE tenant_id=$3',
+        ['Paid', 'Overdue', db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  getById: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM generated_invoices WHERE invoice_id=$1 AND tenant_id=$2', [req.params.id, db.id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   updateStatus: async (req: Request, res: Response) => {
     try {
-      const { status, payment_method, payment_date } = req.body;
-      const result = await pool.query('UPDATE invoices SET status=, payment_method=, payment_date= WHERE invoice_id= RETURNING *', [status, payment_method, payment_date, req.params.id]);
+      const db = getTenantDB(req);
+      const { status } = req.body;
+      const result = await pool.query('UPDATE generated_invoices SET status=$1 WHERE invoice_id=$2 AND tenant_id=$3 RETURNING *', [status, req.params.id, db.id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
-  getStats: async (req: Request, res: Response) => {
+  delete: async (req: Request, res: Response) => {
     try {
-      const receivable = await pool.query("SELECT COUNT(*) as count, SUM(total_amount) as total FROM invoices WHERE invoice_type='Receivable'");
-      const payable = await pool.query("SELECT COUNT(*) as count, SUM(total_amount) as total FROM invoices WHERE invoice_type='Payable'");
-      const overdue = await pool.query("SELECT COUNT(*) as count FROM invoices WHERE status='Overdue'");
-      const pending = await pool.query("SELECT COUNT(*) as count, SUM(total_amount) as total FROM invoices WHERE status='Pending'");
-      res.json({ status: 'success', data: { receivable: receivable.rows[0], payable: payable.rows[0], overdue: overdue.rows[0].count, pending: pending.rows[0] } });
+      const db = getTenantDB(req);
+      await pool.query('DELETE FROM generated_invoices WHERE invoice_id=$1 AND tenant_id=$2', [req.params.id, db.id]);
+      res.json({ status: 'success', message: 'Deleted' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
-

@@ -1,174 +1,59 @@
 import { Request, Response } from 'express';
+import { getTenantDB } from '../config/tenantDb';
 import pool from '../config/database';
 
 export const projectController = {
-  getProjects: async (req: Request, res: Response) => {
+  getAll: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query("SELECT p.*, COUNT(t.task_id) as total_tasks, COUNT(CASE WHEN t.status='Done' THEN 1 END) as completed_tasks FROM pm_projects p LEFT JOIN pm_tasks t ON p.project_id=t.project_id GROUP BY p.project_id ORDER BY p.created_at DESC");
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM projects WHERE tenant_id=$1 ORDER BY created_at DESC', [db.id]);
       res.json({ status: 'success', data: result.rows });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
-
-  createProject: async (req: Request, res: Response) => {
-    try {
-      const { project_name, project_code, description, client, project_manager, department, start_date, end_date, status, priority, budget } = req.body;
-      const result = await pool.query('INSERT INTO pm_projects (project_name, project_code, description, client, project_manager, department, start_date, end_date, status, priority, budget) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *', [project_name, project_code, description, client, project_manager, department, start_date, end_date, status||'Planning', priority||'Medium', budget||0]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  updateProject: async (req: Request, res: Response) => {
-    try {
-      const { project_name, description, client, project_manager, status, priority, budget, spent, progress } = req.body;
-      const result = await pool.query('UPDATE pm_projects SET project_name=$1, description=$2, client=$3, project_manager=$4, status=$5, priority=$6, budget=$7, spent=$8, progress=$9, updated_at=NOW() WHERE project_id=$10 RETURNING *', [project_name, description, client, project_manager, status, priority, budget, spent||0, progress||0, req.params.id]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  deleteProject: async (req: Request, res: Response) => {
-    try {
-      await pool.query('DELETE FROM pm_projects WHERE project_id=$1', [req.params.id]);
-      res.json({ status: 'success', message: 'Project deleted' });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  getTasks: async (req: Request, res: Response) => {
-    try {
-      const result = await pool.query('SELECT * FROM pm_tasks WHERE project_id=$1 ORDER BY created_at DESC', [req.params.projectId]);
-      res.json({ status: 'success', data: result.rows });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  createTask: async (req: Request, res: Response) => {
-    try {
-      const { project_id, task_name, description, assigned_to, status, priority, due_date, estimated_hours, tags } = req.body;
-      const result = await pool.query('INSERT INTO pm_tasks (project_id, task_name, description, assigned_to, status, priority, due_date, estimated_hours, tags) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *', [project_id, task_name, description, assigned_to, status||'Todo', priority||'Medium', due_date, estimated_hours||0, JSON.stringify(tags||[])]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  updateTask: async (req: Request, res: Response) => {
-    try {
-      const { task_name, assigned_to, status, priority, due_date, estimated_hours, actual_hours } = req.body;
-      const result = await pool.query('UPDATE pm_tasks SET task_name=$1, assigned_to=$2, status=$3, priority=$4, due_date=$5, estimated_hours=$6, actual_hours=$7, updated_at=NOW() WHERE task_id=$8 RETURNING *', [task_name, assigned_to, status, priority, due_date, estimated_hours||0, actual_hours||0, req.params.id]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  deleteTask: async (req: Request, res: Response) => {
-    try {
-      await pool.query('DELETE FROM pm_tasks WHERE task_id=$1', [req.params.id]);
-      res.json({ status: 'success', message: 'Task deleted' });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  getMilestones: async (req: Request, res: Response) => {
-    try {
-      const result = await pool.query('SELECT * FROM pm_milestones WHERE project_id=$1 ORDER BY due_date', [req.params.projectId]);
-      res.json({ status: 'success', data: result.rows });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  createMilestone: async (req: Request, res: Response) => {
-    try {
-      const { project_id, milestone_name, due_date, status, description } = req.body;
-      const result = await pool.query('INSERT INTO pm_milestones (project_id, milestone_name, due_date, status, description) VALUES ($1,$2,$3,$4,$5) RETURNING *', [project_id, milestone_name, due_date, status||'Pending', description]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  updateMilestone: async (req: Request, res: Response) => {
-    try {
-      const { status } = req.body;
-      const result = await pool.query('UPDATE pm_milestones SET status=$1 WHERE milestone_id=$2 RETURNING *', [status, req.params.id]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
   getStats: async (req: Request, res: Response) => {
     try {
-      const total = await pool.query('SELECT COUNT(*) as total FROM pm_projects');
-      const active = await pool.query("SELECT COUNT(*) as active FROM pm_projects WHERE status='In Progress'");
-      const completed = await pool.query("SELECT COUNT(*) as completed FROM pm_projects WHERE status='Completed'");
-      const budget = await pool.query('SELECT SUM(budget) as total_budget, SUM(spent) as total_spent FROM pm_projects');
-      res.json({ status: 'success', data: { totalProjects: total.rows[0].total, activeProjects: active.rows[0].active, completedProjects: completed.rows[0].completed, totalBudget: budget.rows[0].total_budget, totalSpent: budget.rows[0].total_spent } });
+      const db = getTenantDB(req);
+      const result = await pool.query(
+        'SELECT COUNT(*) as total, COUNT(CASE WHEN status=$1 THEN 1 END) as active, COUNT(CASE WHEN status=$2 THEN 1 END) as completed, COALESCE(SUM(budget),0) as total_budget FROM projects WHERE tenant_id=$3',
+        ['Active', 'Completed', db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  getById: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM projects WHERE project_id=$1 AND tenant_id=$2', [req.params.id, db.id]);
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  create: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const { project_name, project_code, client, department, start_date, end_date, status, priority, budget, description } = req.body;
+      const result = await pool.query(
+        'INSERT INTO projects (tenant_id,project_name,project_code,client,department,start_date,end_date,status,priority,budget,description) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *',
+        [db.id, project_name, project_code, client, department, start_date, end_date, status||'Active', priority||'Medium', budget||0, description]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  update: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const { project_name, client, status, priority, budget, progress, end_date } = req.body;
+      const result = await pool.query(
+        'UPDATE projects SET project_name=$1,client=$2,status=$3,priority=$4,budget=$5,progress=$6,end_date=$7,updated_at=NOW() WHERE project_id=$8 AND tenant_id=$9 RETURNING *',
+        [project_name, client, status, priority, budget, progress, end_date, req.params.id, db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  delete: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      await pool.query('DELETE FROM projects WHERE project_id=$1 AND tenant_id=$2', [req.params.id, db.id]);
+      res.json({ status: 'success', message: 'Deleted' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
-// Additional controllers for new features
-export const projectFeaturesController = {
-  getTeamMembers: async (req: Request, res: Response) => {
-    try {
-      const result = await pool.query('SELECT * FROM pm_team_members WHERE project_id=$1 ORDER BY joined_at', [req.params.projectId]);
-      res.json({ status: 'success', data: result.rows });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  addTeamMember: async (req: Request, res: Response) => {
-    try {
-      const { project_id, name, role, email, avatar_color } = req.body;
-      const result = await pool.query('INSERT INTO pm_team_members (project_id, name, role, email, avatar_color) VALUES ($1,$2,$3,$4,$5) RETURNING *', [project_id, name, role, email, avatar_color||'#3b82f6']);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  removeTeamMember: async (req: Request, res: Response) => {
-    try {
-      await pool.query('DELETE FROM pm_team_members WHERE member_id=$1', [req.params.id]);
-      res.json({ status: 'success', message: 'Member removed' });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  getComments: async (req: Request, res: Response) => {
-    try {
-      const result = await pool.query('SELECT * FROM pm_comments WHERE project_id=$1 ORDER BY created_at DESC', [req.params.projectId]);
-      res.json({ status: 'success', data: result.rows });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  addComment: async (req: Request, res: Response) => {
-    try {
-      const { project_id, author, content } = req.body;
-      const result = await pool.query('INSERT INTO pm_comments (project_id, author, content) VALUES ($1,$2,$3) RETURNING *', [project_id, author, content]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  deleteComment: async (req: Request, res: Response) => {
-    try {
-      await pool.query('DELETE FROM pm_comments WHERE comment_id=$1', [req.params.id]);
-      res.json({ status: 'success', message: 'Comment deleted' });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  getAttachments: async (req: Request, res: Response) => {
-    try {
-      const result = await pool.query('SELECT * FROM pm_attachments WHERE project_id=$1 ORDER BY created_at DESC', [req.params.projectId]);
-      res.json({ status: 'success', data: result.rows });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  addAttachment: async (req: Request, res: Response) => {
-    try {
-      const { project_id, file_name, file_size, file_type, uploaded_by } = req.body;
-      const result = await pool.query('INSERT INTO pm_attachments (project_id, file_name, file_size, file_type, uploaded_by) VALUES ($1,$2,$3,$4,$5) RETURNING *', [project_id, file_name, file_size, file_type, uploaded_by]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  deleteAttachment: async (req: Request, res: Response) => {
-    try {
-      await pool.query('DELETE FROM pm_attachments WHERE attachment_id=$1', [req.params.id]);
-      res.json({ status: 'success', message: 'Attachment deleted' });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  },
-
-  updateBudget: async (req: Request, res: Response) => {
-    try {
-      const { spent, progress } = req.body;
-      const result = await pool.query('UPDATE pm_projects SET spent=$1, progress=$2, updated_at=NOW() WHERE project_id=$3 RETURNING *', [spent, progress, req.params.id]);
-      res.json({ status: 'success', data: result.rows[0] });
-    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
-  }
-};
-

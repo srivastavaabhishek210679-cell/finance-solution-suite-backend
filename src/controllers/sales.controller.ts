@@ -1,38 +1,52 @@
 import { Request, Response } from 'express';
+import { getTenantDB } from '../config/tenantDb';
 import pool from '../config/database';
 
 export const salesController = {
   getAll: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query('SELECT * FROM sales_deals ORDER BY updated_at DESC');
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM deals WHERE tenant_id=$1 ORDER BY created_at DESC', [db.id]);
       res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  getStats: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const result = await pool.query(
+        'SELECT COUNT(*) as total, COALESCE(SUM(deal_value),0) as pipeline_value, COUNT(CASE WHEN stage=$1 THEN 1 END) as won, COUNT(CASE WHEN stage=$2 THEN 1 END) as lost FROM deals WHERE tenant_id=$3',
+        ['Closed Won', 'Closed Lost', db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   create: async (req: Request, res: Response) => {
     try {
-      const { deal_name, company_name, contact_name, deal_value, stage, probability, expected_close, assigned_to, source, notes } = req.body;
-      const safeClose = expected_close || null;
-      const result = await pool.query('INSERT INTO sales_deals (deal_name, company_name, contact_name, deal_value, stage, probability, expected_close, assigned_to, source, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *', [deal_name, company_name, contact_name, deal_value||0, stage||'Prospecting', probability||0, safeClose, assigned_to, source, notes]);
+      const db = getTenantDB(req);
+      const { deal_name, customer_name, deal_value, stage, expected_close, assigned_to, probability } = req.body;
+      const result = await pool.query(
+        'INSERT INTO deals (tenant_id,deal_name,customer_name,deal_value,stage,expected_close,assigned_to,probability) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
+        [db.id, deal_name, customer_name, deal_value||0, stage||'Prospecting', expected_close, assigned_to, probability||50]
+      );
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   update: async (req: Request, res: Response) => {
     try {
-      const { deal_name, deal_value, stage, probability, expected_close, assigned_to, notes } = req.body;
-      const safeClose = expected_close || null;
-      const result = await pool.query('UPDATE sales_deals SET deal_name=, deal_value=, stage=, probability=, expected_close=, assigned_to=, notes=, updated_at=NOW() WHERE deal_id= RETURNING *', [deal_name, deal_value, stage, probability, safeClose, assigned_to, notes, req.params.id]);
+      const db = getTenantDB(req);
+      const { stage, deal_value, expected_close, assigned_to, probability } = req.body;
+      const result = await pool.query(
+        'UPDATE deals SET stage=$1,deal_value=$2,expected_close=$3,assigned_to=$4,probability=$5,updated_at=NOW() WHERE deal_id=$6 AND tenant_id=$7 RETURNING *',
+        [stage, deal_value, expected_close, assigned_to, probability, req.params.id, db.id]
+      );
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
-  getStats: async (req: Request, res: Response) => {
+  delete: async (req: Request, res: Response) => {
     try {
-      const total = await pool.query('SELECT COUNT(*) as total, SUM(deal_value) as pipeline_value FROM sales_deals');
-      const won = await pool.query("SELECT COUNT(*) as won, SUM(deal_value) as won_value FROM sales_deals WHERE stage='Closed Won'");
-      const byStage = await pool.query('SELECT stage, COUNT(*) as count, SUM(deal_value) as value FROM sales_deals GROUP BY stage ORDER BY count DESC');
-      const forecast = await pool.query('SELECT SUM(deal_value * probability / 100) as forecast FROM sales_deals WHERE stage != ', ['Closed Won']);
-      res.json({ status: 'success', data: { total: total.rows[0].total, pipelineValue: total.rows[0].pipeline_value, won: won.rows[0].won, wonValue: won.rows[0].won_value, byStage: byStage.rows, forecast: forecast.rows[0].forecast } });
+      const db = getTenantDB(req);
+      await pool.query('DELETE FROM deals WHERE deal_id=$1 AND tenant_id=$2', [req.params.id, db.id]);
+      res.json({ status: 'success', message: 'Deleted' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
-
-
