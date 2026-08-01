@@ -13,10 +13,7 @@ export const documentController = {
   getStats: async (req: Request, res: Response) => {
     try {
       const db = getTenantDB(req);
-      const result = await pool.query(
-        'SELECT COUNT(*) as total, COUNT(DISTINCT category) as categories FROM documents WHERE tenant_id=$1',
-        [db.id]
-      );
+      const result = await pool.query('SELECT COUNT(*) as total, COUNT(DISTINCT category) as categories FROM documents WHERE tenant_id=$1', [db.id]);
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
@@ -27,6 +24,17 @@ export const documentController = {
       const result = await pool.query(
         'INSERT INTO documents (tenant_id,title,category,file_url,file_type,file_size,uploaded_by,description) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
         [db.id, title, category||'General', file_url, file_type, file_size, uploaded_by, description]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  update: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const { title, category, description } = req.body;
+      const result = await pool.query(
+        'UPDATE documents SET title=$1,category=$2,description=$3,updated_at=NOW() WHERE document_id=$4 AND tenant_id=$5 RETURNING *',
+        [title, category, description, req.params.id, db.id]
       );
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
