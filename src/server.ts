@@ -210,6 +210,8 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/webhooks-config', require('./routes/webhook.routes').default);
   apiRouter.use('/rbac', require('./routes/rbac.routes').default);
   apiRouter.use('/user-management', require('./routes/userManagement.routes').default);
+  apiRouter.use('/onboarding', require('./routes/onboarding.routes').default);
+  apiRouter.use('/export', require('./routes/export.routes').default);
   apiRouter.use('/live-data', require('./routes/liveData.routes').default);
   apiRouter.use('/supply', require('./routes/supply.routes').default);
   apiRouter.use('/orders', require('./routes/order.routes').default);

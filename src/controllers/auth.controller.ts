@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+﻿import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 
@@ -30,6 +30,11 @@ export class AuthController {
         const fakeUser = { user_id: user.user_id, tenant_id: newTenantId, role_id: 1, email: user.email };
         const { token, refreshToken, expiresIn } = (this.authService as any).generateTokenPair(fakeUser);
 
+        // Send verification email async
+        const { emailVerifyController } = await import('./emailVerify.controller');
+        const fakeReq = { body: { email: user.email } } as any;
+        const fakeRes = { json: () => {} } as any;
+        emailVerifyController.sendVerification(fakeReq, fakeRes).catch(console.error);
         res.status(201).json({
           status:  'success',
           message: 'Account created successfully',
@@ -48,6 +53,11 @@ export class AuthController {
           role_id: role_id || 2,
           ...rest,
         });
+        // Send verification email async
+        const { emailVerifyController } = await import('./emailVerify.controller');
+        const fakeReq = { body: { email: user.email } } as any;
+        const fakeRes = { json: () => {} } as any;
+        emailVerifyController.sendVerification(fakeReq, fakeRes).catch(console.error);
         res.status(201).json({
           status:  'success',
           message: 'User registered successfully',
