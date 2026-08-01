@@ -30,6 +30,13 @@ export const budgetController = {
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
+  delete: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      await pool.query('DELETE FROM budgets WHERE budget_id=$1 AND tenant_id=$2', [req.params.id, db.id]);
+      res.json({ status: 'success', message: 'Deleted' });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
   getTransactions: async (req: Request, res: Response) => {
     try {
       const result = await pool.query('SELECT * FROM budget_transactions WHERE budget_id= ORDER BY created_at DESC', [req.params.id]);
