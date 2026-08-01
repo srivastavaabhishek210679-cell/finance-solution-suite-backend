@@ -1,33 +1,52 @@
 import { Request, Response } from 'express';
+import { getTenantDB } from '../config/tenantDb';
 import pool from '../config/database';
 
 export const assetController = {
   getAll: async (req: Request, res: Response) => {
     try {
-      const result = await pool.query('SELECT * FROM assets ORDER BY created_at DESC');
+      const db = getTenantDB(req);
+      const result = await pool.query('SELECT * FROM assets WHERE tenant_id=$1 ORDER BY created_at DESC', [db.id]);
       res.json({ status: 'success', data: result.rows });
+    } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
+  },
+  getStats: async (req: Request, res: Response) => {
+    try {
+      const db = getTenantDB(req);
+      const result = await pool.query(
+        'SELECT COUNT(*) as total, COALESCE(SUM(purchase_value),0) as total_value, COUNT(CASE WHEN status=$1 THEN 1 END) as active FROM assets WHERE tenant_id=$2',
+        ['Active', db.id]
+      );
+      res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   create: async (req: Request, res: Response) => {
     try {
-      const { asset_name, asset_code, category, department, assigned_to, purchase_date, purchase_price, current_value, depreciation_rate, status, location, warranty_expiry } = req.body;
-      const result = await pool.query('INSERT INTO assets (asset_name, asset_code, category, department, assigned_to, purchase_date, purchase_price, current_value, depreciation_rate, status, location, warranty_expiry) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *', [asset_name, asset_code, category, department, assigned_to, purchase_date, purchase_price, current_value, depreciation_rate, status||'Active', location, warranty_expiry]);
+      const db = getTenantDB(req);
+      const { asset_name, asset_code, category, purchase_date, purchase_value, assigned_to, location, status } = req.body;
+      const result = await pool.query(
+        'INSERT INTO assets (tenant_id,asset_name,asset_code,category,purchase_date,purchase_value,assigned_to,location,status) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *',
+        [db.id, asset_name, asset_code, category, purchase_date, purchase_value||0, assigned_to, location, status||'Active']
+      );
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
   update: async (req: Request, res: Response) => {
     try {
-      const { asset_name, department, assigned_to, current_value, status, location, last_maintenance } = req.body;
-      const result = await pool.query('UPDATE assets SET asset_name=, department=, assigned_to=, current_value=, status=, location=, last_maintenance= WHERE asset_id= RETURNING *', [asset_name, department, assigned_to, current_value, status, location, last_maintenance, req.params.id]);
+      const db = getTenantDB(req);
+      const { asset_name, category, assigned_to, location, status } = req.body;
+      const result = await pool.query(
+        'UPDATE assets SET asset_name=$1,category=$2,assigned_to=$3,location=$4,status=$5,updated_at=NOW() WHERE asset_id=$6 AND tenant_id=$7 RETURNING *',
+        [asset_name, category, assigned_to, location, status, req.params.id, db.id]
+      );
       res.json({ status: 'success', data: result.rows[0] });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   },
-  getStats: async (req: Request, res: Response) => {
+  delete: async (req: Request, res: Response) => {
     try {
-      const total = await pool.query('SELECT COUNT(*) as total, SUM(current_value) as total_value FROM assets');
-      const byCategory = await pool.query('SELECT category, COUNT(*) as count, SUM(current_value) as value FROM assets GROUP BY category ORDER BY value DESC');
-      const expiring = await pool.query("SELECT * FROM assets WHERE warranty_expiry BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '90 days' ORDER BY warranty_expiry");
-      res.json({ status: 'success', data: { total: total.rows[0].total, totalValue: total.rows[0].total_value, byCategory: byCategory.rows, expiringWarranty: expiring.rows } });
+      const db = getTenantDB(req);
+      await pool.query('DELETE FROM assets WHERE asset_id=$1 AND tenant_id=$2', [req.params.id, db.id]);
+      res.json({ status: 'success', message: 'Deleted' });
     } catch (e) { res.status(500).json({ status: 'error', message: String(e) }); }
   }
 };
