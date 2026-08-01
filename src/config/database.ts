@@ -1,4 +1,4 @@
-import { Pool, PoolClient, QueryResult, PoolConfig } from 'pg';
+﻿import { Pool, PoolClient, QueryResult, PoolConfig } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -96,6 +96,8 @@ export const transaction = async <T>(
 export const testConnection = async (): Promise<boolean> => {
   try {
     const result = await query('SELECT NOW()');
+    // Ensure critical indexes exist
+    pool.query('CREATE UNIQUE INDEX IF NOT EXISTS live_kpi_metrics_unique ON live_kpi_metrics(tenant_id, kpi_name)').catch(() => {});
     console.log('✅ Database connected successfully at:', result.rows[0].now);
     return true;
   } catch (error) {
