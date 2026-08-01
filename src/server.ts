@@ -134,15 +134,12 @@ const apiRouter = express.Router();
 // MODULE 1: AUTHENTICATION & USER MANAGEMENT
 // ============================================================
 apiRouter.use('/auth', authLimiter);
-  apiRouter.use('/auth', authRoutes);
-  apiRouter.use('/auth', authRoutes);
   apiRouter.use('/workspace', require('./routes/workspace.routes').default);
 apiRouter.get('/test-after-auth', (req, res) => {
   res.json({ message: 'Test route after auth works!' });
 });
 apiRouter.use('/users', userRoutes);
 apiRouter.use('/analytics', analyticsRoutes);
-//apiRouter.use('/analytics', analyticsRoutes);
 // DEBUG: Direct test route in server.ts
 apiRouter.get('/test-direct', (req, res) => {
   res.json({ message: 'Direct route works!' });
@@ -157,24 +154,16 @@ apiRouter.use('/role-permissions', require('./routes/rolePermissions.routes').de
 apiRouter.use('/user-roles', require('./routes/userRoles.routes').default);
 apiRouter.use('/user-preferences', require('./routes/user_preferences.routes').default);
 apiRouter.use('/preferences', require('./routes/preferences.routes').default);
-  apiRouter.use('/preferences', require('./routes/preferences.routes').default);
-  apiRouter.use('/collaboration', require('./routes/collaboration.routes').default);
   apiRouter.use('/collaboration', require('./routes/collaboration.routes').default);
   apiRouter.use('/integrations/manage', require('./routes/integration.routes').default);
-  apiRouter.use('/integrations/manage', require('./routes/integration.routes').default);
-  apiRouter.use('/report-viewer', require('./routes/reportViewer.routes').default);
   apiRouter.use('/report-viewer', require('./routes/reportViewer.routes').default);
   apiRouter.use('/payroll', require('./routes/payroll.routes').default);
-  apiRouter.use('/payroll', require('./routes/payroll.routes').default);
   apiRouter.use('/resources', require('./routes/resource.routes').default);
-  apiRouter.use('/resources', require('./routes/resource.routes').default);
-  apiRouter.use('/projects-mgmt', require('./routes/project.routes').default);
   apiRouter.use('/projects-mgmt', require('./routes/project.routes').default);
   apiRouter.use('/budget-mgmt', require('./routes/budget.routes').default);
   apiRouter.use('/leave-mgmt', require('./routes/leave.routes').default);
   apiRouter.use('/vendor-mgmt', require('./routes/vendor.routes').default);
   apiRouter.use('/asset-mgmt', require('./routes/asset.routes').default);
-  apiRouter.use('/contract-mgmt', require('./routes/contract.routes').default);
   apiRouter.use('/contract-mgmt', require('./routes/contract.routes').default);
   apiRouter.use('/inventory-mgmt', require('./routes/inventory.routes').default);
   apiRouter.use('/crm-mgmt', require('./routes/crm.routes').default);
@@ -183,7 +172,6 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/expense-mgmt', require('./routes/expenses.routes').default);
   apiRouter.use('/performance-mgmt', require('./routes/performance.routes').default);
   apiRouter.use('/recruitment-mgmt', require('./routes/recruitment.routes').default);
-  apiRouter.use('/recruitment-mgmt', require('./routes/recruitment.routes').default);
   apiRouter.use('/invoices', require('./routes/invoices.routes').default);
   apiRouter.use('/training', require('./routes/training.routes').default);
   apiRouter.use('/travel', require('./routes/travel.routes').default);
@@ -191,11 +179,8 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/sales-pipeline', require('./routes/sales-pipeline.routes').default);
   apiRouter.use('/helpdesk', require('./routes/helpdesk.routes').default);
   apiRouter.use('/compliance', require('./routes/compliance.routes').default);
-  apiRouter.use('/compliance', require('./routes/compliance.routes').default);
   apiRouter.use('/mfa', require('./routes/mfa.routes').default);
   apiRouter.use('/email-verify', require('./routes/emailVerify.routes').default);
-  apiRouter.use('/email-verify', require('./routes/emailVerify.routes').default);
-  apiRouter.use('/gdpr', require('./routes/gdpr.routes').default);
   apiRouter.use('/gdpr', require('./routes/gdpr.routes').default);
   apiRouter.use('/ftp', require('./routes/ftp.routes').default);
   apiRouter.use('/orders', require('./routes/order.routes').default);
@@ -213,8 +198,6 @@ apiRouter.use('/preferences', require('./routes/preferences.routes').default);
   apiRouter.use('/onboarding', require('./routes/onboarding.routes').default);
   apiRouter.use('/export', require('./routes/export.routes').default);
   apiRouter.use('/live-data', require('./routes/liveData.routes').default);
-  apiRouter.use('/supply', require('./routes/supply.routes').default);
-  apiRouter.use('/orders', require('./routes/order.routes').default);
   apiRouter.use('/supply', require('./routes/supply.routes').default);
 apiRouter.use('/subscription-plans', require('./routes/subscriptionPlans.routes').default);
 apiRouter.use('/plan-features', require('./routes/planFeatures.routes').default);
@@ -326,7 +309,6 @@ apiRouter.use('/executive-narratives', require('./routes/executiveNarratives.rou
 // ============================================================
 // MODULE 8: COMPLIANCE & REGULATIONS
 // ============================================================
-apiRouter.use('/compliance', complianceRoutes);
 apiRouter.use('/compliance-rules', require('./routes/complianceRules.routes').default);
 apiRouter.use('/compliance-audit', require('./routes/complianceAudit.routes').default);
 apiRouter.use('/compliance-documents', require('./routes/complianceDocuments.routes').default);
@@ -334,7 +316,6 @@ apiRouter.use('/compliance-calendar', require('./routes/complianceCalendar.route
 apiRouter.use('/compliance-submissions', require('./routes/complianceSubmissions.routes').default);
 apiRouter.use('/regulations', require('./routes/regulations.routes').default);
 apiRouter.use('/regulatory-contacts', require('./routes/regulatoryContacts.routes').default);
-apiRouter.use('/approvals', require('./routes/approvals.routes').default);
 apiRouter.use('/approval-workflows', require('./routes/approvalWorkflows.routes').default);
 apiRouter.use('/approval-steps', require('./routes/approvalSteps.routes').default);
 apiRouter.use('/gdpr-requests', require('./routes/gdprRequests.routes').default);
@@ -345,7 +326,6 @@ apiRouter.use('/blockchain-audit', require('./routes/blockchainAudit.routes').de
 // MODULE 9: AUTOMATION & WORKFLOWS
 // ============================================================
 apiRouter.use('/automation', require('./routes/automation.routes').default);
-  apiRouter.use('/automation', require('./routes/automationTrigger.routes').default);
   apiRouter.use('/tally', require('./routes/tallyImport.routes').default);
   apiRouter.use('/datacapture', require('./routes/dataCapture.routes').default);
 apiRouter.use('/automations', require('./routes/automations.routes').default);
@@ -365,7 +345,6 @@ apiRouter.use('/webhooks', require('./routes/webhooks.routes').default);
 // ============================================================
 // MODULE 10: NOTIFICATIONS & MESSAGING
 // ============================================================
-apiRouter.use('/notifications', require('./routes/notifications.routes').default);
 apiRouter.use('/notification-channels', require('./routes/notification_channels.routes').default);
 apiRouter.use('/notification-templates', require('./routes/notificationTemplates.routes').default);
 apiRouter.use('/email-templates', require('./routes/email_templates.routes').default);
@@ -386,7 +365,6 @@ apiRouter.use('/chat-intents', require('./routes/chatIntents.routes').default);
 // ============================================================
 // MODULE 12: ADMIN & OBSERVABILITY
 // ============================================================
-apiRouter.use('/admin', require('./routes/admin.routes').default);
 apiRouter.use('/admins', require('./routes/admins.routes').default);
 apiRouter.use('/audit', require('./routes/auditLogs.routes').default);
 apiRouter.use('/audit-logs', require('./routes/auditLogs.routes').default);
@@ -544,7 +522,6 @@ setTimeout(() => {
   import('./services/dbBackup.service').then(m => m.startDBBackup()).catch(e => console.error('[DBBackup] Failed:', e));
   import('./services/ftpWatcher.service').then(m => m.startFTPWatcher()).catch(e => console.error('[FTPWatcher] Failed:', e));
 }, 30000);
-
 
 
 
